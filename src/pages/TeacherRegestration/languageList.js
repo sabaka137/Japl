@@ -1,0 +1,81 @@
+export const Languages = [
+    { value: 'ru', label: 'Русский' },
+    { value: 'en', label: 'Английский' },
+    { value: 'jap', label: 'Японский' },
+    { value: 'de', label: 'Немецкий' },
+    { value: 'fr', label: 'Французский' },
+    { value: 'es', label: 'Испанский' },
+    { value: 'it', label: 'Итальянский' },
+    { value: 'pt', label: 'Португальский' },
+    { value: 'nl', label: 'Голландский' },
+    { value: 'pl', label: 'Польский' },
+    { value: 'sv', label: 'Шведский' },
+    { value: 'da', label: 'Датский' },
+    { value: 'fi', label: 'Финский' },
+    { value: 'no', label: 'Норвежский' },
+    { value: 'tr', label: 'Турецкий' },
+    { value: 'ar', label: 'Арабский' },
+    { value: 'zh', label: 'Китайский (Упрощенный)' },
+    { value: 'ja', label: 'Японский' },
+    { value: 'ko', label: 'Корейский' },
+    { value: 'hi', label: 'Хинди' },
+    { value: 'th', label: 'Тайский' },
+    { value: '', label: 'Индонезийский' },
+    { value: 'ms', label: 'Малайский' },
+    { value: 'vi', label: 'Вьетнамский' },
+    { value: 'tr', label: 'Турецкий' },
+    { value: 'el', label: 'Греческий' },
+    { value: 'cs', label: 'Чешский' },
+    { value: 'sk', label: 'Словацкий' },
+    { value: 'hu', label: 'Венгерский' },
+    { value: 'ro', label: 'Румынский' },
+    { value: 'bg', label: 'Болгарский' },
+    { value: 'uk', label: 'Украинский' },
+    { value: 'hr', label: 'Хорватский' },
+    { value: 'sr', label: 'Сербский' },
+    { value: 'sl', label: 'Словенский' },
+    { value: 'mk', label: 'Македонский' },
+    { value: 'sq', label: 'Албанский' },
+    { value: 'et', label: 'Эстонский' },
+    { value: 'lv', label: 'Латышский' },
+    { value: 'lt', label: 'Литовский' },
+    { value: 'hy', label: 'Армянский' },
+    { value: 'ka', label: 'Грузинский' },
+    { value: 'he', label: 'Иврит' },
+    { value: 'ur', label: 'Урду' },
+    { value: 'fa', label: 'Персидский' },
+    { value: 'sw', label: 'Суахили' },
+    { value: 'af', label: 'Африкаанс' },
+    { value: 'xh', label: 'Коса' },
+    { value: 'zu', label: 'Зулу' },
+    { value: 'yo', label: 'Йоруба' },
+]
+
+
+export const CertificatesType = [
+    {
+        value: 'Japanese Language Teaching Competency Test',
+        label: 'Japanese Language Teaching Competency Test',
+    },
+    {
+        value: 'Japanese Language Teacher Training Course',
+        label: 'Japanese Language Teacher Training Course',
+    },
+    { value: 'JLPT', label: 'JLPT' },
+    {
+        value: 'Language Teaching Certificate',
+        label: 'Language Teaching Certificate',
+    },
+    { value: '', label: 'Другой' },
+]
+export const DiplomaType = [
+    { value: 'Педагогический диплом', label: 'Педагогический диплом' },
+    {
+        value: 'Диплом по предмету, который вы преподаете',
+        label: 'Диплом по предмету, который вы преподаете',
+    },
+    { value: 'Другой диплом', label: 'Другой диплом' },
+]
+
+
+

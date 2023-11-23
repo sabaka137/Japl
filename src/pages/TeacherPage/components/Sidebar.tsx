@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { User, UserSchedule } from '../../../types/User/UserTypes'
 
-import { BsLightningCharge, BsLightningChargeFill } from 'react-icons/bs'
+import { BsLightningCharge } from 'react-icons/bs'
 import { Box, Flex, Text } from '../../../components/Common'
 import { TeacherPageButton } from '../style'
 import SendMessageModal from '../../../components/Modal/SendMessageModal'
@@ -16,7 +16,7 @@ import {
     AddToFavorite,
     RemoveFromFavorite,
 } from '../../../redux/reducers/UserSlice'
-
+import TutorPreview from '../../../assets/images/TutorPreview.jpg'
 const Wrapper = styled.div`
     position: absolute;
     width: 340px;
@@ -30,14 +30,17 @@ const Wrapper = styled.div`
     }
 `
 const ContentContainer = styled.div`
-    padding: 10px 20px 20px 20px;
+    padding: 15px 20px 20px 20px;
 `
 const Video = styled.div`
     width: 100%;
     height: 190px;
-    background: grey;
+        box-shadow: 0 0.625rem 0.25rem #00000014;
+    
+
     img {
         width: 100%;
+     
     }
 `
 const NewUserLabel = styled.div`
@@ -96,7 +99,7 @@ function Sidebar({ teacher, schedule }: Props) {
             dispatch(AddToFavorite(teacher!._id))
              
         } else {
-            //fix- add modal for login
+          
             navigate('/login')
         }
     }
@@ -107,7 +110,7 @@ function Sidebar({ teacher, schedule }: Props) {
     return (
         <Wrapper>
             <Video>
-                <img src={require('./TestTeacher.jpeg')} />
+                <img src={TutorPreview} alt='sidebar-preview'/>
             </Video>
 
             <ContentContainer>

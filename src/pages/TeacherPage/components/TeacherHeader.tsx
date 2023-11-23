@@ -92,12 +92,7 @@ const InfoItem = styled.div`
     }
 `
 
-const Video = styled.div`
-    width: 100%;
-    min-height: 450px;
-    background-size: contain;
-    background: grey;
-`
+
 const MobileBottomPanel = styled.div`
     width: 100%;
     display: flex;
@@ -193,7 +188,7 @@ const LanguageLevel = styled.div`
 type Props = {
     currentTeacher: User | null
 }
-//fix-inline
+
 
 export const TeacherHeader = ({ currentTeacher }: Props) => {
     console.log(currentTeacher)
@@ -202,7 +197,7 @@ export const TeacherHeader = ({ currentTeacher }: Props) => {
             <HeaderContainer>
                 <AvatarContainer>
                     <Avatar>
-                        <img src={currentTeacher?.photo} />
+                        <img src={currentTeacher?.photo} alt='teacher-avatar'/>
                     </Avatar>
                 </AvatarContainer>
                 <TeacherContainer>

@@ -19,7 +19,6 @@ import { useAppDispatch } from '../../hooks/hook'
 import ImportModal from './components/ImportModal'
 import { ButtonLoader } from '../../components/Loader/ButtonLoader'
 import { CreateCollectionButton, ImportButton } from './style'
-import { HiOutlinePlus } from 'react-icons/hi'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 
@@ -54,7 +53,7 @@ function CreateGroup() {
     const [collection, setCollection] = useState<ICollection>(defaultValue)
     const {
         register,
-        formState: { errors, isValid },
+        formState: { errors },
         handleSubmit,
         control,
         getValues,
@@ -62,33 +61,7 @@ function CreateGroup() {
         reset,
     } = useForm({
         mode: 'onChange',
-        defaultValues: {
-            name: '',
-            description: '',
-            termins: [
-                {
-                    id: 1,
-                    termin: '',
-                    meaning: '',
-                    reading: '',
-                    isValide: false,
-                },
-                {
-                    id: 2,
-                    termin: '',
-                    meaning: '',
-                    reading: '',
-                    isValide: false,
-                },
-                {
-                    id: 3,
-                    termin: '',
-                    meaning: '',
-                    reading: '',
-                    isValide: false,
-                },
-            ],
-        },
+        defaultValues: defaultValue
     })
     const { fields, append, remove } = useFieldArray({
         control,
@@ -102,7 +75,6 @@ function CreateGroup() {
         name: 'termins',
     })
     //fix- disable button on validation
-    const [isDisable, setDisable] = useState<boolean>(false)
     const [fetching, setFetching] = useState<boolean>(false)
     const [importModal, setImportModal] = useState<boolean>(false)
     const [createType, setCreateType] = useState<'redact' | 'create'>('create')
@@ -125,7 +97,7 @@ function CreateGroup() {
             setCreateType('redact')
         }
     }, [])
-    const onSubmit: SubmitHandler<any> = (data) => {
+    const onSubmit: SubmitHandler<ICollection> = (data) => {
         setFetching(true)
         if (type === 'redact') {
             //user updates collection

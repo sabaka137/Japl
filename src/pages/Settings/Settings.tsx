@@ -1,6 +1,5 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, {useEffect, useRef, useState } from 'react'
 import { Container, Flex } from '../../components/Common'
-import styled from 'styled-components'
 import SettingsNavbar from '../../components/SettingsNavbar'
 import { useAppDispatch, useAppSelector } from '../../hooks/hook'
 import { SubmitHandler, UseFormSetValue, useForm } from 'react-hook-form'
@@ -33,7 +32,7 @@ export const Settings = () => {
     const [file, setSelectedFile] = useState<any>(null)
     const [modalOpen, setModalOpen] = useState(false)
     const [saveLoader, setLoader] = useState(false)
-    
+
     const inputRef = useRef<HTMLInputElement | null>()
     const dispatch = useAppDispatch()
     const { User } = useAppSelector((state) => state.user)
@@ -58,8 +57,13 @@ export const Settings = () => {
     useEffect(() => {
         ChangeTitle('Japl | Settings')
         if (User) {
-
-            reset({name:User.name,surname:User.surname,email:User.email,photo:User.photo,password:''})
+            reset({
+                name: User.name,
+                surname: User.surname,
+                email: User.email,
+                photo: User.photo,
+                password: '',
+            })
         }
     }, [User])
     function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -68,12 +72,11 @@ export const Settings = () => {
         setModalOpen(true)
     }
 
-    const onSubmit: SubmitHandler<FormValues> = (data) =>{
-        setLoader(true)    
-        dispatch(UpdateUser(data)).then(res => {
+    const onSubmit: SubmitHandler<FormValues> = (data) => {
+        setLoader(true)
+        dispatch(UpdateUser(data)).then((res) => {
             setLoader(false)
         })
-            
     }
 
     return (
@@ -104,9 +107,10 @@ export const Settings = () => {
                                 <UserPhoto>
                                     <img
                                         src={
-                                            getValues('photo') === undefined 
+                                            getValues('photo') === undefined
                                                 ? DefaultAvatar
-                                                : getValues('photo') || User?.photo  
+                                                : getValues('photo') ||
+                                                  User?.photo
                                         }
                                     />
                                 </UserPhoto>
@@ -134,7 +138,7 @@ export const Settings = () => {
                                         Upload photo
                                     </LoadButton>
                                     <ImageInfo>
-                                    Max. size - 2 Mb. JPG or PNG format.
+                                        Max. size - 2 Mb. JPG or PNG format.
                                     </ImageInfo>
                                 </Flex>
                             </Flex>
@@ -168,7 +172,7 @@ export const Settings = () => {
                         </RightSide>
                     </Flex>
                     <SaveChangesButton type="submit">
-                      {saveLoader ?<ButtonLoader/> :'Save changes'}
+                        {saveLoader ? <ButtonLoader /> : 'Save changes'}
                     </SaveChangesButton>
                 </ContentForm>
             </Container>

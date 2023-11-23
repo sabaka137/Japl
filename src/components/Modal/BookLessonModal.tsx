@@ -104,14 +104,16 @@ const ScheduleDay = styled.div`
         font-size: 13px;
     }
 `
-const ScheduleItem = styled.div`
+const ScheduleItem = styled.div<{ choosen?: boolean }>`
     color: #3bb3bd;
     font-family: Inter;
     font-size: 1rem;
+    border-radius: 8px;
+    box-shadow: ${(props) => props.choosen && 'inset 0 0 0 1px #3bb3bd'};
     padding: 5px;
     &:hover {
         cursor: pointer;
-        border-radius: 10px;
+
         box-shadow: inset 0 0 0 1px #3bb3bd;
     }
     @media (max-width: 480px) {
@@ -163,6 +165,7 @@ type Props = {
     schedule: UserSchedule[]
     setBookModal: Dispatch<SetStateAction<boolean>>
     avatarSrc: string
+    dateInfo?:{dayIndex:number,dayName:string,time:string}
 }
 const Months = [
     'January',
@@ -179,12 +182,12 @@ const Months = [
     'December',
 ]
 //fix-rerender on change date
-function BookLessonModal({ schedule, setBookModal, avatarSrc }: Props) {
+function BookLessonModal({ schedule, setBookModal, avatarSrc,dateInfo }: Props) {
     const [scheduleWithOffset, setScheduleWithOffset] = useState<
         UserSchedule[] | []
     >([])
     const [pickedTime, setPickedTime] = useState<Date | null>(null)
-    const [date, setDate] = useState(() => new Date())
+    const [date] = useState(() => new Date())
     const [index, setIndex] = useState(0)
     const [currentMonth, setCurrentMonth] = useState(0)
     const [currentDay, setCurrentDay] = useState(0)
@@ -193,7 +196,10 @@ function BookLessonModal({ schedule, setBookModal, avatarSrc }: Props) {
     const tz = Intl.DateTimeFormat().resolvedOptions()
     useEffect(() => {
         if (scheduleWithOffset.length === 0) {
-            setScheduleWithOffset(ConvertScheduleToLocalTime(schedule))
+            setScheduleWithOffset(ConvertScheduleToLocalTime(schedule,dateInfo))
+            if(dateInfo){
+                handlePick(dateInfo.dayIndex,dateInfo.time,dateInfo.dayName)
+            }
         }
     }, [scheduleWithOffset])
     useEffect(() => {
@@ -205,7 +211,8 @@ function BookLessonModal({ schedule, setBookModal, avatarSrc }: Props) {
         setNextMonth(next.getMonth())
         setNextDay(next.getDate())
     }, [index])
-    function handlePick(dayIndex: number, hour: string) {
+    function handlePick(dayIndex: number, hour: string, dayName: string) {
+        console.log(dayIndex,hour,dayName)
         const temp = new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000 * index)
         let gmt = new Date().getTimezoneOffset() / 60
         let hours = Number(hour.split(':')[0])
@@ -217,7 +224,31 @@ function BookLessonModal({ schedule, setBookModal, avatarSrc }: Props) {
             hours - gmt * 2,
             Number(minutes)
         )
+        setScheduleWithOffset((prev) =>
+            prev.map((day) =>
+                day.name.short === dayName
+                    ? {
+                          ...day,
+                          time: day.time.map((t: any) =>
+                              t.time === hour
+                                  ? { ...t, choosen: true }
+                                  : { ...t, choosen: false }
+                          ),
+                      }
+                    : {
+                          ...day,
+                          time: day.time.map((t: any) => ({
+                              ...t,
+                              choosen: false,
+                          })),
+                      }
+            )
+        )
         setPickedTime(localTime)
+    }
+    function aproveTime(){
+        console.log(pickedTime)
+
     }
     function handleClick(e: React.MouseEvent<HTMLElement>) {
         setBookModal(false)
@@ -229,10 +260,10 @@ function BookLessonModal({ schedule, setBookModal, avatarSrc }: Props) {
                 <ModalHeader>
                     <Flex align="center" gap="10px">
                         <Avatar>
-                            <img src={avatarSrc} />
+                            <img src={avatarSrc} alt='tutor-avatar' />
                         </Avatar>
                         <Text color="#384047" fw="500" fz="17px">
-                        Book a 50-minute trial lesson
+                            Book a 50-minute trial lesson
                         </Text>
                     </Flex>
                     <div onClick={() => setBookModal(false)}>
@@ -253,7 +284,7 @@ function BookLessonModal({ schedule, setBookModal, avatarSrc }: Props) {
                             style={{ width: '100%' }}
                         >
                             <Arrow
-                                disabled={index - 1 == -1}
+                                disabled={index - 1 === -1}
                                 isAvailable={index - 1 !== -1}
                                 onClick={() =>
                                     index - 1 !== -1 && setIndex(index - 1)
@@ -303,16 +334,19 @@ function BookLessonModal({ schedule, setBookModal, avatarSrc }: Props) {
                                                 el: {
                                                     time: string
                                                     isAvailable: boolean
+                                                    choosen: boolean
                                                 },
                                                 timeIndex: number
                                             ) =>
                                                 el.isAvailable && (
                                                     <ScheduleItem
-                                                    key={timeIndex}
+                                                        choosen={el.choosen}
+                                                        key={timeIndex}
                                                         onClick={() =>
                                                             handlePick(
                                                                 index,
-                                                                el.time
+                                                                el.time,
+                                                                day.name.short
                                                             )
                                                         }
                                                     >
@@ -328,10 +362,10 @@ function BookLessonModal({ schedule, setBookModal, avatarSrc }: Props) {
                 </ModalContent>
                 <ModalFooter>
                     <Text color="#6f757b" fz="15px" align="center">
-                    Displayed in your time zone: {tz.timeZone}
+                        Displayed in your time zone: {tz.timeZone}
                     </Text>
-                    <Button timePicked={pickedTime !== null}>
-                      Confirm time
+                    <Button onClick={()=>aproveTime()} timePicked={pickedTime !== null}>
+                        Confirm time
                     </Button>
                 </ModalFooter>
             </ModalItem>

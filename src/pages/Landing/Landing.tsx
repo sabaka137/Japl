@@ -1,4 +1,3 @@
-import { ContentContainer } from '../../components/Common'
 import {
     HeroContainer,
     HeroImg,

@@ -48,6 +48,7 @@ export const ExampleCard = ({ exampleItem }: Props) => {
                 </Flex>
                 <Flex
                     align="center"
+                    style={{cursor:'pointer'}}
                     onClick={() => (setPlaying(true), audio.play())}
                 >
                     {playing ? (

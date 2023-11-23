@@ -46,10 +46,10 @@ function Header() {
                 <LeftSide>
                     <NavItems>
                         <NavItem pathname={path.pathname} to="/groups">
-                        Collections
+                            Collections
                         </NavItem>
                         <NavItem pathname={path.pathname} to="/teachers">
-                         Find Tutors
+                            Find Tutors
                         </NavItem>
                     </NavItems>
                     <HeaderSearch />

@@ -1,7 +1,3 @@
-import React, { useEffect, useState } from 'react'
-
-import { ICollection } from '../../../types/Collections/CollectionType'
-
 import { AiOutlineDelete } from 'react-icons/ai'
 import { Text } from '../../../components/Common'
 import {
@@ -60,7 +56,14 @@ type Props = {
     }>
 }
 
-export const TermCard = ({ id, remove, index, register, errors,getValues}: Props) => {
+export const TermCard = ({
+    id,
+    remove,
+    index,
+    register,
+    errors,
+    getValues,
+}: Props) => {
     console.log(errors)
     return (
         <TermCardContainer>
@@ -70,9 +73,15 @@ export const TermCard = ({ id, remove, index, register, errors,getValues}: Props
                 </Text>
                 <div>
                     <AiOutlineDelete
-                        color={getValues('termins').length > 3 ?'#2e3856' : "#d3d5de"}
+                        color={
+                            getValues('termins').length > 3
+                                ? '#2e3856'
+                                : '#d3d5de'
+                        }
                         fontSize={'1.4rem'}
-                        onClick={() => getValues('termins').length > 3 && remove(index)}
+                        onClick={() =>
+                            getValues('termins').length > 3 && remove(index)
+                        }
                     />
                 </div>
             </TermCardTop>

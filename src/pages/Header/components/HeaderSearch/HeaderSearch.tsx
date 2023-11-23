@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {
     HeaderInput,
-    HistoryContainer,
     InputContainer,
     InputIcon,
     Kanji,
@@ -13,8 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hook'
 import { BasicSearch, setLoad } from '../../../../redux/reducers/SearchSlice'
 import { useLocation } from 'react-router-dom'
-import { Flex, Text } from '../../../../components/Common'
-import { ButtonLoader } from '../../../../components/Loader/ButtonLoader'
+
 import SearchLoader from '../../../../components/Loader/SearchLoader'
 import { BiSearchAlt2 } from 'react-icons/bi'
 
@@ -22,7 +20,6 @@ import { BiSearchAlt2 } from 'react-icons/bi'
 function HeaderSearch() {
     const [value, setValue] = useState('')
     const [enterPressed, setPressed] = useState(false)
-    const [searchHistory, setHistory] = useState('')
     const dispatch = useAppDispatch()
     const { searchResults, isLoad } = useAppSelector((state) => state.search)
     useEffect(() => {
@@ -33,25 +30,17 @@ function HeaderSearch() {
     }, [value])
     useEffect(() => {
         document.body.addEventListener('click', () => {
-         setPressed(false)
+            setPressed(false)
         })
     }, [])
     const handlePress = () => {
         dispatch(BasicSearch(value))
         setPressed(true)
-        if (localStorage.getItem('searchHistory') === null) {
-            localStorage.setItem('searchHistory', JSON.stringify([value]))
-        } else {
-            let tepmHistory = JSON.parse(localStorage.getItem('searchHistory')!)
-            tepmHistory.push(value)
-            setHistory(tepmHistory)
-            localStorage.setItem('searchHistory', JSON.stringify(tepmHistory))
-        }
     }
     const path = useLocation()
     return (
         <SearchWrapper>
-            <InputContainer onClick={(e)=>e.stopPropagation()}>
+            <InputContainer onClick={(e) => e.stopPropagation()}>
                 <HeaderInput
                     pathname={path.pathname}
                     onChange={(e) => setValue(e.target.value)}
@@ -59,7 +48,11 @@ function HeaderSearch() {
                     value={value}
                     placeholder="search for kanji"
                 />
-                {value && <InputIcon onClick={()=>handlePress()} ><BiSearchAlt2/></InputIcon>}
+                {value && (
+                    <InputIcon onClick={() => handlePress()}>
+                        <BiSearchAlt2 />
+                    </InputIcon>
+                )}
             </InputContainer>
 
             {value && enterPressed && (

@@ -1,14 +1,15 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { AiOutlineQuestionCircle } from 'react-icons/ai'
 import { Flex } from '../../../components/Common'
-import { useAppDispatch, useAppSelector } from '../../../hooks/hook'
 
-import { useParams } from 'react-router-dom'
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from 'react-icons/md'
 import { ConvertScheduleToLocalTime } from '../../../utils/ConvertScheduleToLocalTime'
-import { SetLessons } from '../../../redux/reducers/UserSlice'
+
 import { addDays } from '../../../utils/AddDaysToDate'
+import { createPortal } from 'react-dom'
+import BookLessonModal from '../../../components/Modal/BookLessonModal'
+import { User, UserSchedule } from '../../../types/User/UserTypes'
 const Wrapper = styled.div`
     width: 65%;
     background: white;
@@ -98,7 +99,7 @@ const ScheduleItem = styled.div`
     font-family: Inter;
     flex: 1 0;
     font-size: 1rem;
-    padding: 7px 20px;
+    padding: 7px;
     &:hover {
         cursor: pointer;
         border-radius: 10px;
@@ -144,10 +145,13 @@ const Months = [
 ]
 
 type Props = {
-    schedule: any
+    teacher: User | null
+    schedule: UserSchedule[]
 }
-export const Schedule = ({ schedule }: Props) => {
-    const [date, setDate] = useState(() => new Date())
+export const Schedule = ({ schedule,teacher}: Props) => {
+    const [scheduleModal,setScheduleModal] = useState(false)
+    const [dateInfo,setDateInfo] = useState()
+    const [date] = useState(() => new Date())
     const [index, setIndex] = useState(0)
     const [scheduleWithOffset, setScheduleWithOffset] = useState<any>([])
     const [currentMonth, setCurrentMonth] = useState(0)
@@ -155,10 +159,6 @@ export const Schedule = ({ schedule }: Props) => {
     const [nextMonth, setNextMonth] = useState(0)
     const [nextDay, setNextDay] = useState(0)
     const [showFullSchedule, SetFullSchedule] = useState(false)
-    const User = useAppSelector((state) => state.user.User)
-    const dispatch = useAppDispatch()
-    const { id } = useParams()
-
     useEffect(() => {
         //fix-move to utils maybe
         var today = new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000 * index)
@@ -167,37 +167,30 @@ export const Schedule = ({ schedule }: Props) => {
         setCurrentDay(today)
         setNextMonth(next.getMonth())
         setNextDay(next.getDate())
-    }, [index])
+    }, [index,date])
     useEffect(() => {
         if (scheduleWithOffset.length === 0) {
             setScheduleWithOffset(ConvertScheduleToLocalTime(schedule))
         }
-    }, [scheduleWithOffset])
+    }, [scheduleWithOffset,schedule])
 
-    function handleAprove(dayIndex: number, hour: any) {
-        const temp = new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000 * index)
-        let gmt = new Date().getTimezoneOffset() / 60
-        let hours = Number(hour.split(':')[0])
-        let minutes = hour.split(':')[1]
-
-        dispatch(
-            SetLessons({
-                teacherId: id!,
-                studentId: User!._id,
-                date: new Date(
-                    temp.getFullYear(),
-                    temp.getMonth(),
-                    temp.getDate() + dayIndex,
-                    hours - gmt * 2,
-                    Number(minutes)
-                ),
-                dayIndex,
-            })
-        )
+    function handleAprove(dateInfo:any) {
+        setDateInfo(dateInfo)
+      setScheduleModal(true)
     }
 
     return (
         <Wrapper>
+             {scheduleModal &&
+                createPortal(
+                    <BookLessonModal
+                        dateInfo={dateInfo}
+                        avatarSrc={teacher!.photo}
+                        setBookModal={setScheduleModal}
+                        schedule={schedule}
+                    />,
+                    document.body
+                )}
             <h3>Schedule</h3>
             <TimeZoneInfo>
                 <div>
@@ -212,7 +205,7 @@ export const Schedule = ({ schedule }: Props) => {
                 <Flex align="center" gap="20px">
                     <Flex>
                         <Arrow
-                            disabled={index - 1 == -1}
+                            disabled={index - 1 === -1}
                             isAvailable={index - 1 !== -1}
                             onClick={() =>
                                 index - 1 !== -1 && setIndex(index - 1)
@@ -255,7 +248,7 @@ export const Schedule = ({ schedule }: Props) => {
                                         <ScheduleItem
                                             key={timeIndex}
                                             onClick={() =>
-                                                handleAprove(index, el.time)
+                                                handleAprove({dayIndex:index,dayName:day.name.short,time:el.time})
                                             }
                                         >
                                             {el.time}
@@ -265,7 +258,7 @@ export const Schedule = ({ schedule }: Props) => {
                                             <ScheduleItem
                                                 key={timeIndex}
                                                 onClick={() =>
-                                                    handleAprove(index, el.time)
+                                                    handleAprove({dayIndex:index,dayName:day.name.short,time:el.time})
                                                 }
                                             >
                                                 {el.time}

@@ -19,12 +19,10 @@ import FlashcardGame from './FlashcardsGame'
 import { CollectionRating, ShareButton } from './FlashcardsGame/style'
 import { BsCollectionFill } from 'react-icons/bs'
 import { HiDocumentText } from 'react-icons/hi'
-import { FaGamepad } from 'react-icons/fa'
 import { IoShareOutline } from 'react-icons/io5'
 import { AiOutlineLock, AiTwotoneStar } from 'react-icons/ai'
 
-type Props = {}
-export const SelectedGroup = ({}: Props) => {
+export const SelectedGroup = () => {
     const { pathname } = useLocation()
     const { currentCollection } = useAppSelector((state) => state.collections)
     const dispatch = useAppDispatch()
@@ -34,7 +32,7 @@ export const SelectedGroup = ({}: Props) => {
                 pathname.split('/')[pathname.split('/').length - 1]
             )
         )
-    }, [])
+    }, [dispatch,pathname])
 
     return (
         <PageWrapper>

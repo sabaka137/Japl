@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { useAppDispatch } from '../../hooks/hook'
 import { AuthSliceAsyncActions } from '../../redux/reducers/AuthSlice'
 const Wrapper = styled.div`
-    position: absolute;
+    position: fixed;
     width: 150px;
     background: white;
     top: 60px;

@@ -149,6 +149,7 @@ const PrevButton = styled.div`
     background: #f7f5f2;
     border-radius: 10px;
     display: flex;
+    cursor:pointer;
     align-items: center;
     justify-content: center;
     font-size: 1.4rem;
@@ -184,7 +185,8 @@ function ChatSideBar({ currentFriend, setSideBarOpen }: Props) {
                         <Text color="#006987" fz={'1.3rem'} fw={'bold'}>
                             {currentFriend?.name}
                             <FaExternalLinkAlt
-                                style={{ marginLeft: '10px' }}
+                            onClick={()=>navigate(`/teacher/${currentFriend?._id}`)}
+                                style={{ cursor:'pointer',marginLeft: '10px' }}
                                 fontSize={'1rem'}
                             />
                         </Text>

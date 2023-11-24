@@ -72,7 +72,7 @@ export const TermCardContainer = styled.div`
     box-shadow: 0 0.25rem 1rem 0 #2e385614;
     @media (max-width: 600px) {
         height: auto;
-        padding: 10px 0px;
+        padding: 10px 0px 20px;
     }
 `
 export const TermCardItem = styled.div`

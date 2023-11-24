@@ -64,7 +64,6 @@ export const TermCard = ({
     errors,
     getValues,
 }: Props) => {
-    console.log(errors)
     return (
         <TermCardContainer>
             <TermCardTop>

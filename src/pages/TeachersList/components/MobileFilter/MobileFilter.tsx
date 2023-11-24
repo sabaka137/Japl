@@ -21,7 +21,7 @@ const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     position: fixed;
-    z-index: 4;
+    z-index: 22;
     left: 0;
     top: 0;
     background: white;

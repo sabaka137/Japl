@@ -54,13 +54,13 @@ function UserLessons() {
                             />
                         </LessonsImage>
                         <Test>
-                            <Text>Еще нет уроков</Text>
+                            <Text>No lessons yet</Text>
                             <Text1>
-                                Как только вы найдете подходящего репетитора и
-                                забронируете первый урок, он появится здесь
+                                As soon as you find a suitable tutor and and
+                                book your first lesson, they will appear here.
                             </Text1>
                             <Button onClick={() => navigate('/teachers')}>
-                                Найти репетитора
+                                Find a tutor
                             </Button>
                         </Test>
                     </LessonsContainer>

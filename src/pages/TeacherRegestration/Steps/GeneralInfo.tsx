@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useMemo } from 'react'
+import { Dispatch, FC, SetStateAction, useMemo, useState } from 'react'
 import { FieldErrors, useFieldArray } from 'react-hook-form'
 import countryList from 'react-select-country-list'
 
@@ -29,8 +29,8 @@ export const GeneralInfo: FC<Props> = ({
     trigger,
 }) => {
     //fix - change lib to constant
+    const [languages,setLanguages] = useState(REGISTRATION_LANGUAGE)
     const options = useMemo(() => countryList().getData(), [])
-    console.log(options)
     const { fields, append, remove } = useFieldArray<{
         name: any
         control: any
@@ -47,7 +47,7 @@ export const GeneralInfo: FC<Props> = ({
                 fw={'500'}
                 margin={'0px 0px 30px'}
             >
-                Info
+                Personal information
             </Text>
             <RegistrationInput
                 type="text"
@@ -119,7 +119,7 @@ export const GeneralInfo: FC<Props> = ({
             <div>
                 <RegistrationSelect
                     label={'Country'}
-                    errors={errors}
+                    errors={errors?.general?.country}
                     control={control}
                     options={options}
                     formName={'general.country'}
@@ -131,13 +131,15 @@ export const GeneralInfo: FC<Props> = ({
                     <div style={{ flex: '1' }}>Level</div>
                 </LanguageLevelContiner>
                 {fields.map((field, index) => (
-                    <SelectRangeWrapper>
+                    <SelectRangeWrapper key={field.id}>
                         <RegistrationSelect
                             isRange={true}
                             control={control}
-                            options={REGISTRATION_LANGUAGE}
+                            mustBeUnique
+                            setLanguages={setLanguages}
+                            options={languages}
                             formName={`general.languages.${index}.language`}
-                            errors={errors}
+                            errors={errors?.general?.languages && errors?.general?.languages[index]?.language}
                         />
 
                         <RegistrationSelect
@@ -145,7 +147,7 @@ export const GeneralInfo: FC<Props> = ({
                             control={control}
                             options={LANGUAGE_LEVEL}
                             formName={`general.languages.${index}.level`}
-                            errors={errors}
+                            errors={errors?.general?.languages && errors?.general?.languages[index]?.level}
                         />
 
                         {index >= 1 && (
@@ -160,9 +162,11 @@ export const GeneralInfo: FC<Props> = ({
                 ))}
             </div>
             <Text
-                color='#33AAB4'
-                fz='0.9rem'
-                ff='Inter'
+                color="#33AAB4"
+                cursor="pointer"
+                style={{ cursor: 'pointer' }}
+                fz="0.9rem"
+                ff="Inter"
                 onClick={() => append({ language: '', level: '' })}
             >
                 Add language

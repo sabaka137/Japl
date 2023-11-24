@@ -5,7 +5,7 @@ const Wrapper = styled.div`
     width: 100%;
     margin-bottom: 20px;
     box-sizing: border-box;
-    position:relative;
+    position: relative;
 `
 const Label = styled.label`
     display: block;
@@ -30,10 +30,13 @@ const Input = styled.input<{ error: boolean }>`
     width: 100%;
     margin-top: 5px;
     padding: 10px 12px;
-    border: ${(props) => (props.error ? '1px solid red' : '1px solid #dadfe1')};
+    border: ${(props) => (props.error ? '1px solid #FA7070' : '1px solid #dadfe1')};
     box-sizing: border-box;
     border-radius: 5px;
     outline: none;
+    &:hover {
+        border-color: ${(props) => !props.error && 'rgb(59, 179, 189)'};
+    }
     &:focus {
         box-shadow: rgb(206, 237, 240) 0px 0px 8px;
         border-color: rgb(59, 179, 189);

@@ -261,7 +261,11 @@ export const Chat = ({ conversation, currentId, setCurrentView }: Props) => {
                     >
                         {width > 768 ? (
                             <TopBar>
-                                <Text fw={'500'} fz={'1.2rem'}>
+                                <Text
+                                    onClick={() => setSideBarOpen(true)}
+                                    fw={'500'}
+                                    fz={'1.2rem'}
+                                >
                                     {currentFriend?.name}{' '}
                                     {currentFriend?.surname[0]}.
                                 </Text>

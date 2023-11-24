@@ -23,7 +23,8 @@ import {
 } from '../../../../components/Common'
 import CardExample from './CardExample'
 import {
-    UseFieldArrayAppend,
+    UseFieldArrayPrepend,
+    UseFieldArrayRemove,
     UseFormGetValues,
     UseFormSetValue,
 } from 'react-hook-form'
@@ -54,7 +55,7 @@ type Props = {
             isValide: boolean
         }[]
     }>
-    append: UseFieldArrayAppend<
+    prepend: UseFieldArrayPrepend<
         {
             name: string
             description: string
@@ -68,6 +69,7 @@ type Props = {
         },
         'termins'
     >
+    remove: UseFieldArrayRemove
 }
 type Card = {
     id: number
@@ -75,12 +77,11 @@ type Card = {
     text: string
 }
 export const ImportModal = ({
-    setGroup,
     group,
     setImportModal,
     getValues,
-    setValue,
-    append,
+    remove,
+    prepend,
 }: Props) => {
     const [card, setCard] = useState<Card[]>([
         { id: 1, order: 1, text: 'termin' },
@@ -158,7 +159,7 @@ export const ImportModal = ({
     }
     function confirmImport() {
         tempCard.forEach((card) =>
-            append({
+            prepend({
                 id: card.id,
                 reading: card.reading,
                 termin: card.termin,
@@ -166,6 +167,17 @@ export const ImportModal = ({
                 isValide: false,
             })
         )
+        getValues('termins').forEach((item, index) => {
+            if (tempCard.length < 3) return
+            if (
+                item.meaning === '' &&
+                item.reading === '' &&
+                item.termin === ''
+            ) {
+                console.log(item)
+                remove(index)
+            }
+        })
 
         setImportModal(false)
     }
@@ -197,10 +209,10 @@ export const ImportModal = ({
                     </Flex>
                     <Text margin={'0px 0px 10px'} color="#2E3856">
                         <Text inline fw={'bold'}>
-                        Import data
+                            Import data
                         </Text>
-                        . Copy and paste your data (from Word, Excel,
-                        Google Docs, etc.)
+                        . Copy and paste your data (from Word, Excel, Google
+                        Docs, etc.)
                     </Text>
                     <div>
                         <ImportTextArea
@@ -257,7 +269,7 @@ export const ImportModal = ({
                                                 }
                                             />
                                             <label htmlFor={'comma'}>
-                                            comma
+                                                comma
                                             </label>
                                         </div>
                                     </SeparatorItem>
@@ -306,7 +318,7 @@ export const ImportModal = ({
                                                 }
                                             />
                                             <label htmlFor={'linebreak'}>
-                                            Line break
+                                                Line break
                                             </label>
                                         </div>
                                     </SeparatorItem>
@@ -324,7 +336,7 @@ export const ImportModal = ({
                                                 }
                                             />
                                             <label htmlFor={'semicolon'}>
-                                            Semicolon
+                                                Semicolon
                                             </label>
                                         </div>
                                     </SeparatorItem>
@@ -368,7 +380,7 @@ export const ImportModal = ({
                         </Flex>
 
                         <ConfirmButton onClick={() => confirmImport()}>
-                          Import
+                            Import
                         </ConfirmButton>
                     </Flex>
                     <CardContainer count={tempCard.length > 6}>

@@ -158,7 +158,15 @@ export const ProfileSchedule = ({
                             </label>
                         </CustomCheckbox>
                         {Days[index].checked && (
-                            <Day {...{ control, register }} index={index} />
+                            <Day
+                                {...{ control, register }}
+                                errors={
+                                    errors?.general?.schedule
+                                        ? errors?.general?.schedule[index]
+                                        : {}
+                                }
+                                index={index}
+                            />
                         )}
                     </div>
                 ))}

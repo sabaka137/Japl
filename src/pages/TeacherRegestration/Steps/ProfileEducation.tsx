@@ -10,7 +10,7 @@ import { SelectRangeWrapper } from '../style'
 import { RegistrationButtonPrev } from '../../../components/Button/RegistrationButtonPrev'
 import { generateYears } from '../../../utils/GenerateYearsRange'
 import { User } from '../../../types/User/UserTypes'
-import { FieldErrors, UseFormRegister, UseFormTrigger } from 'react-hook-form'
+import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormTrigger } from 'react-hook-form'
 import { SkipInfo } from './style'
 
 type Props = {
@@ -19,6 +19,9 @@ type Props = {
     control: any
     setStep: Dispatch<SetStateAction<number>>
     trigger: UseFormTrigger<{ general: User }>
+    setValue:UseFormSetValue<{
+        general: User;
+    }>
 }
 
 export const ProfileEducation = ({
@@ -27,12 +30,21 @@ export const ProfileEducation = ({
     register,
     errors,
     trigger,
+    setValue
 }: Props) => {
+    const [firstNumber, setFirstNumber] = useState(0)
+    const [secondNumber, setSecondNumber] = useState(0)
     const [years, setYears] = useState<any>([])
     const [checked, setChecked] = useState(false)
     useEffect(() => {
         setYears(generateYears())
     }, [])
+    useEffect(()=>{
+        if(years.length === 0) return
+        if(years && firstNumber === years[0].value){
+            setValue(`general.education.years.to`,'')
+        }
+    },[firstNumber,secondNumber,years])
 
     return (
         <>
@@ -122,14 +134,27 @@ export const ProfileEducation = ({
                             <RegistrationSelect
                                 isRange={true}
                                 control={control}
-                                options={years}
+                                setFirstNumber={setFirstNumber}
+                                firstRange
+                                options={ secondNumber === 0
+                                    ? years
+                                    : firstNumber === 0
+                                    ? years.filter(
+                                          (year: any) =>
+                                              year.value < secondNumber
+                                      )
+                                    : years}
                                 formName={`general.education.years.from`}
                                 errors={errors?.general?.education?.years?.from}
                             />
                             <RegistrationSelect
                                 isRange={true}
+                                setSecondNumber={setSecondNumber}
+                                secondRange
                                 control={control}
-                                options={years}
+                                options={years.filter(
+                                    (year: any) => year.value > firstNumber
+                                )}
                                 formName={`general.education.years.to`}
                                 errors={errors?.general?.education?.years?.to}
                             />

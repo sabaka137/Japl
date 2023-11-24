@@ -7,7 +7,7 @@ import { CollectionSliceAsyncActions } from '../../redux/reducers/CollectionSlic
 import DeleteImg from '../../assets/images/ConfirmDelete.png'
 
 export const Wrapper = styled.div`
-    position: absolute;
+    position: fixed;
     z-index: 4;
     left: 0;
     top: 0;
@@ -33,6 +33,10 @@ export const Modal = styled.div`
     color: black;
     box-sizing: border-box;
     padding: 30px 30px;
+    @media(max-width:500px){
+        width:250px;
+        padding: 15px;
+    }
 `
 
 export const ConfirmText = styled.div`
@@ -41,11 +45,15 @@ export const ConfirmText = styled.div`
     font-weight: bold;
     width: 80%;
     margin-bottom: 30px;
+    @media(max-width:500px){
+        font-size:1.1rem;
+    }
 `
 export const ConfirmImage = styled.div`
     width:200px;
     img{
         width:200px;
+        height:200px;
     }
 `
 export const Button = styled.button<{delete?:boolean, onClick: (e: Event) => void;}>`
@@ -61,6 +69,10 @@ export const Button = styled.button<{delete?:boolean, onClick: (e: Event) => voi
     color: ${(props) => props.delete && 'white'};
     &:hover {
         cursor: pointer;
+    }
+    @media(max-width:500px){
+        width: 100px;
+        height: 45px;
     }
 `
 

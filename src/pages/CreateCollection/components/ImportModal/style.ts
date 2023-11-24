@@ -62,7 +62,7 @@ color: white;
 font-weight: bold;
 border-radius: 5px;
 @media(max-width:450px){
-	padding:5px 5px;
+	padding:10px 15px;
 	font-size:0.9rem;
 	max-height:40px;
 }

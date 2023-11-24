@@ -20,7 +20,7 @@ import { User } from '../../types/User/UserTypes'
 
 const Container = styled.div`
     background: white;
-    padding: 20px 20px 20px 35px;
+    padding: 20px 20px 50px 35px;
     min-height: 700px;
     width: 700px;
     box-sizing: border-box;
@@ -31,7 +31,7 @@ const Container = styled.div`
     }
 `
 function TeacherRegistration() {
-    const [step, setStep] = useState(1)
+    const [step, setStep] = useState(6)
     const {
         register,
         formState: { errors },
@@ -271,6 +271,7 @@ function TeacherRegistration() {
                         setStep={setStep}
                         control={control}
                         trigger={trigger}
+                         setValue={setValue}
                         errors={errors}
                         register={register}
                     />
@@ -281,6 +282,7 @@ function TeacherRegistration() {
                         setStep={setStep}
                         control={control}
                         trigger={trigger}
+                        setValue={setValue}
                         errors={errors}
                         register={register}
                     />

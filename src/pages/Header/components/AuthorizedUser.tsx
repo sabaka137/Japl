@@ -7,7 +7,7 @@ import { User } from '../../../types/User/UserTypes'
 import { Flex } from '../../../components/Common'
 import { AiOutlineHeart, AiOutlineMessage } from 'react-icons/ai'
 import { IoIosArrowDown, IoMdNotificationsOutline } from 'react-icons/io'
-import { IoWalletOutline } from 'react-icons/io5'
+import { IoSearch, IoWalletOutline } from 'react-icons/io5'
 import { AvatarModal } from '../../../components/Modal/AvatarModal'
 import { Separator } from '../style'
 import LocalizationModal from '../../../components/Modal/LocalizationModal'
@@ -118,6 +118,9 @@ function AuthorizedUser({
                 </Localization>
                 <Separator />
                 <IconGroup>
+                    <IconItem>
+                        <IoSearch />
+                    </IconItem>
                     <IconItem>
                         <IoWalletOutline />
                     </IconItem>

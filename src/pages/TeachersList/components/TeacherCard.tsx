@@ -30,6 +30,7 @@ const TeacherCardWrapper = styled.div`
     flex-wrap: wrap;
     @media (max-width: 1000px) {
         width: 100%;
+        overflow: hidden;
     }
 `
 const Photo = styled.div`
@@ -120,7 +121,7 @@ const Header = styled.div<{ DescriptionOpen: boolean }>`
     font-size: 13px;
     font-family: Inter;
     color: black;
-    height: ${(props) => (props.DescriptionOpen ? 'auto' : '80px')};
+    max-height: ${(props) => (props.DescriptionOpen ? 'auto' : '65px')};
     word-break: break-all;
     overflow: hidden;
     span {
@@ -176,8 +177,8 @@ const BookLesson = styled.button`
     border-radius: 10px;
     border: none;
     margin-bottom: 10px;
-    box-sizing:border-box;
-        padding: 0px 20px;
+    box-sizing: border-box;
+    padding: 0px 20px;
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
@@ -260,7 +261,7 @@ const AvatarNavBar = styled.div`
     position: absolute;
     left: 0;
     top: 0;
-    z-index: 2;
+    z-index: 1;
     width: 100%;
     height: 40px;
     box-sizing: border-box;
@@ -338,7 +339,6 @@ function TeacherCard({
     function addToFavorite() {
         if (User !== null) {
             dispatch(AddToFavorite(teacher._id))
-           
         } else {
             //fix- add modal for login
             navigate('/login')
@@ -398,7 +398,7 @@ function TeacherCard({
                 </Photo>
                 <TopBar>
                     <div>
-                        <Name target='_blank' to={`/teacher/${teacher._id}`}>
+                        <Name target="_blank" to={`/teacher/${teacher._id}`}>
                             {teacher.name} {teacher.surname[0]}.
                             <ReactCountryFlag
                                 countryCode={teacher?.country}
@@ -416,7 +416,9 @@ function TeacherCard({
                     </div>
                     <TeacherShort>
                         <Flex justify="flex-start" gap={'8px'} align="center">
-                            <NewUserLabel>Recently on the platform</NewUserLabel>
+                            <NewUserLabel>
+                                Recently on the platform
+                            </NewUserLabel>
                             <LessonInfo>
                                 <LessonPrice>
                                     {teacher.price}
@@ -441,7 +443,9 @@ function TeacherCard({
                                         align="center"
                                         gap="5px"
                                     >
-                                        <Language>{getLabel(el.language)}</Language>
+                                        <Language>
+                                            {getLabel(el.language)}
+                                        </Language>
                                         <LanguageLevel>
                                             {el.level}
                                         </LanguageLevel>
@@ -454,7 +458,9 @@ function TeacherCard({
                                             align="center"
                                             gap="5px"
                                         >
-                                            <Language>{getLabel(el.language)}</Language>
+                                            <Language>
+                                                {getLabel(el.language)}
+                                            </Language>
                                             <LanguageLevel>
                                                 {el.level}
                                             </LanguageLevel>
@@ -488,7 +494,7 @@ function TeacherCard({
                     </BottomBarText>
                     <ButtonsContainer>
                         <BookLesson onClick={() => BookClick()}>
-                        Book a trial lesson
+                            Book a trial lesson
                         </BookLesson>
                         <SendMessageButton onClick={() => SendMessage()}>
                             <span style={{ textAlign: 'center' }}>
@@ -523,7 +529,6 @@ function TeacherCard({
                     />,
                     document.body
                 )}
-        
         </TeacherCardWrapper>
     )
 }

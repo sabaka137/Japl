@@ -1,5 +1,5 @@
 import ReactCountryFlag from 'react-country-flag'
-
+import React, { useState } from 'react'
 import { Flex, Text } from '../../../components/Common'
 import styled from 'styled-components'
 import { TbMessage } from 'react-icons/tb'
@@ -7,7 +7,15 @@ import { PiStudentLight } from 'react-icons/pi'
 import { FaRegCircleDot } from 'react-icons/fa6'
 import { TeacherPageButton } from '../style'
 import { User } from '../../../types/User/UserTypes'
-import { BiHeart, BiMessageRounded } from 'react-icons/bi'
+import { BiHeart, BiMessageRounded, BiSolidHeart } from 'react-icons/bi'
+import { useAppDispatch, useAppSelector } from '../../../hooks/hook'
+import { useNavigate, useParams } from 'react-router-dom'
+import { createPortal } from 'react-dom'
+import SendMessageModal from '../../../components/Modal/SendMessageModal'
+import {
+    AddToFavorite,
+    RemoveFromFavorite,
+} from '../../../redux/reducers/UserSlice'
 
 //fix- add clip-path
 const Avatar = styled.div`
@@ -91,7 +99,6 @@ const InfoItem = styled.div`
         color: #aeb5bc;
     }
 `
-
 
 const MobileBottomPanel = styled.div`
     width: 100%;
@@ -189,15 +196,37 @@ type Props = {
     currentTeacher: User | null
 }
 
-
 export const TeacherHeader = ({ currentTeacher }: Props) => {
-    console.log(currentTeacher)
+    const [messageModal, setMessageModal] = useState(false)
+    const User = useAppSelector((state) => state.user.User)
+    const navigate = useNavigate()
+    const { id } = useParams()
+    const dispatch = useAppDispatch()
+
+    function OpenMessageModal() {
+        if (User !== null) {
+            setMessageModal(true)
+        } else {
+            navigate('/login')
+        }
+    }
+    function addToFavorite() {
+        if (User !== null) {
+            dispatch(AddToFavorite(currentTeacher!._id))
+        } else {
+            navigate('/login')
+        }
+    }
+
+    function removeFromFavorite() {
+        dispatch(RemoveFromFavorite(currentTeacher!._id))
+    }
     return (
         <>
             <HeaderContainer>
                 <AvatarContainer>
                     <Avatar>
-                        <img src={currentTeacher?.photo} alt='teacher-avatar'/>
+                        <img src={currentTeacher?.photo} alt="teacher-avatar" />
                     </Avatar>
                 </AvatarContainer>
                 <TeacherContainer>
@@ -228,7 +257,7 @@ export const TeacherHeader = ({ currentTeacher }: Props) => {
                             </InfoItem>
                             <LanguageList>
                                 <Text color="#3C4447" fz="14px">
-                                Languages:
+                                    Languages:
                                 </Text>
                                 {currentTeacher?.languages.map((el, index) => (
                                     <Flex
@@ -254,17 +283,27 @@ export const TeacherHeader = ({ currentTeacher }: Props) => {
             </HeaderContainer>
             <Bottom>
                 <Flex direction="column" gap="10px">
-                    <TeacherPageButton>
+                    <TeacherPageButton onClick={() => OpenMessageModal()}>
                         <BiMessageRounded />
                         Send a message
                     </TeacherPageButton>
-                    <TeacherPageButton>
-                        <BiHeart />
-                        Save to list
+                    <TeacherPageButton
+                        onClick={() =>
+                            currentTeacher?.inFavorite
+                                ? removeFromFavorite()
+                                : addToFavorite()
+                        }
+                    >
+               
+                        {currentTeacher?.inFavorite ? (
+                            <BiSolidHeart />
+                        ) : (
+                            <BiHeart />
+                        )}
+                        {currentTeacher?.inFavorite ? 'Saved' : 'Save to list'}
                     </TeacherPageButton>
                 </Flex>
 
-               
                 <MobileBottomPanel>
                     <Flex justify="space-around">
                         <NewUserLabel>Recently on the platform</NewUserLabel>
@@ -279,6 +318,16 @@ export const TeacherHeader = ({ currentTeacher }: Props) => {
                     <TeacherPageButton>Book a lesson</TeacherPageButton>
                 </MobileBottomPanel>
             </Bottom>
+            {messageModal &&
+                createPortal(
+                    <SendMessageModal
+                        avatarSrc={currentTeacher!.photo}
+                        name={currentTeacher!.name}
+                        setModalOpen={setMessageModal}
+                        teacherId={id!}
+                    />,
+                    document.body
+                )}
         </>
     )
 }

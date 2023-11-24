@@ -23,12 +23,12 @@ const Wrapper = styled.div<{ isWrapperFixed: boolean }>`
     margin-bottom: 20px;
     position: ${(props) => (props.isWrapperFixed ? 'sticky' : 'auto')};
     top: 0;
-    z-index: 5;
+    z-index: 22;
     box-sizing: border-box;
     border-radius: 0 0 16px 16px;
     padding: 16px 32px 24px 32px;
     background: ${(props) => (props.isWrapperFixed ? '#192435' : '#f3f3f3')};
-    transition: background-color 0.1s;
+    transition: background-color 0.2s;
 `
 
 const ContentDesktop = styled.div<{ isWrapperFixed: boolean }>`

@@ -54,11 +54,11 @@ export const ProfiilePrice = ({ setStep, register, errors }: Props) => {
                 props={{
                     ...register(`general.price`, {
                         required: 'Required field',
-                        maxLength: 3,
                         pattern: {
                             value: /^-?\d*\.?\d*$/,
                             message: 'The number must be an integer',
                         },
+                        max: {value:100,message:'Price must be between 1 and 100'},
                     }),
                 }}
             />

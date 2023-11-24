@@ -2,6 +2,7 @@ import React from 'react'
 
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
+import { CiCirclePlus } from "react-icons/ci";
 
 export const CreateCardWrapper = styled(NavLink)`
     width: calc(33.33333% - 50px);
@@ -16,9 +17,10 @@ export const CreateCardWrapper = styled(NavLink)`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 180px;
+    font-size: 80px;
+    line-height:70px;
   div{
-    margin-bottom:40px;
+  
   }
     text-decoration: none;
     &:hover {
@@ -29,7 +31,7 @@ export const CreateCardWrapper = styled(NavLink)`
     }
 `
 function CreateCard() {
-    return <CreateCardWrapper to={'/group/create'}><div>+</div></CreateCardWrapper>
+    return <CreateCardWrapper to={'/group/create'}><div><CiCirclePlus /></div></CreateCardWrapper>
 }
 
 export default CreateCard

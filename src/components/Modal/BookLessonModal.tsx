@@ -5,6 +5,7 @@ import { Flex, Text } from '../Common'
 import { UserSchedule } from '../../types/User/UserTypes'
 import { AiOutlineClose } from 'react-icons/ai'
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md'
+import { addDays } from '../../utils/AddDaysToDate'
 const ModalWrapper = styled.div`
     position: fixed;
     width: 100%;
@@ -75,12 +76,12 @@ const ModalFooter = styled.div`
 `
 const Button = styled.button<{ timePicked: boolean }>`
     background: ${(props) => (props.timePicked ? '#3bb3bd' : '#e9ebeb')};
-    border-radius: 15px;
+    border-radius: 5px;
     border: none;
     box-sizing: border-box;
-    padding: 10px 55px;
+    padding: 12px 50px;
     color: ${(props) => (props.timePicked ? 'white' : '#6f757b')};
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
     cursor: pointer;
     &:hover {
@@ -190,7 +191,7 @@ function BookLessonModal({ schedule, setBookModal, avatarSrc,dateInfo }: Props) 
     const [date] = useState(() => new Date())
     const [index, setIndex] = useState(0)
     const [currentMonth, setCurrentMonth] = useState(0)
-    const [currentDay, setCurrentDay] = useState(0)
+    const [currentDay, setCurrentDay] = useState<Date>(()=> new Date())
     const [nextMonth, setNextMonth] = useState(0)
     const [nextDay, setNextDay] = useState(0)
     const tz = Intl.DateTimeFormat().resolvedOptions()
@@ -205,9 +206,9 @@ function BookLessonModal({ schedule, setBookModal, avatarSrc,dateInfo }: Props) 
     useEffect(() => {
         //fix-move to utils mb
         var today = new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000 * index)
-        let next = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000)
+        let next = new Date(today.getTime() + 6 * 24 * 60 * 60 * 1000)
         setCurrentMonth(today.getMonth())
-        setCurrentDay(today.getDate())
+        setCurrentDay(today)
         setNextMonth(next.getMonth())
         setNextDay(next.getDate())
     }, [index])
@@ -294,7 +295,7 @@ function BookLessonModal({ schedule, setBookModal, avatarSrc,dateInfo }: Props) 
                             </Arrow>
                             <Flex align="center" gap="3px">
                                 <GLobalDate>
-                                    {Months[currentMonth]} {currentDay}
+                                    {Months[currentMonth]} {currentDay.getDate()}
                                 </GLobalDate>
                                 —
                                 <GLobalDate>
@@ -326,7 +327,7 @@ function BookLessonModal({ schedule, setBookModal, avatarSrc,dateInfo }: Props) 
                                         }}
                                     >
                                         <div>{day.name?.short}</div>
-                                        <div>{index + 1}</div>
+                                        <div>{addDays(currentDay,index)}</div>
                                     </div>
                                     <div style={{ flex: '1 0' }}>
                                         {day.time.map(
@@ -365,7 +366,7 @@ function BookLessonModal({ schedule, setBookModal, avatarSrc,dateInfo }: Props) 
                         Displayed in your time zone: {tz.timeZone}
                     </Text>
                     <Button onClick={()=>aproveTime()} timePicked={pickedTime !== null}>
-                        Confirm time
+                        Confirm
                     </Button>
                 </ModalFooter>
             </ModalItem>

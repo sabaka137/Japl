@@ -78,6 +78,7 @@ export const LoginPage = () => {
     useEffect(() => {
         reset({ name: '', password: '', email: '' })
     }, [login])
+
     return (
         <ContentContainer>
             <LoginContainer>
@@ -86,12 +87,12 @@ export const LoginPage = () => {
                         <LoginType>Log in</LoginType>
 
                         <LoginChangeType onClick={() => setLogin(false)}>
-                            Sign in as a student
+                            Sign up as a student
                         </LoginChangeType>
                         <LoginChangeType
                             onClick={() => navigate('/signup/teacher')}
                         >
-                            Sign in as a tutor
+                            Sign up as a tutor
                         </LoginChangeType>
 
                         <OauthButtonsContainer>
@@ -163,7 +164,7 @@ export const LoginPage = () => {
                     </div>
                 ) : (
                     <div>
-                        <LoginType>Sign in as a student</LoginType>
+                        <LoginType>Sign up as a student</LoginType>
 
                         <LoginChangeType onClick={() => setLogin(true)}>
                             Already have an account?
@@ -172,11 +173,11 @@ export const LoginPage = () => {
                         <OauthButtonsContainer>
                             <OAuthButton type="google">
                                 <AiOutlineGoogle />
-                                <div>Signing up via Google</div>
+                                <div>Sign up up via Google</div>
                             </OAuthButton>
                             <OAuthButton type="facebook">
                                 <BsFacebook />
-                                <div>Signing up via Facebook</div>
+                                <div>Sign up up via Facebook</div>
                             </OAuthButton>
                         </OauthButtonsContainer>
                         <LoginSeparator>or</LoginSeparator>

@@ -66,15 +66,15 @@ export const CertificatesType = [
         value: 'Language Teaching Certificate',
         label: 'Language Teaching Certificate',
     },
-    { value: '', label: 'Другой' },
+    { value: '', label: 'Another' },
 ]
 export const DiplomaType = [
-    { value: 'Педагогический диплом', label: 'Педагогический диплом' },
+    { value: 'Pedagogical Diploma', label: 'Pedagogical Diploma' },
     {
-        value: 'Диплом по предмету, который вы преподаете',
-        label: 'Диплом по предмету, который вы преподаете',
+        value: 'Diploma in the subject you teach',
+        label: 'Diploma in the subject you teach',
     },
-    { value: 'Другой диплом', label: 'Другой диплом' },
+    { value: 'Another diploma', label: 'Another diploma' },
 ]
 
 

@@ -101,7 +101,7 @@ export const Settings = () => {
                 <Title>Profile settings</Title>
                 <ContentForm onSubmit={handleSubmit(onSubmit)}>
                     <Flex justify="space-between">
-                        <LeftSide>Фото</LeftSide>
+                        <LeftSide>Avatar</LeftSide>
                         <RightSide>
                             <Flex justify="space-between">
                                 <UserPhoto>

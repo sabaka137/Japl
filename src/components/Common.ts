@@ -29,6 +29,7 @@ interface Props {
     bg?: string
     opacity?:number;
     borderBox?: boolean
+    cursor?:string
 }
 export const Text = styled.div<Props>`
     font-size: ${(props) => props.fz || '1rem'};
@@ -40,6 +41,8 @@ export const Text = styled.div<Props>`
     color: ${(props) => props.color || 'black'};
     display: ${(props) => (props.inline ? 'inline' : 'block')};
     margin: ${(props) => props.margin || '0px'};
+   
+    
 `
 export const Box = styled.div<Props>`
     width: ${(props) => props.w || 'auto'}%;

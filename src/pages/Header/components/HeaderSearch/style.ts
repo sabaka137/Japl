@@ -85,9 +85,7 @@ export const ResultLoader = styled.div`
     box-sizing: border-box;
     text-decoration: none;
     padding: 0px 20px;
-    &:hover {
-        background: #f6f7fb;
-    }
+  
 `
 
 export const HistoryContainer = styled.div``

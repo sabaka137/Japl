@@ -61,9 +61,9 @@ function CreateGroup() {
         reset,
     } = useForm({
         mode: 'onChange',
-        defaultValues: defaultValue
+        defaultValues: defaultValue,
     })
-    const { fields, append, remove } = useFieldArray({
+    const { fields, append, remove, prepend } = useFieldArray({
         control,
         rules: {
             minLength: {
@@ -138,7 +138,8 @@ function CreateGroup() {
                         <ImportModal
                             getValues={getValues}
                             setValue={setValue}
-                            append={append}
+                            remove={remove}
+                            prepend={prepend}
                             setGroup={setCollection}
                             group={collection}
                             setImportModal={setImportModal}
@@ -172,12 +173,16 @@ function CreateGroup() {
                                     placeholder="Enter a description"
                                 />
                             </div>
-                            <ImportButton type='button' onClick={() => setImportModal(true)}>
+                            <ImportButton
+                                type="button"
+                                onClick={() => setImportModal(true)}
+                            >
                                 <AiOutlinePlusCircle /> Import card
                             </ImportButton>
                         </Box>
                         {fields.map((field, index) => (
                             <TermCard
+                                key={field.id}
                                 errors={
                                     errors.termins !== undefined &&
                                     errors.termins[index]

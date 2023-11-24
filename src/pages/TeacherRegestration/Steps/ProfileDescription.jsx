@@ -78,14 +78,14 @@ let Data = [
         header: '1. Introduce yourself',
         desc: 'Show yourself to potential students! Talk about your teaching experience and passion for teaching, mention your interests and hobbies.',
         placeholder: "Hi, my name is... I'm from...",
-        minLength: 40,
-        maxLength: 300,
+        minLength: 250,
+        maxLength: 650,
     },
     {
         formField: 'experience',
         header: '2. Teaching experience',
         minLength: 100,
-        maxLength: 300,
+        maxLength: 700,
         desc: 'Give a detailed description of your teaching experience. Add certifications, teaching methodology, education, and subject matter expertise.',
         placeholder:
             'I have 5 years of teaching experience. I have a TEFL certificate and my lessons are...',
@@ -95,7 +95,7 @@ let Data = [
         header: '3. Get potential students interested',
         desc: 'Inspire students to book their first lesson. Emphasize the benefits of learning with you!',
         minLength: 15,
-        maxLength: 50,
+        maxLength: 250,
         placeholder:
             'Sign up for my trial lesson so we can discuss your goals and how I can help you achieve them....',
     },

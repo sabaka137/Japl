@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     padding: 0px 30px;
     line-height: 0.9rem;
     @media (max-width: 768px) {
-        display: none;
+        justify-content:center;
     }
 `
 const Item = styled(NavLink)`

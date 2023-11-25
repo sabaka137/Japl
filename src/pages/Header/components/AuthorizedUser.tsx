@@ -13,6 +13,8 @@ import { Separator } from '../style'
 import LocalizationModal from '../../../components/Modal/LocalizationModal'
 
 import DefaultAvatar from '../../../assets/images/DefaultAvatar.png'
+import SearchModal from '../../../components/Modal/SearchModal'
+import { createPortal } from 'react-dom'
 
 const Avatar = styled.div`
     width: 30px;
@@ -46,6 +48,12 @@ const IconItem = styled.div`
     svg {
         cursor: pointer;
     }
+`
+const SearchItem = styled(IconItem)`
+display:none;
+ @media(max-width:650px){
+    display:flex;
+ }
 `
 const ItemCount = styled.div`
     position: absolute;
@@ -101,26 +109,18 @@ function AuthorizedUser({
     setLocalizationModal,
     localizationModal,
 }: Props) {
+    const [modalOpen, setOpen] = useState(false)
     const navigate = useNavigate()
     return (
         <Flex align="center" gap={'10px'}>
             <Flex align="center" gap="20px">
-                <Localization
-                    onClick={(e) => (
-                        e.stopPropagation(),
-                        setLocalizationModal(!localizationModal),
-                        setModalActive(false)
-                    )}
-                >
-                    <div>Русский, USD</div>
-                    <IoIosArrowDown />
-                    {localizationModal && <LocalizationModal />}
-                </Localization>
+         
                 <Separator />
+
                 <IconGroup>
-                    <IconItem>
+                    <SearchItem onClick={()=>setOpen(true)}>
                         <IoSearch />
-                    </IconItem>
+                    </SearchItem>
                     <IconItem>
                         <IoWalletOutline />
                     </IconItem>
@@ -151,6 +151,8 @@ function AuthorizedUser({
                 <img src={User.photo || DefaultAvatar} />
                 {modalActive && <AvatarModal />}
             </Avatar>
+            {modalOpen &&
+                createPortal(<SearchModal setOpen={setOpen} />, document.body)}
         </Flex>
     )
 }

@@ -21,7 +21,7 @@ const Wrapper = styled.div`
     top: 0;
     right: 0;
     z-index: 3;
-
+    overflow-y:hidden;
     @media (max-width: 1000px) {
         display: flex;
         justify-content: flex-end;
@@ -29,16 +29,16 @@ const Wrapper = styled.div`
 `
 const Modal = styled.div`
     width: 240px;
-    height: 100vh;
+    height: 100%;
     background: #384047;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    padding: 0px 0px 20px 0px;
+    padding: 0px 0px 0px 0px;
 `
 const TopBar = styled.div`
     width: 100%;
-    height: 70px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -253,31 +253,7 @@ function SideBar({ authorized, user, setSideBarOpen }: Props) {
                         </div>
                     </LinksContainer>
                 )}
-                <BottomBar>
-                    <SelectItem>
-                        <Select>
-                            <option>Русский</option>
-                            <option>English</option>
-                            <option>Polski</option>
-                            <option>Deutsch</option>
-                        </Select>
-                        <SelectArrow>
-                            <IoIosArrowDown />
-                        </SelectArrow>
-                    </SelectItem>
-
-                    <SelectItem>
-                        <Select>
-                            <option>RUB</option>
-                            <option>EUR</option>
-                            <option>UAH</option>
-                            <option>USD</option>
-                        </Select>
-                        <SelectArrow>
-                            <IoIosArrowDown />
-                        </SelectArrow>
-                    </SelectItem>
-                </BottomBar>
+                
             </Modal>
         </Wrapper>
     )

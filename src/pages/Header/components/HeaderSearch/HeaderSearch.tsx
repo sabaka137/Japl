@@ -17,7 +17,10 @@ import SearchLoader from '../../../../components/Loader/SearchLoader'
 import { BiSearchAlt2 } from 'react-icons/bi'
 
 //fix add search history
-function HeaderSearch() {
+type Props = {
+    isAuth?: boolean
+}
+function HeaderSearch({ isAuth }: Props) {
     const [value, setValue] = useState('')
     const [enterPressed, setPressed] = useState(false)
     const dispatch = useAppDispatch()
@@ -34,14 +37,15 @@ function HeaderSearch() {
         })
     }, [])
     const handlePress = () => {
-        dispatch(BasicSearch(value))
+        dispatch(BasicSearch(value.toLowerCase()))
         setPressed(true)
     }
     const path = useLocation()
     return (
-        <SearchWrapper>
+        <SearchWrapper isAuth={isAuth}>
             <InputContainer onClick={(e) => e.stopPropagation()}>
                 <HeaderInput
+                    autoFocus={window.innerWidth <= 650 ? true : false}
                     pathname={path.pathname}
                     onChange={(e) => setValue(e.target.value)}
                     onKeyDown={(e) => e.key == 'Enter' && handlePress()}

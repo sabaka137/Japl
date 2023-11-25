@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const HeaderWrapper = styled.div<{ pathname: string }>`
-    padding: 15px 40px;
+    padding: 15px 25px;
     background: ${(props) =>
         props.pathname === '/teachers' ? '#f3f3f3' : 'white'};
 
@@ -20,7 +20,7 @@ export const LeftSide = styled.nav`
     display: flex;
     align-items: center;
     flex: 1;
-    @media (max-width: 600px) {
+    @media (max-width: 650px) {
         display: none;
     }
 `
@@ -33,6 +33,7 @@ export const Separator = styled.nav`
     }
 `
 export const NavItems = styled.nav`
+display:flex;
     @media (max-width: 1000px) {
         display: none;
     }
@@ -40,6 +41,7 @@ export const NavItems = styled.nav`
 
 export const NavItem = styled(NavLink)<{ pathname: string }>`
     font-size: 1rem;
+    display:block;
     text-decoration: none;
     margin: 0px 10px;
     font-family: Inter;
@@ -108,12 +110,18 @@ export const UserContainer = styled.div`
 export const OpenSidebarButton = styled.div`
 display:flex;
 align-items:center;
-margin-left:10px;
+margin:0px 10px;
 cursor:pointer;
 svg{
     font-size:1.4rem;
 }
 @media (min-width: 1001px) {
+    display: none;
+}
+`
+
+export const OpenSearchButton = styled(OpenSidebarButton)`
+@media (min-width: 650px) {
     display: none;
 }
 `

@@ -2,10 +2,12 @@ import { FiLogIn } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { Flex } from '../../../components/Common'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import LocalizationModal from '../../../components/Modal/LocalizationModal'
 import { Separator } from '../style'
+import SearchModal from '../../../components/Modal/SearchModal'
+import { createPortal } from 'react-dom'
 
 const Localization = styled.div`
     color: #192435;
@@ -51,22 +53,15 @@ type Props = {
 }
 
 function NonAuthorizedUser({ setLocalizationModal, localizationModal }: Props) {
+
     return (
         <Flex align="center" gap="20px">
-            <Localization
-                onClick={(e) => (
-                    e.stopPropagation(),
-                    setLocalizationModal(!localizationModal)
-                )}
-            >
-                <div>Русский, USD</div>
-                <IoIosArrowDown />
-                {localizationModal && <LocalizationModal />}
-            </Localization>
+            
             <Separator />
             <LoginButton to={'/login'}>
                 <FiLogIn /> <div>Log in</div>
             </LoginButton>
+           
         </Flex>
     )
 }

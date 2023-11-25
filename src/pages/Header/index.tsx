@@ -10,6 +10,7 @@ import {
     LeftSide,
     NavItem,
     NavItems,
+    OpenSearchButton,
     OpenSidebarButton,
     Separator,
     UserContainer,
@@ -21,11 +22,14 @@ import SideBar from './components/SideBar'
 import NonAuthorizedUser from './components/NonAuthorizedUser'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { Flex } from '../../components/Common'
+import { IoSearch } from 'react-icons/io5'
+import SearchModal from '../../components/Modal/SearchModal'
 
 function Header() {
     const [modalActive, setModalActive] = useState<boolean>(false)
     const [localizationModal, setLocalizationModal] = useState(false)
     const [sideBarOpen, setSideBarOpen] = useState<boolean>(false)
+    const [modalOpen, setOpen] = useState(false)
     const User = useAppSelector((state) => state.user.User)
     const path = useLocation()
     const socket = useContext(SocketContext)
@@ -52,7 +56,7 @@ function Header() {
                             Find Tutors
                         </NavItem>
                     </NavItems>
-                    <HeaderSearch />
+                    <HeaderSearch isAuth={User !== null} />
                 </LeftSide>
             </Flex>
 
@@ -78,6 +82,11 @@ function Header() {
                         />
                     </>
                 )}
+                {!User && (
+                    <OpenSearchButton onClick={() => setOpen(true)}>
+                        <IoSearch />
+                    </OpenSearchButton>
+                )}
                 <OpenSidebarButton onClick={() => setSideBarOpen(true)}>
                     <AiOutlineMenu />
                 </OpenSidebarButton>
@@ -88,6 +97,11 @@ function Header() {
                             user={User}
                             setSideBarOpen={setSideBarOpen}
                         />,
+                        document.body
+                    )}
+                {modalOpen &&
+                    createPortal(
+                        <SearchModal setOpen={setOpen} />,
                         document.body
                     )}
             </UserContainer>

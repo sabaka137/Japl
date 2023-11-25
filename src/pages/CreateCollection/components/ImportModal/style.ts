@@ -51,6 +51,9 @@ export const DragButtons = styled.div`
 	&:hover {
 		cursor: grab;
 	}
+	@media(max-width:650px){
+		display:none;
+	}
 `;
 export const ConfirmButton = styled.button`
 max-height:60px;

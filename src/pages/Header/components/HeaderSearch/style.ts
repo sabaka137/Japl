@@ -1,11 +1,16 @@
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
-export const SearchWrapper = styled.div`
+export const SearchWrapper = styled.div<{ isAuth?: boolean }>`
     position: relative;
     width: 40%;
-
+    @media (max-width: 1400px) {
+        width: 60%;
+    }
     @media (max-width: 1000px) {
+        width: ${(props) => (props.isAuth ? '100%' : '75%')};
+    }
+    @media (max-width: 650px) {
         width: 100%;
     }
 `
@@ -85,7 +90,6 @@ export const ResultLoader = styled.div`
     box-sizing: border-box;
     text-decoration: none;
     padding: 0px 20px;
-  
 `
 
 export const HistoryContainer = styled.div``

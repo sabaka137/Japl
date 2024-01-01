@@ -47,6 +47,8 @@ function ConversationItem({
 }: Props) {
     const [currentFriend, setCurrentFriend] = useState<User>()
     const [lastMessage, setLastMessage] = useState<any>('')
+    const [isLoaded, setLoaded] = useState<boolean>(false)
+
     const dispatch = useAppDispatch()
     useEffect(() => {
         const friendId = conversations.members.find(
@@ -55,6 +57,7 @@ function ConversationItem({
         dispatch(GetConversationFriend(friendId!)).then((res) => {
             setLastMessage(res.payload.lastMessage)
             setCurrentFriend(res.payload.friend)
+            setLoaded(true)
         })
     }, [])
     function handleClick() {
@@ -63,42 +66,44 @@ function ConversationItem({
     }
     return (
         <Wrapper onClick={() => handleClick()}>
-            <FriendItem>
-                <Avatar>
-                    <img src={currentFriend?.photo || DefaultAvatar} />
-                </Avatar>
-                <div
-                    style={{
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        width: '100%',
-                    }}
-                >
-                    <Flex justify="space-between" style={{ width: '100%' }}>
-                        <Text fw={'500'} color="#384047" fz={'14px'}>
-                            {currentFriend?.name} {currentFriend?.surname}
-                        </Text>
-                        <Text color="#AEB5BC" fz="12px">
-                            {new Date(lastMessage.time).toLocaleDateString(
-                                'de-DE'
-                            )}
-                        </Text>
-                    </Flex>
-                    <Text
-                        color="#6F757B"
-                        fz={'14px'}
+            {isLoaded && (
+                <FriendItem>
+                    <Avatar>
+                        <img src={currentFriend?.photo || DefaultAvatar} />
+                    </Avatar>
+                    <div
                         style={{
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
                             whiteSpace: 'nowrap',
-                            padding: '0px 15px 0px 0px',
+                            width: '100%',
                         }}
                     >
-                        {lastMessage.text || 'Нет сообщений'}
-                    </Text>
-                </div>
-            </FriendItem>
+                        <Flex justify="space-between" style={{ width: '100%' }}>
+                            <Text fw={'500'} color="#384047" fz={'14px'}>
+                                {currentFriend?.name} {currentFriend?.surname}
+                            </Text>
+                            <Text color="#AEB5BC" fz="12px">
+                                {new Date(lastMessage.time).toLocaleDateString(
+                                    'de-DE'
+                                )}
+                            </Text>
+                        </Flex>
+                        <Text
+                            color="#6F757B"
+                            fz={'14px'}
+                            style={{
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
+                                padding: '0px 15px 0px 0px',
+                            }}
+                        >
+                            {lastMessage.text || 'Нет сообщений'}
+                        </Text>
+                    </div>
+                </FriendItem>
+            )}
         </Wrapper>
     )
 }

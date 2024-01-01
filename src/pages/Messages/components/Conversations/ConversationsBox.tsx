@@ -10,6 +10,7 @@ import ConversationItem from './ConversationItem'
 import EmptyFriend from './EmptyFriend'
 import { useAppDispatch } from '../../../../hooks/hook'
 import { ConversationSliceAsyncActions } from '../../../../redux/reducers/ConversationSlice'
+import PageLoader from '../../../../components/Loader/PageLoader'
 
 type Props = {
     setCurrentChat: Dispatch<SetStateAction<Conversation | null>>
@@ -38,7 +39,6 @@ export const ConversationsBox = ({
                             conversations?.map((c: Conversation) => (
                                 <div key={c._id}>
                                     <ConversationItem
-                                  
                                         setCurrentView={setCurrentView}
                                         setCurrentChat={setCurrentChat}
                                         conversations={c}
@@ -52,7 +52,7 @@ export const ConversationsBox = ({
                     </ConversationsContent>
                 </>
             ) : (
-                <div>loader</div>
+                <PageLoader />
             )}
         </ConversationsWrapper>
     )

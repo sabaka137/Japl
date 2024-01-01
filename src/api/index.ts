@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const API_URL = 'http://localhost:5000/'
+export const API_URL = 'https://japl-server-api.onrender.com/'
 
 const API = axios.create({
     baseURL: API_URL,

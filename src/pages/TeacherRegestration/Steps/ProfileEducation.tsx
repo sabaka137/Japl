@@ -2,25 +2,32 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { RegistrationButtonNext } from '../../../components/Button/RegistrationButtonNext'
 import RegistrationInput from '../../../components/Input/RegistrationInput'
 
-import { DiplomaType } from '../languageList'
-
 import { Flex, Text } from '../../../components/Common'
 import { RegistrationSelect } from '../../../components/Select/RegistrationSelect'
 import { SelectRangeWrapper } from '../style'
 import { RegistrationButtonPrev } from '../../../components/Button/RegistrationButtonPrev'
 import { generateYears } from '../../../utils/GenerateYearsRange'
-import { User } from '../../../types/User/UserTypes'
-import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormTrigger } from 'react-hook-form'
+import { TeacherReg, User } from '../../../types/User/UserTypes'
+import {
+    Control,
+    FieldErrors,
+    UseFormRegister,
+    UseFormSetValue,
+    UseFormTrigger,
+} from 'react-hook-form'
 import { SkipInfo } from './style'
+import { DIPLOMA } from '../../../constants/data'
 
 type Props = {
-    errors: FieldErrors<{ general: User }> | undefined
-    register: UseFormRegister<{ general: User }>
-    control: any
+    errors: FieldErrors<{ general: TeacherReg }> | undefined
+    register: UseFormRegister<{ general: TeacherReg }>
+    control: Control<{
+        general: TeacherReg
+    }>
     setStep: Dispatch<SetStateAction<number>>
-    trigger: UseFormTrigger<{ general: User }>
-    setValue:UseFormSetValue<{
-        general: User;
+    trigger: UseFormTrigger<{ general: TeacherReg }>
+    setValue: UseFormSetValue<{
+        general: TeacherReg
     }>
 }
 
@@ -30,21 +37,21 @@ export const ProfileEducation = ({
     register,
     errors,
     trigger,
-    setValue
+    setValue,
 }: Props) => {
     const [firstNumber, setFirstNumber] = useState(0)
     const [secondNumber, setSecondNumber] = useState(0)
-    const [years, setYears] = useState<any>([])
+    const [years, setYears] = useState<{ value: string; label: string }[]>([])
     const [checked, setChecked] = useState(false)
     useEffect(() => {
         setYears(generateYears())
     }, [])
-    useEffect(()=>{
-        if(years.length === 0) return
-        if(years && firstNumber === years[0].value){
-            setValue(`general.education.years.to`,'')
+    useEffect(() => {
+        if (years.length === 0) return
+        if (years && firstNumber === Number(years[0].value)) {
+            setValue(`general.education.years.to`, '')
         }
-    },[firstNumber,secondNumber,years])
+    }, [firstNumber, secondNumber, years])
 
     return (
         <>
@@ -72,7 +79,7 @@ export const ProfileEducation = ({
                     onChange={(e) => setChecked(e.target.checked)}
                 />
                 <Text color="#384047" ff="Inter" fz="14px">
-                    I don't have a college degree
+                    I don&apos;t have a college degree
                 </Text>
             </SkipInfo>
             {!checked && (
@@ -105,7 +112,7 @@ export const ProfileEducation = ({
                         </span>
                         <RegistrationSelect
                             control={control}
-                            options={DiplomaType}
+                            options={DIPLOMA}
                             errors={errors?.general?.education?.diploma}
                             formName={`general.education.diploma`}
                         />
@@ -136,14 +143,17 @@ export const ProfileEducation = ({
                                 control={control}
                                 setFirstNumber={setFirstNumber}
                                 firstRange
-                                options={ secondNumber === 0
-                                    ? years
-                                    : firstNumber === 0
-                                    ? years.filter(
-                                          (year: any) =>
-                                              year.value < secondNumber
-                                      )
-                                    : years}
+                                options={
+                                    secondNumber === 0
+                                        ? years
+                                        : firstNumber === 0
+                                          ? years.filter(
+                                                (year) =>
+                                                    Number(year.value) <
+                                                    secondNumber
+                                            )
+                                          : years
+                                }
                                 formName={`general.education.years.from`}
                                 errors={errors?.general?.education?.years?.from}
                             />
@@ -153,7 +163,7 @@ export const ProfileEducation = ({
                                 secondRange
                                 control={control}
                                 options={years.filter(
-                                    (year: any) => year.value > firstNumber
+                                    (year) => Number(year.value) > firstNumber
                                 )}
                                 formName={`general.education.years.to`}
                                 errors={errors?.general?.education?.years?.to}

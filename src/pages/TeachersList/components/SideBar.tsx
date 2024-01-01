@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { IoEarthSharp } from 'react-icons/io5'
 import { Flex } from '../../../components/Common'
 import { NavLink } from 'react-router-dom'
+import { User, UserSchedule } from '../../../types/User/UserTypes'
+import { ScheduleStats } from '../../../types/Teachers/TeachersType'
 const Wrapper = styled.div<{ isFirst: boolean }>`
     width: 35%;
     max-width: 410px;
@@ -82,6 +84,7 @@ const ScheduleRangeStat = styled.div<{ bg: string }>`
 const FullScheduuleLink = styled(NavLink)`
     display: flex;
     width: 100%;
+
     height: 45px;
     background: #f7f5f2;
     border-radius: 10px;
@@ -89,6 +92,7 @@ const FullScheduuleLink = styled(NavLink)`
     align-items: center;
     margin-top: 20px;
     font-size: 1.05rem;
+    font-family: Noto Sans;
     font-weight: 500;
     color: #090f19;
     text-decoration: none;
@@ -99,8 +103,8 @@ type Props = {
         left: number
         isFirst: boolean
     }
-    schedule: any
-    teacher: any
+    schedule: UserSchedule[]
+    teacher: User
 }
 export const SideBar = ({ teacher, modalPosition, schedule }: Props) => {
     const [scheduleStat, setScheduleStat] = useState<any[]>([])
@@ -116,7 +120,8 @@ export const SideBar = ({ teacher, modalPosition, schedule }: Props) => {
 
         WRef.current!.style.left = modalPosition.left + 20 + 'px'
     }, [modalPosition])
-    let morning = [
+    //TODO вынести в константу
+    const morning = [
         '06:00',
         '06:30',
         '07:00',
@@ -131,7 +136,7 @@ export const SideBar = ({ teacher, modalPosition, schedule }: Props) => {
         '11:30',
         '12:00',
     ]
-    let day = [
+    const day = [
         '12:30',
         '13:00',
         '13:30',
@@ -145,7 +150,7 @@ export const SideBar = ({ teacher, modalPosition, schedule }: Props) => {
         '17:30',
         '18:00',
     ]
-    let evening = [
+    const evening = [
         '18:00',
         '18:30',
         '19:00',
@@ -159,7 +164,7 @@ export const SideBar = ({ teacher, modalPosition, schedule }: Props) => {
         '23:00',
         '23:30',
     ]
-    let night = [
+    const night = [
         '00:00',
         '00:30',
         '01:00',
@@ -176,12 +181,12 @@ export const SideBar = ({ teacher, modalPosition, schedule }: Props) => {
     ]
     const scheduleMemo = useMemo(() => chechSchedule(), [schedule])
     function chechSchedule() {
-        let res: any[] = []
-        schedule.forEach((el: any) => {
-            let temp = { mornin: 0, day: 0, evening: 0, night: 0 }
-            el.time.forEach((time: any) => {
+        const res: ScheduleStats[] = []
+        schedule.forEach((el) => {
+            const temp = { morning: 0, day: 0, evening: 0, night: 0 }
+            el.time.forEach((time) => {
                 if (morning.includes(time.time)) {
-                    temp.mornin += 1
+                    temp.morning += 1
                 }
                 if (day.includes(time.time)) {
                     temp.day += 1
@@ -242,7 +247,7 @@ export const SideBar = ({ teacher, modalPosition, schedule }: Props) => {
                             </Flex>
                         </Flex>
                         <Flex style={{ width: '80%', gap: '2px' }}>
-                            {schedule.map((el: any, index: number) => (
+                            {schedule.map((el, index: number) => (
                                 <Flex
                                     key={index}
                                     direction="column"
@@ -261,13 +266,10 @@ export const SideBar = ({ teacher, modalPosition, schedule }: Props) => {
                                             color: '#52667D',
                                             textTransform: 'lowercase',
                                         }}
-                                    >
-                                        {el.name[0]}
-                                        {el.name[1]}
-                                    </Flex>
+                                    ></Flex>
                                     <ScheduleRangeStat
                                         bg={getScheduleColor(
-                                            scheduleStat[index].mornin
+                                            scheduleStat[index].morning
                                         )}
                                     />
 
@@ -293,7 +295,7 @@ export const SideBar = ({ teacher, modalPosition, schedule }: Props) => {
                 )}
             </div>
             <FullScheduuleLink target="_blank" to={`/teacher/${teacher._id}`}>
-            View full schedule
+                View full schedule
             </FullScheduuleLink>
         </Wrapper>
     )

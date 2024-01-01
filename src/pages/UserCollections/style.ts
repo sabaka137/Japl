@@ -12,11 +12,11 @@ export const CollectionContent = styled.div`
     }
 `
 export const CollectionContainer = styled.div`
-width: 75%;
-margin:0 auto;
-@media (max-width: 1428px) {
-    width: 100%;
-}
+    width: 75%;
+    margin: 0 auto;
+    @media (max-width: 1428px) {
+        width: 100%;
+    }
 `
 export const FlashcardsInfo = styled.div`
     width: 100%;
@@ -58,14 +58,17 @@ export const TypesContainer = styled.div`
     }
 `
 //#2e3856 bg
-export const TypeButton = styled(NavLink)<{disabled?:boolean;active?:boolean}>`
+export const TypeButton = styled(NavLink)<{
+    disabled?: boolean
+    active?: boolean
+}>`
     height: 50px;
     display: flex;
-     pointer-events: ${props=>props.disabled ? 'none':'default'};
+    pointer-events: ${(props) => (props.disabled ? 'none' : 'default')};
     padding: 0px 20px;
     border-radius: 5px;
     align-items: center;
-    background: ${props=>props.disabled ? '#F1EFEF':'white'};
+    background: ${(props) => (props.disabled ? '#F1EFEF' : 'white')};
     box-shadow: 0 0.0625rem 0.1875rem 0 #2e385614;
     margin-left: 10px;
     font-weight: bold;
@@ -80,10 +83,11 @@ export const TypeButton = styled(NavLink)<{disabled?:boolean;active?:boolean}>`
         font-family: Inter;
         font-size: 1rem;
         gap: 10px;
-        color: ${props=>props.disabled ? 'grey': props.active ? '#001B79' :'#2e3856'};
+        color: ${(props) =>
+            props.disabled ? 'grey' : props.active ? '#001B79' : '#2e3856'};
         svg {
             font-size: 1.4rem;
-            color: ${props=>props.disabled ? 'grey':'blue'};
+            color: ${(props) => (props.disabled ? 'grey' : 'blue')};
         }
     }
 
@@ -99,11 +103,9 @@ export const TypeButton = styled(NavLink)<{disabled?:boolean;active?:boolean}>`
         transition: width 0.3s;
     }
     &:hover::after {
-        width: ${props=>props.disabled ?'0' :'100%'};
+        width: ${(props) => (props.disabled ? '0' : '100%')};
     }
     @media (max-width: 600px) {
         margin-top: 10px;
     }
 `
-
-

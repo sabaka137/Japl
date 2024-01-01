@@ -1,11 +1,32 @@
 import styled from 'styled-components'
+export const LessonsWrapper = styled.div`
+    width: 50%;
+    margin: 30px auto;
+    border-radius: 5px;
 
+    box-sizing: border-box;
+    padding: 0px 10px;
+
+    @media (max-width: 1500px) {
+        width: 50%;
+    }
+    @media (max-width: 1200px) {
+        width: 65%;
+    }
+    @media (max-width: 1028px) {
+        width: 80%;
+    }
+    @media (max-width: 769px) {
+        width: 95%;
+    }
+`
 export const LessonsContainer = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+
     justify-content: center;
 `
 
@@ -21,7 +42,6 @@ export const LessonsImage = styled.div`
         height: 200px;
     }
 `
-//fix хуйня переделай
 export const Test = styled.div`
     width: 250px;
 `

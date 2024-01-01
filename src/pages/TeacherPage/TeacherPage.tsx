@@ -16,12 +16,13 @@ function TeacherPage() {
     const { currentTeacher, isTeacheLoad } = useAppSelector(
         (state) => state.teachers
     )
+
     const { id } = useParams()
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(GetTeacher(id!))
-    }, [dispatch,id])
+    }, [dispatch, id])
 
     return (
         <div>
@@ -43,17 +44,19 @@ function TeacherPage() {
                             />
                         </TeacherContent>
                         <TeacherContent>
-                            <Schedule  teacher={currentTeacher} schedule={currentTeacher!.schedule} />
+                            <Schedule
+                                teacher={currentTeacher}
+                                schedule={currentTeacher!.schedule}
+                            />
                         </TeacherContent>
                     </Box>
                     <BottomPanel
                         schedule={currentTeacher!.schedule}
                         teacher={currentTeacher}
                     />
-                    
                 </div>
             ) : (
-                <PageLoader/>
+                <PageLoader />
             )}
         </div>
     )

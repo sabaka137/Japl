@@ -7,25 +7,29 @@ import {
     UseFormRegister,
     UseFormTrigger,
     UseFormSetValue,
+    Control,
 } from 'react-hook-form'
 import { RegistrationButtonNext } from '../../../components/Button/RegistrationButtonNext'
 import RegistrationInput from '../../../components/Input/RegistrationInput'
-import { CertificatesType, Languages } from '../languageList'
+
 import { Flex, Text } from '../../../components/Common'
 import { RegistrationSelect } from '../../../components/Select/RegistrationSelect'
 import { SelectRangeWrapper } from '../style'
 import { RegistrationButtonPrev } from '../../../components/Button/RegistrationButtonPrev'
 import { generateYears } from '../../../utils/GenerateYearsRange'
-import { User } from '../../../types/User/UserTypes'
+import { TeacherReg, User } from '../../../types/User/UserTypes'
 import { SkipInfo } from './style'
+import { CERTIFICATE } from '../../../constants/data'
 type Props = {
-    errors: FieldErrors<{ general: User }> | undefined
-    register: UseFormRegister<{ general: User }>
-    control: any
+    errors: FieldErrors<{ general: TeacherReg }> | undefined
+    register: UseFormRegister<{ general: TeacherReg }>
+    control: Control<{
+        general: TeacherReg
+    }>
     setStep: Dispatch<SetStateAction<number>>
-    trigger: UseFormTrigger<{ general: User }>
+    trigger: UseFormTrigger<{ general: TeacherReg }>
     setValue: UseFormSetValue<{
-        general: User
+        general: TeacherReg
     }>
 }
 export const ProfileCertificates = ({
@@ -36,7 +40,7 @@ export const ProfileCertificates = ({
     errors,
     setValue,
 }: Props) => {
-    const [years, setYears] = useState<any>([])
+    const [years, setYears] = useState<{ value: string; label: string }[]>([])
     const [firstNumber, setFirstNumber] = useState(0)
     const [secondNumber, setSecondNumber] = useState(0)
     const [checked, setChecked] = useState(false)
@@ -49,7 +53,7 @@ export const ProfileCertificates = ({
     }, [])
     useEffect(() => {
         if (years.length === 0) return
-        if (firstNumber === years[0].value) {
+        if (firstNumber === Number(years[0].value)) {
             setValue(`general.certificates.0.years.to`, '')
         }
     }, [firstNumber, secondNumber, years])
@@ -84,7 +88,7 @@ export const ProfileCertificates = ({
                     ff="Inter"
                     fz="14px"
                 >
-                    I don't have teaching certifications yet
+                    I don&apos;t have teaching certifications yet
                 </Text>
             </SkipInfo>
             {!checked &&
@@ -102,7 +106,7 @@ export const ProfileCertificates = ({
                             </Text>
                             <RegistrationSelect
                                 control={control}
-                                options={CertificatesType}
+                                options={CERTIFICATE}
                                 errors={
                                     errors?.general?.certificates![index]?.name
                                 }
@@ -144,11 +148,12 @@ export const ProfileCertificates = ({
                                         secondNumber === 0
                                             ? years
                                             : firstNumber === 0
-                                            ? years.filter(
-                                                  (year: any) =>
-                                                      year.value < secondNumber
-                                              )
-                                            : years
+                                              ? years.filter(
+                                                    (year) =>
+                                                        Number(year.value) <
+                                                        secondNumber
+                                                )
+                                              : years
                                     }
                                     formName={`general.certificates.${index}.years.from`}
                                     errors={
@@ -162,7 +167,8 @@ export const ProfileCertificates = ({
                                     secondRange
                                     control={control}
                                     options={years.filter(
-                                        (year: any) => year.value > firstNumber
+                                        (year) =>
+                                            Number(year.value) > firstNumber
                                     )}
                                     formName={`general.certificates.${index}.years.to`}
                                     errors={

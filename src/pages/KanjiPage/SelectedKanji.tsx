@@ -10,29 +10,33 @@ import {
     PageWrapper,
     Text,
 } from '../../components/Common'
-import { KanjiSVG, KanjiTop } from '../Vocabulary/style'
-import {
-    KanjiMeaning,
-    Reading,
-    ReadingContainer,
-    ReadingJap,
-    ReadingRom,
-    ReadingType,
-} from '../Vocabulary/components/style'
+
 import { useParams } from 'react-router-dom'
 import { ExampleCard } from './components/ExampleCard'
 import { InfoTypeContainer, InfoTypeItem } from './components/style'
 import PageLoader from '../../components/Loader/PageLoader'
-import { WritingContainer, WritingItem, ItemContainer } from './style'
+import {
+    WritingContainer,
+    WritingItem,
+    ItemContainer,
+    KanjiTop,
+    KanjiSVG,
+    KanjiMeaning,
+    Reading,
+    ReadingJap,
+    ReadingRom,
+    ReadingContainer,
+    ReadingType,
+} from './style'
 
 export const SelectedKanji = () => {
     const [spinner, setSpinner] = useState<boolean>(true)
     const [infoType, setInfoType] = useState<'example' | 'drawingOrder'>(
         'example'
     )
-    let path = useParams()
+    const path = useParams()
     const dispatch = useAppDispatch()
-    let { currentKanji, selectedLoad } = useAppSelector(
+    const { currentKanji, selectedLoad } = useAppSelector(
         (state) => state.vocabulary
     )
 
@@ -104,23 +108,29 @@ export const SelectedKanji = () => {
                                     currentKanji != null &&
                                     currentKanji.examples.map(
                                         (el: examples) => (
-                                            <ExampleCard exampleItem={el} />
+                                            <ExampleCard
+                                                key={el.meaning.english}
+                                                exampleItem={el}
+                                            />
                                         )
                                     )
                                 ) : (
                                     <WritingContainer>
                                         {currentKanji?.kanji.strokes.images.map(
                                             (el: string, index) => (
-                                                <ItemContainer>
+                                                <ItemContainer key={index}>
                                                     <Flex
                                                         direction="column"
                                                         align="center"
-                                                        gap='5px'
+                                                        gap="5px"
                                                     >
                                                         <WritingItem>
                                                             <img src={el} />
                                                         </WritingItem>
-                                                        <Text fz='18px' ff="Inter">
+                                                        <Text
+                                                            fz="18px"
+                                                            ff="Inter"
+                                                        >
                                                             {index + 1}
                                                         </Text>
                                                     </Flex>

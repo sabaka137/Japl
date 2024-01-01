@@ -33,8 +33,8 @@ export const ResultNavigationWrapper = styled.div`
     z-index: 2;
     display: flex;
     justify-content: center;
-    box-sizing:border-box;
-    padding:0px 10px;
+    box-sizing: border-box;
+    padding: 0px 10px;
     align-items: center;
 `
 export const ResultNavigationMobal = styled.div`

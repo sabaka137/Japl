@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
 export const TopBar = styled.div`
-    
     min-height: 60px;
     border-bottom: 1px solid #d8dfe6;
     display: flex;
@@ -10,9 +9,8 @@ export const TopBar = styled.div`
     padding: 0px 12px;
 `
 export const MobileTopBar = styled.div`
-    
     min-height: 60px;
-   background:#f8f8f8;
+    background: #f8f8f8;
     display: flex;
     align-items: center;
     box-sizing: border-box;
@@ -23,15 +21,19 @@ export const ChatContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex: 2 0 0px;
-    overflow-y:scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
     padding: 20px;
     box-sizing: border-box;
-      &::-webkit-scrollbar {
+    &::-webkit-scrollbar {
         display: none;
     }
 `
 
 export const MessageContainer = styled.div`
+    width: 100%;
+
     display: flex;
     flex-direction: column;
 `
@@ -41,7 +43,8 @@ export const MessageItem = styled.div<{ owner: boolean }>`
     gap: 10px;
     align-self: ${(props) => (props.owner ? 'flex-end' : 'flex-start')};
     max-width: 45%;
-    margin-top:10px;
+
+    margin-top: 10px;
 `
 export const AvatarContainer = styled.div<{ owner: boolean }>`
     display: ${(props) => (props.owner ? 'none' : 'block')};
@@ -64,14 +67,15 @@ export const Avatar = styled.div`
 
 export const MessageText = styled.div<{ owner: boolean }>`
     background: ${(props) => (props.owner ? '#c3f5fa' : '#f7f5f2')};
-    padding: 12px;
+    padding: 12px 12px 8px;
     border-radius: 10px;
     display: flex;
-    line-height:1.2rem;
+    line-height: 1.2rem;
     flex-direction: column;
-    
+    font-family: Noto Sans;
+    word-break: break-word;
     color: #384047;
-    text-align:left;
+    text-align: left;
     font-weight: 400;
 `
 export const MessageTime = styled.div`
@@ -81,7 +85,6 @@ export const MessageTime = styled.div`
 `
 
 export const InputContainer = styled.div`
-
     height: 60px;
     display: flex;
     border-top: 1px solid #d8dfe6;
@@ -90,11 +93,11 @@ export const InputContainer = styled.div`
 export const MessageInput = styled.input`
     height: 100%;
     border: none;
-    box-sizing:border-box;
-    color:#384047;
-    font-weight:500;
-    padding:0px 10px;
-    font-size:1rem;
+    box-sizing: border-box;
+    color: #384047;
+    font-weight: 500;
+    padding: 0px 10px;
+    font-size: 1rem;
     flex: 1;
     &:focus {
         border: none;
@@ -102,16 +105,15 @@ export const MessageInput = styled.input`
     }
 `
 
-
-export const SendButton = styled.button<{isEmpty:boolean}>`
-    border: none; 
-    background:none;
-    svg{
-        color:${props=>props.isEmpty ?'#8194a7' :'#0096b2'};
-        font-size:1.3rem;
-        cursor:pointer;
-        &:hover{
-            color:${props=>props.isEmpty ?'#8194a7' :'#4cb5c9'};
+export const SendButton = styled.button<{ isEmpty: boolean }>`
+    border: none;
+    background: none;
+    svg {
+        color: ${(props) => (props.isEmpty ? '#8194a7' : '#0096b2')};
+        font-size: 1.3rem;
+        cursor: pointer;
+        &:hover {
+            color: ${(props) => (props.isEmpty ? '#8194a7' : '#4cb5c9')};
         }
     }
 `

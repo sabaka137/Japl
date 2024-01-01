@@ -4,7 +4,6 @@ import { Landing } from './pages/Landing/Landing'
 import { Groups } from './pages/UserCollections/Groups'
 import SelectedGroup from './pages/CollectionPage/SelectedGroup'
 import CreateGroup from './pages/CreateCollection/CreateGroup'
-import Vocabulary from './pages/Vocabulary/Vocabulary'
 import SelectedKanji from './pages/KanjiPage/SelectedKanji'
 import Header from './pages/Header'
 import GroupQuiz from './pages/CollectionQuiz/CollectionQuiz'
@@ -115,7 +114,6 @@ function AppRoutes({ isAuthenticated }: Props) {
                             </PrivateRoute>
                         }
                     />
-                    <Route path="/vocabulary" element={<Vocabulary />} />
                     <Route
                         path="/vocabulary/:kanji"
                         element={<SelectedKanji />}

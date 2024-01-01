@@ -14,7 +14,7 @@ const RecomendationContainer = styled.div`
 const BookContainer = styled.div`
     display: flex;
     gap: 20px;
-   
+
     @media (max-width: 600px) {
         flex-direction: column;
     }
@@ -25,18 +25,18 @@ const BookItem = styled(NavLink)<{ last?: boolean }>`
     height: 160px;
     border-radius: 15px;
     box-shadow: 0 0.225rem 0.25rem #00000014;
-    text-decoration:none;
+    text-decoration: none;
     background: white;
     display: flex;
     box-sizing: border-box;
     padding: 16px;
     gap: 15px;
     height: 100%;
-    &:hover{
-    cursor:pointer;
+    &:hover {
+        cursor: pointer;
 
-    border-bottom:4px solid #a8afff;
-    };
+        border-bottom: 4px solid #a8afff;
+    }
     @media (max-width: 800px) {
         display: ${(props) => (props.last ? 'none' : 'flex')};
         width: 50%;
@@ -85,8 +85,8 @@ const BookName = styled.div`
     color: #282e3e;
     font-weight: 500;
     margin-bottom: 15px;
-    &:hover{
-        color:#423ed8;
+    &:hover {
+        color: #423ed8;
     }
 `
 
@@ -95,9 +95,8 @@ const BookDesc = styled.div`
     color: #586380;
     font-weight: bold;
 `
-type Props = {}
 
-function BookRecomendation({}: Props) {
+function BookRecomendation() {
     return (
         <RecomendationContainer>
             <Text
@@ -106,14 +105,17 @@ function BookRecomendation({}: Props) {
                 fz={'22px'}
                 fw={'500'}
             >
-              Recommended books from experts
+                Recommended books from experts
             </Text>
             <BookContainer>
-                <BookItem target='_blank' to={'https://www.google.com.ua/books/edition/みんなの日本語/G-bl2P5lRl4C?hl=ru&gbpv=1&dq=minna+no+nihongo&pg=PP7&printsec=frontcover'}>
+                <BookItem
+                    target="_blank"
+                    to={
+                        'https://www.google.com.ua/books/edition/みんなの日本語/G-bl2P5lRl4C?hl=ru&gbpv=1&dq=minna+no+nihongo&pg=PP7&printsec=frontcover'
+                    }
+                >
                     <BookImg>
-                        <img
-                            src={Minna}
-                        />
+                        <img src={Minna} />
                     </BookImg>
                     <BookText>
                         <BookName>Minna no nihongo</BookName>
@@ -127,11 +129,14 @@ function BookRecomendation({}: Props) {
                         </BookHelp>
                     </BookText>
                 </BookItem>
-                <BookItem target='_blank' to={'https://www.google.com.ua/books/edition/Kodansha_s_Furigana_Japanese_Dictionary/3aJNEAAAQBAJ?hl=ru'}>
+                <BookItem
+                    target="_blank"
+                    to={
+                        'https://www.google.com.ua/books/edition/Kodansha_s_Furigana_Japanese_Dictionary/3aJNEAAAQBAJ?hl=ru'
+                    }
+                >
                     <BookImg>
-                        <img
-                            src={Kodansha}
-                        />
+                        <img src={Kodansha} />
                     </BookImg>
                     <BookText>
                         <BookName>Kodansha’s Furigana</BookName>
@@ -145,11 +150,15 @@ function BookRecomendation({}: Props) {
                         </BookHelp>
                     </BookText>
                 </BookItem>
-                <BookItem last target='_blank' to={'https://www.google.com.ua/books/edition/とびら/eYCHzgEACAAJ?hl=ru&sa=X&ved=2ahUKEwjLvr7NiZiCAxX_FRAIHdgqDIwQiKUDegQIDRAE'}>
+                <BookItem
+                    last
+                    target="_blank"
+                    to={
+                        'https://www.google.com.ua/books/edition/とびら/eYCHzgEACAAJ?hl=ru&sa=X&ved=2ahUKEwjLvr7NiZiCAxX_FRAIHdgqDIwQiKUDegQIDRAE'
+                    }
+                >
                     <BookImg>
-                        <img
-                            src={Tobira}
-                        />
+                        <img src={Tobira} />
                     </BookImg>
                     <BookText>
                         <BookName>Tobira</BookName>

@@ -16,10 +16,10 @@ export const LoginType = styled.div`
     margin-bottom: 15px;
 `
 export const LoginErrorMessage = styled.div`
-color:#7D0B00;
-font-size:0.95rem;
-font-weight:400;
-margin-bottom:20px;
+    color: #7d0b00;
+    font-size: 0.95rem;
+    font-weight: 400;
+    margin-bottom: 20px;
 `
 export const LoginChangeType = styled.div`
     color: #006987;
@@ -54,7 +54,7 @@ export const ConfirmButton = styled.button`
     }
 `
 export const OauthButtonsContainer = styled.div`
-margin-top:20px;
+    margin-top: 20px;
 `
 
 export const OAuthButton = styled.a<{ type: string }>`
@@ -70,8 +70,8 @@ export const OAuthButton = styled.a<{ type: string }>`
         props.type === 'google'
             ? '#4285f4'
             : props.type === 'facebook'
-            ? '#3c5a9a'
-            : props.type === 'apple' && '#000000'};
+              ? '#3c5a9a'
+              : props.type === 'apple' && '#000000'};
     margin-bottom: 10px;
     &:hover {
         cursor: pointer;
@@ -79,8 +79,8 @@ export const OAuthButton = styled.a<{ type: string }>`
             props.type === 'google'
                 ? '#5794fb'
                 : props.type === 'facebook'
-                ? '#5375bd'
-                : props.type === 'apple' && '#333'};
+                  ? '#5375bd'
+                  : props.type === 'apple' && '#333'};
     }
     svg {
         position: absolute;

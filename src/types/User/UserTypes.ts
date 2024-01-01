@@ -15,7 +15,32 @@ export interface User {
     inFavorite?: boolean
     description: UserDescription
     schedule: UserSchedule[]
-    price: string
+    price: number
+}
+export interface TeacherReg {
+    _id: string
+    name: string
+    role: string
+    photo: string
+    surname: string
+    email: string
+    password?: string
+    country: string
+    lessons: UserLesson[]
+    languages: UserLanguage[]
+    certificates: UserCertificate[]
+    favoriteTeachers: string[]
+    education: UserEducation
+    inFavorite?: boolean
+    description: UserDescription
+    schedule: TeacherSchedule[]
+    price: number
+}
+
+export type TeacherSchedule = {
+    name: { full: string; short: string }
+    checked: boolean
+    time: { from: string; to: string }[]
 }
 
 export interface UserUpdate {
@@ -35,7 +60,8 @@ export type UserDescription = {
 
 type UserLesson = {
     teacherId: string
-    date: string
+    studentId: string
+    date: Date
 }
 
 type UserLanguage = {
@@ -59,5 +85,5 @@ type UserEducation = {
 export type UserSchedule = {
     name: { full: string; short: string }
     checked: boolean
-    time: any
+    time: { time: string; isAvailable: boolean; choosen?: boolean }[]
 }

@@ -1,49 +1,63 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { Text } from '../Common'
 import { AiOutlineClose } from 'react-icons/ai'
-const ModalWrapper = styled.div`
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    box-sizing: border-box;
-    padding: 15px;
-`
+import { NavLink } from 'react-router-dom'
+
 const ModalItem = styled.div`
-position:absolute;
-bottom:20px;
-right:20px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: white;
     border-left: 4px solid #58db69;
-    position: relative;
     box-shadow: 0 0.225rem 0.25rem #00000014;
     width: 365px;
     height: 55px;
     box-sizing: border-box;
+    z-index: 40;
     padding: 0px 15px 0px 10px;
+    @media (max-width: 440px) {
+        width: 250px;
+    }
 `
-type Props = {}
-
-function SuccessfullMessage({}: Props) {
+const TextLink = styled(NavLink)`
+    color: #0766ad;
+    font-size: 14px;
+    text-decoration: none;
+`
+type Props = {
+    setSuccessfull: React.Dispatch<React.SetStateAction<boolean>>
+}
+function SuccessfullMessage({ setSuccessfull }: Props) {
+    useEffect(() => {
+        setTimeout(() => {
+            setSuccessfull(false)
+        }, 4000)
+    }, [])
+    const handleClose = () => {
+        setSuccessfull(false)
+    }
     return (
-        <>
-            <ModalItem>
-                <div>
-                    <Text fw="bold">Успешно</Text>
-                    <Text opacity={0.65} fw='500' fz="14px">Можете посмотреть сообщения в чате</Text>
-                </div>
-                <AiOutlineClose color='grey' fontSize={'20px'} />
-            </ModalItem>
-        </>
+        <ModalItem>
+            <div>
+                <Text ff="Noto Sans" fw="400" color="#36e873">
+                    Message sended
+                </Text>
+                <Text opacity={0.65} fw="500" fz="14px" ff="Noto Sans">
+                    You can see it right{' '}
+                    <TextLink to={'/messages'}>here</TextLink>
+                </Text>
+            </div>
+            <AiOutlineClose
+                cursor={'pointer'}
+                onClick={() => handleClose()}
+                color="grey"
+                fontSize={'20px'}
+            />
+        </ModalItem>
     )
 }
 

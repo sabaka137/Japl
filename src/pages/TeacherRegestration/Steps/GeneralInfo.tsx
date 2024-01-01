@@ -1,8 +1,13 @@
 import { Dispatch, FC, SetStateAction, useMemo, useState } from 'react'
-import { FieldErrors, useFieldArray } from 'react-hook-form'
+import {
+    FieldErrors,
+    UseFormRegister,
+    UseFormTrigger,
+    useFieldArray,
+} from 'react-hook-form'
 import countryList from 'react-select-country-list'
 
-import { User } from '../../../types/User/UserTypes'
+import { TeacherReg, User } from '../../../types/User/UserTypes'
 
 import RegistrationInput from '../../../components/Input/RegistrationInput'
 import { Flex, Text } from '../../../components/Common'
@@ -14,11 +19,15 @@ import { LANGUAGE_LEVEL, REGISTRATION_LANGUAGE } from '../../../constants/data'
 import { LanguageLevelContiner, LanguageLevelIcon } from './style'
 
 type Props = {
-    errors: FieldErrors<{ general: User }> | undefined
-    register: any
+    errors: FieldErrors<{ general: TeacherReg }> | undefined
+    register: UseFormRegister<{
+        general: TeacherReg
+    }>
     control: any
     setStep: Dispatch<SetStateAction<number>>
-    trigger: any
+    trigger: UseFormTrigger<{
+        general: TeacherReg
+    }>
 }
 
 export const GeneralInfo: FC<Props> = ({
@@ -29,10 +38,10 @@ export const GeneralInfo: FC<Props> = ({
     trigger,
 }) => {
     //fix - change lib to constant
-    const [languages,setLanguages] = useState(REGISTRATION_LANGUAGE)
+    const [languages, setLanguages] = useState(REGISTRATION_LANGUAGE)
     const options = useMemo(() => countryList().getData(), [])
     const { fields, append, remove } = useFieldArray<{
-        name: any
+        name: string
         control: any
     }>({
         name: 'general.languages',
@@ -139,7 +148,10 @@ export const GeneralInfo: FC<Props> = ({
                             setLanguages={setLanguages}
                             options={languages}
                             formName={`general.languages.${index}.language`}
-                            errors={errors?.general?.languages && errors?.general?.languages[index]?.language}
+                            errors={
+                                errors?.general?.languages &&
+                                errors?.general?.languages[index]?.language
+                            }
                         />
 
                         <RegistrationSelect
@@ -147,7 +159,10 @@ export const GeneralInfo: FC<Props> = ({
                             control={control}
                             options={LANGUAGE_LEVEL}
                             formName={`general.languages.${index}.level`}
-                            errors={errors?.general?.languages && errors?.general?.languages[index]?.level}
+                            errors={
+                                errors?.general?.languages &&
+                                errors?.general?.languages[index]?.level
+                            }
                         />
 
                         {index >= 1 && (

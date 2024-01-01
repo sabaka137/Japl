@@ -7,17 +7,6 @@ import { setFavorite, unSetFavotite } from './TeachersSlice'
 import { Lesson } from '../../types/Lesson/LessonsType'
 import { RootState } from '../store/store'
 
-export const GetTeachersList = createAsyncThunk(
-    'teachers/GetTeachersList',
-    async () => {
-        try {
-            const response = await TeachersAPI.GetTeachers()
-            return response.data
-        } catch (e) {
-            console.log(e)
-        }
-    }
-)
 export const GetUser = createAsyncThunk(
     'teachers/GetUser',
     async (_, { dispatch }) => {
@@ -82,7 +71,9 @@ export const UpdateUser = createAsyncThunk(
     async (data: UserUpdate, { dispatch }) => {
         try {
             await UserAPI.UpdateUser(data)
-        } catch (e) {}
+        } catch (e) {
+            console.log(e)
+        }
     }
 )
 export const AddToFavorite = createAsyncThunk(
@@ -110,22 +101,19 @@ export const RemoveFromFavorite = createAsyncThunk(
     }
 )
 export const GetFavoriteTeachers = createAsyncThunk<
-any,
-any,
-{ state: RootState }
->(
-    'teachers/GetFavoriteTeachers',
-    async (id:string,{getState}) => {
-        try {
-            const response = await UserAPI.GetFavoriteTeachers()
-            const isAuthenticated = getState().user.User !== null
-            const UserFavorites = getState().user.User?.favoriteTeachers
-            return { data: response.data, UserFavorites, isAuthenticated }
-        } catch (e) {
-            console.error(e)
-        }
+    any,
+    any,
+    { state: RootState }
+>('teachers/GetFavoriteTeachers', async (id: string, { getState }) => {
+    try {
+        const response = await UserAPI.GetFavoriteTeachers()
+        const isAuthenticated = getState().user.User !== null
+        const UserFavorites = getState().user.User?.favoriteTeachers
+        return { data: response.data, UserFavorites, isAuthenticated }
+    } catch (e) {
+        console.error(e)
     }
-)
+})
 export const GetLessons = createAsyncThunk('auth/getLessons', async () => {
     try {
         const response = await TeachersAPI.GetLessons()
@@ -151,7 +139,7 @@ type GroupState = {
     favoriteTeachersStatus: 'pending' | 'done' | 'rejected'
     User: User | null
     Conversations: any
-    isConversationLoad:boolean
+    isConversationLoad: boolean
     Notifications: any
     isLoad: boolean
 }
@@ -159,7 +147,7 @@ const initialState: GroupState = {
     lessons: null,
     User: null,
     favoriteTeachers: [],
-    isConversationLoad:false,
+    isConversationLoad: false,
     favoriteTeachersStatus: 'pending',
     Conversations: null,
     Notifications: [],
@@ -176,21 +164,31 @@ const UserSlice = createSlice({
         setUser(state, action) {
             state.User = action.payload
         },
+        setLessonsLocal(state, action) {
+            state.User?.lessons.push(action.payload)
+        },
+        setUserAvatarLocal(state, action) {
+            state.User!.photo = action.payload
+        },
         setFavoriteLocal(state, action) {
             state.User!.favoriteTeachers.push(action.payload)
-            state.favoriteTeachers = state.favoriteTeachers.map((teacher: User) =>
-            teacher._id === action.payload
-                ? { ...teacher, inFavorite: true }
-                : { ...teacher }
-        )
+            state.favoriteTeachers = state.favoriteTeachers.map(
+                (teacher: User) =>
+                    teacher._id === action.payload
+                        ? { ...teacher, inFavorite: true }
+                        : { ...teacher }
+            )
         },
         unsetFavoriteLocal(state, action) {
-            state.favoriteTeachers = state.favoriteTeachers.map((teacher: User) =>
-            teacher._id === action.payload
-                ? { ...teacher, inFavorite: false }
-                : { ...teacher }
-        )
-            state.User!.favoriteTeachers = state.User!.favoriteTeachers.filter(id => id !== action.payload )
+            state.favoriteTeachers = state.favoriteTeachers.map(
+                (teacher: User) =>
+                    teacher._id === action.payload
+                        ? { ...teacher, inFavorite: false }
+                        : { ...teacher }
+            )
+            state.User!.favoriteTeachers = state.User!.favoriteTeachers.filter(
+                (id) => id !== action.payload
+            )
         },
         ClearUser(state) {
             state.User = null
@@ -216,18 +214,28 @@ const UserSlice = createSlice({
                 state.favoriteTeachersStatus = 'pending'
             })
             .addCase(GetFavoriteTeachers.fulfilled, (state, action) => {
-                state.favoriteTeachers = action.payload?.data.map((el: any) => ({
-                    ...el,
-                    isModalOpen: false,
-                    inFavorite: action.payload.isAuthenticated
-                        ? action.payload.UserFavorites.includes(el._id)
-                        : false,
-                }))
+                state.favoriteTeachers = action.payload?.data.map(
+                    (el: any) => ({
+                        ...el,
+                        isModalOpen: false,
+                        inFavorite: action.payload.isAuthenticated
+                            ? action.payload.UserFavorites.includes(el._id)
+                            : false,
+                    })
+                )
                 state.favoriteTeachersStatus = 'done'
             })
     },
 })
 
-export const { setNotifications, setUser, ClearUser,setFavoriteLocal,unsetFavoriteLocal} = UserSlice.actions
+export const {
+    setNotifications,
+    setUser,
+    ClearUser,
+    setFavoriteLocal,
+    unsetFavoriteLocal,
+    setLessonsLocal,
+    setUserAvatarLocal,
+} = UserSlice.actions
 
 export default UserSlice.reducer

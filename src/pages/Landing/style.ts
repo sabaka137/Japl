@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import LandingEffect from '../../assets/images/Landing/effect.png'
 
-
 export const LandingContainer = styled.div`
     margin: 0 auto;
     max-width: 1380px;

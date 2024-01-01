@@ -6,10 +6,15 @@ import { BsPlusLg } from 'react-icons/bs'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { RegistrationSelect } from '../../../../components/Select/RegistrationSelect'
 import { SelectRangeWrapper } from '../../style'
-function Day({ index, control, register, name, errors }) {
+type Props = {
+    control: any
+    index: number
+    errors: any
+}
+function Day({ index, control, errors }: Props) {
     const { fields, remove, append, insert } = useFieldArray({
+        name: `general.schedule.${index}.time`,
         control,
-        name: `general.schedule[${index}].time`,
     })
     const [time, setTime] = useState([
         { value: '00:00', label: '00:00' },
@@ -61,7 +66,6 @@ function Day({ index, control, register, name, errors }) {
         { value: '23:00', label: '23:00' },
         { value: '23:30', label: '23:30' },
     ])
-
     return (
         <div>
             {fields.map((item, k) => {
@@ -118,7 +122,7 @@ function Day({ index, control, register, name, errors }) {
                                         </div>
                                         <div
                                             onClick={() =>
-                                                insert(k + 1, {
+                                                append({
                                                     from: '',
                                                     to: '',
                                                 })
@@ -133,7 +137,7 @@ function Day({ index, control, register, name, errors }) {
                                 ) : (
                                     <div
                                         onClick={() =>
-                                            insert(k + 1, {
+                                            append({
                                                 from: '',
                                                 to: '',
                                             })

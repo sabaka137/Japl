@@ -34,10 +34,10 @@ const Input = styled.input<{ error: boolean }>`
         border-color: rgb(59, 179, 189);
     }
 `
-//fix-type
+
 type Props = {
     props: any
-    label: any
+    label: string
     value?: string
     errors: any
     placeholder: string

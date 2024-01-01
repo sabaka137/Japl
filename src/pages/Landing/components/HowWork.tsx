@@ -177,9 +177,8 @@ padding:16px 32px;
 display:flex;
 justify-content:center;
 `
-type Props = {}
 
-export default function HowWork({}: Props) {
+export default function HowWork() {
     return (
         <Wrapper>
             <HeaderIcon fill>
@@ -230,8 +229,8 @@ export default function HowWork({}: Props) {
                         <div>
                             <LargeText>Use our video platform</LargeText>
                             <SmallText>
-                                When it's time for a lesson, connect with your
-                                tutor using the full video platform
+                                When it&apos;s time for a lesson, connect with
+                                your tutor using the full video platform
                             </SmallText>
                         </div>
                     </TextContainer>
@@ -269,8 +268,8 @@ export default function HowWork({}: Props) {
                         100% Satisfaction Guarantee
                     </Text>
                     <Text color="#6f757b" fz="15px" align="center">
-                        If you don't like your trial lesson, we will offer you a
-                        free lesson with another tutor or a refund. money
+                        If you don&apos;t like your trial lesson, we will offer
+                        you a free lesson with another tutor or a refund. money
                     </Text>
                 </div>
             </BottomBar>

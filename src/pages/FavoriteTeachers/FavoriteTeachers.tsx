@@ -20,13 +20,12 @@ import { ChangeTitle } from '../../utils/ChangeTitle'
 import { Container } from '../TeachersList/style'
 import PageLoader from '../../components/Loader/PageLoader'
 
-type Props = {}
 type ModalPosition = {
     top: number
     left: number
     isFirst: boolean
 }
-function FavoriteTeachers({}: Props) {
+function FavoriteTeachers() {
     const [width, setWidth] = useState(window.innerWidth)
     const [modalPosition, setModalPosition] = useState<ModalPosition | null>(
         null
@@ -44,7 +43,7 @@ function FavoriteTeachers({}: Props) {
         dispatch(GetFavoriteTeachers('1'))
     }, [])
 
-    let TeacherRef = useRef<HTMLInputElement[]>([])
+    const TeacherRef = useRef<HTMLInputElement[]>([])
     const addTeachertoRef = (el: HTMLInputElement) => {
         if (el && !TeacherRef.current.includes(el)) {
             TeacherRef.current.push(el)
@@ -67,7 +66,7 @@ function FavoriteTeachers({}: Props) {
         }
     }, [width])
     function hoverHandle(teacherIndex: number) {
-        let firstTeacherTopPosition =
+        const firstTeacherTopPosition =
             TeacherRef.current[0].getBoundingClientRect().top + window.scrollY
         setCurrentTeacher(teacherIndex)
         setModalPosition({
@@ -136,7 +135,8 @@ function FavoriteTeachers({}: Props) {
                             </Text>
                             <Text1>
                                 Browse and save tutors on the Tutors page. This
-                                is where you'll find your list of saved tutors.
+                                is where you&apos;ll find your list of saved
+                                tutors.
                             </Text1>
                             <Button onClick={() => navigate('/teachers')}>
                                 Watch tutors

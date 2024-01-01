@@ -11,7 +11,7 @@ import { RegistrationButtonNext } from '../../../components/Button/RegistrationB
 import styled from 'styled-components'
 import { RegistrationButtonPrev } from '../../../components/Button/RegistrationButtonPrev'
 import { Flex, Text } from '../../../components/Common'
-import { User } from '../../../types/User/UserTypes'
+import { TeacherReg, User } from '../../../types/User/UserTypes'
 const DescriptionContainer = styled.div`
     border-bottom: 1px solid #d8dfe6;
     margin-bottom: 20px;
@@ -53,7 +53,8 @@ const ErrorMessage = styled.div`
     font-size: 14px;
 `
 const DescriptionItem = styled.div``
-const NextButton = styled.button`
+
+const NextButton = styled.button<{ active: boolean }>`
     background: #f8f8f8;
     color: ${(props) => (props.active ? '#33AAB4' : '#aeb5bc')};
     border: ${(props) =>
@@ -72,7 +73,7 @@ const DescriptionHelp = styled.div`
     font-size: 0.9rem;
     margin-bottom: 15px;
 `
-let Data = [
+const Data = [
     {
         formField: 'interests',
         header: '1. Introduce yourself',
@@ -110,14 +111,22 @@ let Data = [
 ]
 
 //fix-types
-
+type Props = {
+    watch: any
+    setStep: React.Dispatch<React.SetStateAction<number>>
+    register: any
+    errors: any
+    trigger: UseFormTrigger<{
+        general: TeacherReg
+    }>
+}
 export const ProfileDescription = ({
     watch,
     setStep,
     register,
     errors,
     trigger,
-}) => {
+}: Props) => {
     const [subStep, setSubStep] = useState(0)
     return (
         <>

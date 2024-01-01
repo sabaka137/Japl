@@ -40,13 +40,13 @@ type Props = {
     avatarSrc: string
     name: string
     setActionModal: Dispatch<SetStateAction<boolean>>
-    teacherId:string
+    teacherId: string
 }
 
 function LoginForActiontModal({ avatarSrc }: Props) {
     return (
-        <ModalWrapper onClick={(e: any) => alert(1)}>
-            <ModalItem onClick={(e: any) => alert(2)}>
+        <ModalWrapper>
+            <ModalItem>
                 <Avatar>
                     <img src={avatarSrc} />
                 </Avatar>

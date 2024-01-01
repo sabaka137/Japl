@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -15,8 +15,10 @@ import { ProfileSchedule } from './Steps/ProfileSchedule/ProfileSchedule'
 import { ProfiilePrice } from './Steps/ProfiilePrice'
 import { ProfileEducation } from './Steps/ProfileEducation'
 import ProfilePicture from './Steps/ProfilePicture/ProfilePicture'
-import DonePage from './Steps/DonePage'
-import { User } from '../../types/User/UserTypes'
+import { TeacherReg, User, UserSchedule } from '../../types/User/UserTypes'
+import { POSSIBLE_TIME_RANGE } from '../../constants/Time'
+import { generate, generateSchedule } from './GenerateTeacher'
+import { FACES } from './faces'
 
 const Container = styled.div`
     background: white;
@@ -30,8 +32,21 @@ const Container = styled.div`
         width: 100%;
     }
 `
+async function toDataURL(url: any, callback: any) {
+    const xhr = new XMLHttpRequest()
+    xhr.onload = function () {
+        const reader = new FileReader()
+        reader.onloadend = function () {
+            callback(reader.result)
+        }
+        reader.readAsDataURL(xhr.response)
+    }
+    xhr.open('GET', url)
+    xhr.responseType = 'blob'
+    xhr.send()
+}
 function TeacherRegistration() {
-    const [step, setStep] = useState(6)
+    const [step, setStep] = useState(1)
     const {
         register,
         formState: { errors },
@@ -40,7 +55,7 @@ function TeacherRegistration() {
         setValue,
         trigger,
         watch,
-    } = useForm<{ general: User }>({
+    } = useForm<{ general: TeacherReg }>({
         mode: 'onChange',
         defaultValues: {
             general: {
@@ -121,129 +136,123 @@ function TeacherRegistration() {
                         time: [{ from: '09:00', to: '17:00' }],
                     },
                 ],
-                price: '',
+                price: 0,
             },
         },
     })
     const dispatch = useAppDispatch()
-
-    const onSubmit: SubmitHandler<{ general: User }> = (data) => {
-        let gmt = new Date().getTimezoneOffset() / 60
+    const onSubmit: SubmitHandler<{ general: TeacherReg }> = (data) => {
+        const gmt = new Date().getTimezoneOffset() / 60
+        const convertedSchedule: UserSchedule[] = []
+        //TODO looks terrible, rewrite
         data.general.schedule.forEach((el) => {
-            let timeArr = [
-                '01:00',
-                '01:30',
-                '02:00',
-                '02:30',
-                '03:00',
-                '03:30',
-                '04:00',
-                '04:30',
-                '05:00',
-                '05:30',
-                '06:00',
-                '06:30',
-                '07:00',
-                '07:30',
-                '08:00',
-                '08:30',
-                '09:00',
-                '09:30',
-                '10:00',
-                '10:30',
-                '11:00',
-                '11:30',
-                '12:00',
-                '12:30',
-                '13:00',
-                '13:30',
-                '14:00',
-                '14:30',
-                '15:00',
-                '15:30',
-                '16:00',
-                '16:30',
-                '17:00',
-                '17:30',
-                '18:00',
-                '18:30',
-                '19:00',
-                '19:30',
-                '20:00',
-                '20:30',
-                '21:00',
-                '21:30',
-                '22:00',
-                '22:30',
-                '23:00',
-                '23:30',
-                '00:00',
-                '00:30',
-            ]
-            //fix-tye
-            let test: any = []
-            el.time.forEach((time: any) => {
-                let firstIndex = timeArr.indexOf(time.from) + gmt * 2
-                let lastIndex = timeArr.indexOf(time.to) + gmt * 2
-                if (firstIndex < timeArr.length && lastIndex < timeArr.length) {
+            const UTCTimeArray: string[] = []
+            el.time.forEach((time) => {
+                const firstIndex =
+                    POSSIBLE_TIME_RANGE.indexOf(time.from) + gmt * 2
+                const lastIndex = POSSIBLE_TIME_RANGE.indexOf(time.to) + gmt * 2
+                if (
+                    firstIndex < POSSIBLE_TIME_RANGE.length &&
+                    lastIndex < POSSIBLE_TIME_RANGE.length
+                ) {
                     if (firstIndex < 0 && lastIndex < 0) {
-                        test.push(
-                            ...timeArr.slice(
-                                timeArr.length - Math.abs(firstIndex),
-                                timeArr.length - Math.abs(lastIndex) + 1
+                        UTCTimeArray.push(
+                            ...POSSIBLE_TIME_RANGE.slice(
+                                POSSIBLE_TIME_RANGE.length -
+                                    Math.abs(firstIndex),
+                                POSSIBLE_TIME_RANGE.length -
+                                    Math.abs(lastIndex) +
+                                    1
                             )
                         )
                     }
                     if (firstIndex < 0 && lastIndex > 0) {
-                        let res = []
+                        const res = []
                         res.push(
-                            ...timeArr.slice(
-                                timeArr.length - Math.abs(firstIndex),
-                                timeArr.length
+                            ...POSSIBLE_TIME_RANGE.slice(
+                                POSSIBLE_TIME_RANGE.length -
+                                    Math.abs(firstIndex),
+                                POSSIBLE_TIME_RANGE.length
                             )
                         )
-                        res.push(...timeArr.slice(0, lastIndex + 1))
-                        test.push(...res)
+                        res.push(...POSSIBLE_TIME_RANGE.slice(0, lastIndex + 1))
+                        UTCTimeArray.push(...res)
                     }
                     if (firstIndex > 0 && lastIndex > 0) {
-                        test.push(...timeArr.slice(firstIndex, lastIndex + 1))
+                        UTCTimeArray.push(
+                            ...POSSIBLE_TIME_RANGE.slice(
+                                firstIndex,
+                                lastIndex + 1
+                            )
+                        )
                     }
                 } else {
                     if (
-                        firstIndex > timeArr.length &&
-                        lastIndex > timeArr.length
+                        firstIndex > POSSIBLE_TIME_RANGE.length &&
+                        lastIndex > POSSIBLE_TIME_RANGE.length
                     ) {
-                        test.push(
-                            ...timeArr.slice(
-                                firstIndex - timeArr.length,
-                                lastIndex - timeArr.length + 1
+                        UTCTimeArray.push(
+                            ...POSSIBLE_TIME_RANGE.slice(
+                                firstIndex - POSSIBLE_TIME_RANGE.length,
+                                lastIndex - POSSIBLE_TIME_RANGE.length + 1
                             )
                         )
                     }
                     if (
-                        firstIndex < timeArr.length &&
-                        lastIndex > timeArr.length
+                        firstIndex < POSSIBLE_TIME_RANGE.length &&
+                        lastIndex > POSSIBLE_TIME_RANGE.length
                     ) {
-                        let res = []
-                        res.push(...timeArr.slice(firstIndex, timeArr.length))
+                        const res = []
                         res.push(
-                            ...timeArr.slice(0, lastIndex - timeArr.length + 1)
+                            ...POSSIBLE_TIME_RANGE.slice(
+                                firstIndex,
+                                POSSIBLE_TIME_RANGE.length
+                            )
                         )
-                        test.push(...res)
+                        res.push(
+                            ...POSSIBLE_TIME_RANGE.slice(
+                                0,
+                                lastIndex - POSSIBLE_TIME_RANGE.length + 1
+                            )
+                        )
+                        UTCTimeArray.push(...res)
                     }
                 }
             })
-            el.time = []
-            Array.from(new Set(test)).forEach((te) => {
-                el.time.push({ time: te, isAvailable: true })
-            })
+            const timeArray: { time: string; isAvailable: boolean }[] = []
+
+            if (el.checked) {
+                Array.from(new Set(UTCTimeArray)).forEach((temp) => {
+                    timeArray.push({ time: temp, isAvailable: true })
+                })
+            }
+
+            convertedSchedule.push({ ...el, time: timeArray })
         })
-        dispatch(AuthSliceAsyncActions.Registration({ ...data.general })).then(res=>{
+        dispatch(
+            AuthSliceAsyncActions.Registration({
+                ...data.general,
+                schedule: convertedSchedule,
+            })
+        ).then((res) => {
             navigate('/groups')
         })
-
     }
     const navigate = useNavigate()
+
+    function createCouple() {
+        for (let i = 0; i < 400; i++) {
+            createTeacher()
+        }
+    }
+    function createTeacher() {
+        toDataURL(
+            FACES[Math.floor(Math.random() * FACES.length)],
+            function (dataUrl: any) {
+                dispatch(AuthSliceAsyncActions.Registration(generate(dataUrl)))
+            }
+        )
+    }
     function StepNavigate(step: number) {
         switch (step) {
             case 1:
@@ -271,7 +280,7 @@ function TeacherRegistration() {
                         setStep={setStep}
                         control={control}
                         trigger={trigger}
-                         setValue={setValue}
+                        setValue={setValue}
                         errors={errors}
                         register={register}
                     />
@@ -315,8 +324,6 @@ function TeacherRegistration() {
                         register={register}
                     />
                 )
-            case 8:
-                return <DonePage />
         }
     }
     return (
@@ -334,6 +341,7 @@ function TeacherRegistration() {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {StepNavigate(step)}
                     </form>
+                    <div onClick={() => createCouple()}>generate one</div>
                 </Container>
             </ContentContainer>
         </div>

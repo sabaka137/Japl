@@ -120,15 +120,11 @@ const Button = styled(NavLink)`
     }
 `
 
-type Props = {}
-
-function StudentBlock({}: Props) {
+function StudentBlock() {
     return (
         <Wrapper>
             <ImgContainer>
-                <img
-                    src={Student}
-                />
+                <img src={Student} />
             </ImgContainer>
             <Separator>
                 <SeparatorIcon>
@@ -138,11 +134,11 @@ function StudentBlock({}: Props) {
             <Content>
                 <HeaderTextContainer>
                     <TextHeader>
-                    Hundreds of thousands of students join us every month
+                        Hundreds of thousands of students join us every month
                     </TextHeader>
                     <TextSub>
-                    ...and achieve their learning objectives. With experienced
-                        tutors, your goals will be closer than ever!
+                        ...and achieve their learning objectives. With
+                        experienced tutors, your goals will be closer than ever!
                     </TextSub>
                     <Button to={'/login'}>Start training</Button>
                 </HeaderTextContainer>

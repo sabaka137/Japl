@@ -43,12 +43,9 @@ export const ExampleCard = ({ exampleItem }: Props) => {
                 </Text>
             </div>
             <Flex gap={'10px'}>
-                <Flex align="center" onClick={() => setModal(true)}>
-                    <BiBookAdd color="#282E3E" />{' '}
-                </Flex>
                 <Flex
                     align="center"
-                    style={{cursor:'pointer'}}
+                    style={{ cursor: 'pointer' }}
                     onClick={() => (setPlaying(true), audio.play())}
                 >
                     {playing ? (
@@ -58,11 +55,6 @@ export const ExampleCard = ({ exampleItem }: Props) => {
                     )}
                 </Flex>
             </Flex>
-            {modal &&
-                createPortal(
-                    <AddKanjiModal example={exampleItem} />,
-                    document.body
-                )}
         </ExampleContainer>
     )
 }

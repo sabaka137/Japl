@@ -17,6 +17,8 @@ import {
     RemoveFromFavorite,
 } from '../../../redux/reducers/UserSlice'
 import TutorPreview from '../../../assets/images/TutorPreview.jpg'
+import SuccessfullMessage from '../../../components/Modal/SuccessfullMessage'
+import SuccessfullBookLesson from '../../../components/Modal/SuccessfullBookLesson'
 const Wrapper = styled.div`
     position: absolute;
     width: 340px;
@@ -35,12 +37,10 @@ const ContentContainer = styled.div`
 const Video = styled.div`
     width: 100%;
     height: 190px;
-        box-shadow: 0 0.625rem 0.25rem #00000014;
-    
+    box-shadow: 0 0.625rem 0.25rem #00000014;
 
     img {
         width: 100%;
-     
     }
 `
 const NewUserLabel = styled.div`
@@ -74,6 +74,8 @@ type Props = {
 }
 function Sidebar({ teacher, schedule }: Props) {
     const [messageModal, setMessageModal] = useState(false)
+    const [successfulMessage, setSuccessfull] = useState(false)
+    const [successfulLesson, setSuccessfullLesson] = useState(false)
     const [scheduleModal, setScheduleModal] = useState(false)
     const User = useAppSelector((state) => state.user.User)
     const dispatch = useAppDispatch()
@@ -97,9 +99,7 @@ function Sidebar({ teacher, schedule }: Props) {
     function addToFavorite() {
         if (User !== null) {
             dispatch(AddToFavorite(teacher!._id))
-             
         } else {
-          
             navigate('/login')
         }
     }
@@ -110,7 +110,7 @@ function Sidebar({ teacher, schedule }: Props) {
     return (
         <Wrapper>
             <Video>
-                <img src={TutorPreview} alt='sidebar-preview'/>
+                <img src={TutorPreview} alt="sidebar-preview" />
             </Video>
 
             <ContentContainer>
@@ -123,7 +123,7 @@ function Sidebar({ teacher, schedule }: Props) {
                         >
                             <div>
                                 <NewUserLabel>
-                                Recently on the platform
+                                    Recently on the platform
                                 </NewUserLabel>
                             </div>
                         </Flex>
@@ -150,9 +150,13 @@ function Sidebar({ teacher, schedule }: Props) {
                         <BiMessageRounded />
                         Send a message
                     </TeacherPageButton>
-                    <TeacherPageButton onClick={() => teacher?.inFavorite
-                                    ? removeFromFavorite()
-                                    : addToFavorite()}>
+                    <TeacherPageButton
+                        onClick={() =>
+                            teacher?.inFavorite
+                                ? removeFromFavorite()
+                                : addToFavorite()
+                        }
+                    >
                         {teacher?.inFavorite ? <BiSolidHeart /> : <BiHeart />}
                         {teacher?.inFavorite ? 'Saved' : 'Save to list'}
                     </TeacherPageButton>
@@ -161,6 +165,7 @@ function Sidebar({ teacher, schedule }: Props) {
             {messageModal &&
                 createPortal(
                     <SendMessageModal
+                        setSuccessfull={setSuccessfull}
                         avatarSrc={teacher!.photo}
                         name={teacher!.name}
                         setModalOpen={setMessageModal}
@@ -168,9 +173,23 @@ function Sidebar({ teacher, schedule }: Props) {
                     />,
                     document.body
                 )}
+            {successfulMessage &&
+                createPortal(
+                    <SuccessfullMessage setSuccessfull={setSuccessfull} />,
+                    document.body
+                )}
+            {successfulLesson &&
+                createPortal(
+                    <SuccessfullBookLesson
+                        setSuccessfullLesson={setSuccessfullLesson}
+                    />,
+                    document.body
+                )}
             {scheduleModal &&
                 createPortal(
                     <BookLessonModal
+                        setSuccessfullLesson={setSuccessfullLesson}
+                        teacherId={teacher!._id}
                         avatarSrc={teacher!.photo}
                         setBookModal={setScheduleModal}
                         schedule={schedule}

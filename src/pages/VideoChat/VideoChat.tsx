@@ -23,8 +23,8 @@ import CallSettings from './components/CallSettings'
 type PropsType = VideoHTMLAttributes<HTMLVideoElement> & {
     srcObject: MediaStream
 }
-type Props = {}
-function VideoChat({}: Props) {
+
+function VideoChat() {
     const [stream, setStream] = useState<any>()
     const [viewModal, setViewModal] = useState(false)
     const [call, setCall] = useState<any>()
@@ -53,7 +53,6 @@ function VideoChat({}: Props) {
             console.log('звонок пришеa')
             setReceivingCall(true)
             setCall(data)
-            
         })
         socket.on('changing-view', (view) => {
             setCurrentView(view)
@@ -138,7 +137,6 @@ function VideoChat({}: Props) {
             console.log('answer', stream)
             if (remoteVideo.current) {
                 remoteVideo.current.srcObject = stream
-                
             }
         })
         peer.on('close', () => {
@@ -170,10 +168,10 @@ function VideoChat({}: Props) {
         setCurrentView(view)
     }
 
-    function LoadFile(e: any) {
-        let file = e.target.files[0]
-
-        let reader = new FileReader()
+    function LoadFile(e: React.ChangeEvent<HTMLInputElement>) {
+        if (e.target.files === null) return
+        const file = e.target.files[0]
+        const reader = new FileReader()
         reader.readAsDataURL(file)
         reader.onload = function (e) {
             console.log(reader.result)
@@ -240,7 +238,9 @@ function VideoChat({}: Props) {
                     )}
                 </PDFSide>
             )}
-            <div onClick={()=>console.log(remoteVideo.current?.srcObject)}>123123</div>
+            <div onClick={() => console.log(remoteVideo.current?.srcObject)}>
+                123123
+            </div>
             <CallSettings setViewModal={setViewModal} />
             {viewModal && (
                 <ChangeViewWrapper>

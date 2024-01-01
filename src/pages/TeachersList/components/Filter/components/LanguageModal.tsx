@@ -15,25 +15,30 @@ const Wrapper = styled.div`
     border-radius: 15px;
     z-index: 3;
     left: 0;
+    box-shadow: 0 0 0 2px #dcdce5;
 `
 const Item = styled.div<{ isChecked: boolean }>`
     display: flex;
     width: 100%;
     align-items: center;
+    justify-content: space-between;
     cursor: pointer;
     box-sizing: border-box;
-    padding: 7px 15px;
+    padding: 12px 15px;
+    border-bottom: 1px solid #dcdce5;
     input {
         display: none;
     }
     &:hover {
-        background: #fafafa;
+        background: #f4f4f8;
     }
     span {
-        color: #384047;
+        color: #121117;
         cursor: pointer;
-
-        padding-left: 30px;
+        font-family: Noto Sans;
+        font-weight: 400;
+        font-size: 16px;
+        padding-left: 35px;
         position: relative;
         &:hover {
             &:before {
@@ -46,8 +51,8 @@ const Item = styled.div<{ isChecked: boolean }>`
                 top: 1px;
                 width: 18px;
                 height: 18px;
-                border-radius: 2px;
-                border: 1px solid #6cb1b4;
+                border-radius: 3px;
+                border: 2px solid #6cb1b4;
                 background-color: rgb(255, 255, 255);
                 transition: all 50ms ease;
             }
@@ -62,17 +67,24 @@ const Item = styled.div<{ isChecked: boolean }>`
             top: 1px;
             width: 18px;
             height: 18px;
-            border-radius: 2px;
-            border: 1px solid rgb(218, 223, 225);
+            border-radius: 3px;
+            border: 2px solid rgb(218, 223, 225);
             background-color: rgb(255, 255, 255);
-            transition: border-color 0s ease 0s, background-color 0s ease 0s,
+            transition:
+                border-color 0s ease 0s,
+                background-color 0s ease 0s,
                 all 50ms ease 0s;
         }
     }
 `
 const ContentWrapper = styled.div`
-    height: 304px;
+    height: 324px;
     overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
 `
 const CheckMark = styled.div<{ isChecked: boolean }>`
     position: absolute;
@@ -82,21 +94,23 @@ const CheckMark = styled.div<{ isChecked: boolean }>`
 `
 const InputWrapper = styled.div`
     box-sizing: border-box;
-    padding: 15px;
+    padding: 15px 15px 10px 15px;
 `
 const Input = styled.input`
-    border: 1px solid #dadfe1;
-    border-radius: 2px;
+    border: 2px solid #dcdce5;
+    border-radius: 5px;
     box-shadow: none;
     color: #384047;
     display: block;
     font-size: 14px;
     font-weight: 400;
     height: 38px;
+    font-family: Inter;
     line-height: 1;
     width: 100%;
+    height: 40px;
     box-sizing: border-box;
-    padding: 0 12px;
+    padding: 0px 12px;
     &:before {
         content: '1111';
         color: black;
@@ -109,6 +123,7 @@ const Input = styled.input`
         box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.08);
     }
 `
+
 type Props = {
     setFilters: React.Dispatch<React.SetStateAction<IFilter>>
     languages: {
@@ -154,15 +169,15 @@ function LanguageModal({ setFilters, languages }: Props) {
                             onClick={() => changeHandler(c.id)}
                             isChecked={c.checked}
                         >
-                            <div>
-                                <input type="checkbox" />
-                            </div>
                             <span>
-                                {c.language.label}
+                                <div> {c.language.label}</div>
                                 <CheckMark isChecked={c.checked}>
                                     <BsCheckLg />
                                 </CheckMark>
                             </span>
+                            <div>
+                                <input type="checkbox" />
+                            </div>
                         </Item>
                     ))}
             </ContentWrapper>

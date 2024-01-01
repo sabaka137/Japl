@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Controller } from 'react-hook-form'
+import { Control, Controller, FieldErrors } from 'react-hook-form'
 import Select from 'react-select'
 import { Dispatch } from 'redux'
 import styled from 'styled-components'
+import { TeacherReg } from '../../types/User/UserTypes'
 
-const SelectWrapper = styled.div<{ isRange: boolean }>`
+const SelectWrapper = styled.div<{ isRange: boolean | undefined }>`
     width: ${(props) => (props.isRange ? '100' : '65')}%;
     @media (max-width: 720px) {
         width: 100%;
@@ -25,19 +26,25 @@ const Label = styled.label`
     font-size: 0.9rem;
 `
 //TODO fix-type
+type SelectValue = {
+    value: string
+    label: string
+}
 type Props = {
-    control?: any
-    options?: any
+    control?: Control<{
+        general: TeacherReg
+    }>
+    options: SelectValue[]
     formName?: any
     errors?: any
-    label?: any
-    isRange?: any
+    label?: string
+    isRange?: boolean
     props?: any
     mustBeUnique?: boolean
     firstRange?: boolean
     secondRange?: boolean
-    setFirstNumber?: any
-    setSecondNumber?: any
+    setFirstNumber?: React.Dispatch<React.SetStateAction<number>>
+    setSecondNumber?: React.Dispatch<React.SetStateAction<number>>
     setLanguages?: React.Dispatch<
         React.SetStateAction<
             {
@@ -63,12 +70,12 @@ export const RegistrationSelect = ({
     setSecondNumber,
 }: Props) => {
     const [currentValue, setCurrentValue] = useState('')
-    function handleChange(val: any) {
-        setCurrentValue(val.value)
+    function handleChange(value: string) {
+        setCurrentValue(value)
         if (mustBeUnique && setLanguages) {
             setLanguages((prev) =>
                 prev.map((item) =>
-                    item.value === val.value
+                    item.value === value
                         ? { ...item, isAvailable: false }
                         : {
                               ...item,
@@ -84,12 +91,12 @@ export const RegistrationSelect = ({
             )
         }
     }
-    function pickYear(year: number) {
-        if (firstRange) {
-            setFirstNumber(year)
+    function pickYear(year: string) {
+        if (firstRange && setFirstNumber) {
+            setFirstNumber(Number(year))
         }
-        if (secondRange) {
-            setSecondNumber(year)
+        if (secondRange && setSecondNumber) {
+            setSecondNumber(Number(year))
         }
     }
 
@@ -100,7 +107,7 @@ export const RegistrationSelect = ({
                 <Controller
                     rules={{ required: 'Required field' }}
                     control={control}
-                    defaultValue={options.map((c: any) => c.value)}
+                    defaultValue={options.map((c: SelectValue) => c.value)}
                     name={formName}
                     render={({ field: { onChange, value, ref } }) => (
                         <Select
@@ -113,13 +120,13 @@ export const RegistrationSelect = ({
                                 }),
                             }}
                             maxMenuHeight={200}
-                            value={options.filter((c: any) =>
+                            value={options.filter((c: SelectValue) =>
                                 value.includes(c.value)
                             )}
                             onChange={(val) => (
-                                onChange(val.value),
-                                pickYear(val.value),
-                                handleChange(val)
+                                onChange(val?.value),
+                                pickYear(val!.value),
+                                handleChange(val!.value)
                             )}
                             options={
                                 mustBeUnique

@@ -65,7 +65,7 @@ export const FlashcardGame = ({ collection }: Props) => {
                 </Text>
                 <RightArrow
                     disabled={index - 1 < 0}
-                    isDisabled={index + 1 > collection!?.termins.length}
+                    isDisabled={index + 1 > collection!.termins.length}
                     onClick={() =>
                         typeof collection != 'undefined' &&
                         index + 1 <= collection!.termins.length &&

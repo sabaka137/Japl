@@ -7,7 +7,7 @@ import { FILTER_DAYS, FILTER_HOURS } from '../../../../../constants/data'
 const Wrapper = styled.div`
     width: 120%;
     margin-left: -20%;
-    min-width:340px;
+    min-width: 340px;
     background: white;
     position: absolute;
     top: 100%;
@@ -17,11 +17,11 @@ const Wrapper = styled.div`
     left: 0;
     box-sizing: border-box;
     padding: 15px 15px 20px 15px;
-    @media(max-width:1080px){
-        margin-left:-40%;
+    @media (max-width: 1080px) {
+        margin-left: -40%;
     }
-    @media(max-width:960px){
-        margin-left:-70%;
+    @media (max-width: 960px) {
+        margin-left: -70%;
     }
 `
 const TimeContainer = styled.div`
@@ -87,7 +87,6 @@ type Props = {
     choosenDays: string[]
 }
 
-
 function ScheduleModal({ setFilters, choosenSchedule, choosenDays }: Props) {
     const [schedule, setSchedule] = useState(FILTER_HOURS)
     const [days, setDays] = useState(FILTER_DAYS)
@@ -112,13 +111,13 @@ function ScheduleModal({ setFilters, choosenSchedule, choosenDays }: Props) {
 
     useEffect(() => {
         if (isDirty) {
-            let finalSchedule: string[] = []
+            const finalSchedule: string[] = []
             schedule.forEach((s) => {
                 if (s.checked) {
                     finalSchedule.push(s.time.hours)
                 }
             })
-            let finalDays: string[] = []
+            const finalDays: string[] = []
             days.forEach((d) => {
                 if (d.checked) {
                     finalDays.push(d.day.code)
@@ -156,9 +155,10 @@ function ScheduleModal({ setFilters, choosenSchedule, choosenDays }: Props) {
                 color="#090F19"
                 fw={'500'}
                 fz={'14px'}
+                ff="Noto Sans"
                 margin={'0px 0px 7px 0px'}
             >
-              Time of day (in your time zone)
+                Time of day (in your time zone)
             </Text>
             <TimeContainer>
                 {schedule.map((el) => (

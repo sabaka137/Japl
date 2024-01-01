@@ -7,6 +7,7 @@ import {
     Button,
     LessonsContainer,
     LessonsImage,
+    LessonsWrapper,
     Test,
     Text,
     Text1,
@@ -27,18 +28,14 @@ function UserLessons() {
         }
     }, [lessons, dispatch])
     return (
-        <div style={{ background: '#edeff0', height: window.innerHeight }}>
+        <div
+            style={{
+                background: '#edeff0',
+                minHeight: window.innerHeight,
+            }}
+        >
             <SettingsNavbar />
-            <Container
-                style={{
-                    minHeight: '400px',
-                    marginTop: '30px',
-                    boxSizing: 'border-box',
-                    padding: '32px',
-                }}
-                w={50}
-                m={'0 auto'}
-            >
+            <LessonsWrapper>
                 {lessons?.length ? (
                     <Flex direction="column" gap={'15px'}>
                         {lessons?.map((lesson, index) => (
@@ -65,7 +62,7 @@ function UserLessons() {
                         </Test>
                     </LessonsContainer>
                 )}
-            </Container>
+            </LessonsWrapper>
         </div>
     )
 }

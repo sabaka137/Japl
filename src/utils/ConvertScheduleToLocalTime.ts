@@ -4,12 +4,11 @@ export const ConvertScheduleToLocalTime = (
     schedule: UserSchedule[],
     dateInfo?: { dayName: string; time: string }
 ) => {
-    let gmt = new Date().getTimezoneOffset() / 60
+    const gmt = new Date().getTimezoneOffset() / 60
     const date = new Date()
-    console.log(dateInfo)
-    let res: any[] = []
+    const res: UserSchedule[] = []
     for (let i = date.getDay() - 1; i <= 6; i++) {
-        let timeArr: any[] = []
+        const timeArr: any = []
         schedule[i]?.time.forEach((time: any) => {
             timeArr.push({
                 time: new Date(
@@ -46,7 +45,7 @@ export const ConvertScheduleToLocalTime = (
         res.push({ ...schedule[i], time: timeArr })
     }
     for (let i = 0; i <= date.getDay() - 2; i++) {
-        let timeArr: any[] = []
+        const timeArr: any[] = []
         schedule[i].time.forEach((time: any) => {
             timeArr.push({
                 time: new Date(

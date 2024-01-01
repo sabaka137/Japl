@@ -66,8 +66,9 @@ function HeaderSearch({ isAuth }: Props) {
                             <ResultLoader>Sorry, nothing found.</ResultLoader>
                         ) : (
                             <>
-                                {searchResults?.map((el) => (
+                                {searchResults?.map((el, index) => (
                                     <ResultItem
+                                        key={index}
                                         to={`/vocabulary/${el.kanji.character}`}
                                         onClick={() => (
                                             setValue(''), setPressed(false)

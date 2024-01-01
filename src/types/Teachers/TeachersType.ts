@@ -12,6 +12,7 @@ export interface IFilter {
     }[]
     time: string[]
     days: string[]
+    currentPage?: number
     isNative: boolean
     sortBy: { value: string; label: string }
     searchBy: string
@@ -19,12 +20,20 @@ export interface IFilter {
 
 export interface FilterRequestOptions {
     languages: string | null
-    minPrice:number,
-    maxPrice:number,
+    minPrice: number
+    page: number
+    maxPrice: number
     countries: string | null
     time: string | null
     days: string | null
     isNative: boolean
-    sortBy: string | null
-    searchBy: string | null
+    sort: string | null
+    search: string | null
+}
+
+export interface ScheduleStats {
+    morning: number
+    day: number
+    evening: number
+    night: number
 }

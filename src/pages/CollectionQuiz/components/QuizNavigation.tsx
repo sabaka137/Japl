@@ -43,6 +43,7 @@ export const QuizNavigation = ({ ResultNav, quizMode }: Props) => {
                 <ResultNavigation>
                     {ResultNav.map((el: ResultNavigationItem) => (
                         <Item
+                            key={el.order}
                             isCorrect={el.isCorrect}
                             onClick={() =>
                                 window.scrollTo({
@@ -72,8 +73,9 @@ export const QuizNavigation = ({ ResultNav, quizMode }: Props) => {
                             <AiOutlineClose />
                         </Close>
                         <Text>Cписок вопросов</Text>
-                        {ResultNav.map((el: ResultNavigationItem) => (
+                        {ResultNav.map((el: ResultNavigationItem, index) => (
                             <Item
+                                key={index}
                                 isCorrect={el.isCorrect}
                                 onClick={() => handleClick(el)}
                             >

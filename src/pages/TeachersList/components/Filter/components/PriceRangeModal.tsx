@@ -7,12 +7,13 @@ const Wrapper = styled.div`
     position: absolute;
     top: 100%;
     margin-top: 10px;
-    border-radius: 15px;
+    border-radius: 7px;
     z-index: 3;
     left: 0;
     height: 100px;
     box-sizing: border-box;
     padding: 20px;
+    box-shadow: 0 0 0 2px #dcdce5;
 `
 const RangeSlider = styled.div`
     height: 5px;
@@ -21,6 +22,11 @@ const RangeSlider = styled.div`
     position: relative;
 `
 const RangeValues = styled.div`
+    width: 100%;
+    display: flex;
+    font-family: Inter;
+    font-weight: 500;
+    justify-content: center;
     margin-bottom: 20px;
     font-size: 1.3rem;
 `
@@ -64,10 +70,10 @@ const RangeInput = styled.input`
 
 type Props = {
     setFilters: React.Dispatch<React.SetStateAction<IFilter>>
-    price:{min:number,max:number}
+    price: { min: number; max: number }
 }
 
-function PriceRangeModal({ setFilters,price}: Props) {
+function PriceRangeModal({ setFilters, price }: Props) {
     const [minValue, setMinValue] = useState<any>(price.min)
     const [maxValue, setMaxValue] = useState<any>(price.max)
     const minRef = useRef<HTMLInputElement | null>(null)
@@ -75,9 +81,9 @@ function PriceRangeModal({ setFilters,price}: Props) {
     const progressBarRef = useRef<HTMLDivElement>(null)
     useEffect(() => {
         if (progressBarRef.current !== null) {
-            progressBarRef.current.style.left = (minValue / 35) * 100 + '%'
+            progressBarRef.current.style.left = (minValue / 50) * 100 + '%'
             progressBarRef.current.style.right =
-                100 - (maxValue / 35) * 100 + '%'
+                100 - (maxValue / 50) * 100 + '%'
         }
     }, [minValue, maxValue])
 
@@ -101,7 +107,7 @@ function PriceRangeModal({ setFilters,price}: Props) {
                         ref={minRef}
                         value={minValue}
                         min={1}
-                        max={35}
+                        max={50}
                         step={1}
                         onChange={(e) => setMinValue(e.target.value)}
                         type="range"
@@ -111,7 +117,7 @@ function PriceRangeModal({ setFilters,price}: Props) {
                         ref={maxRef}
                         value={maxValue}
                         min={1}
-                        max={35}
+                        max={50}
                         step={1}
                         onChange={(e) => setMaxValue(e.target.value)}
                         type="range"

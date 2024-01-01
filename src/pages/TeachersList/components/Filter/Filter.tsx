@@ -13,7 +13,11 @@ import LanguageModal from './components/LanguageModal'
 import NativeModal from './components/NativeModal'
 import SortByFilter from '../MobileFilter/components/SortByFilter'
 import SortModal from './components/SortModal'
-import { AiFillCheckCircle, AiFillCloseCircle, AiOutlineSearch } from 'react-icons/ai'
+import {
+    AiFillCheckCircle,
+    AiFillCloseCircle,
+    AiOutlineSearch,
+} from 'react-icons/ai'
 import { BsArrowRight } from 'react-icons/bs'
 import { LANGUAGES, COUNTRIES } from '../../../../constants/data'
 import { useAppDispatch } from '../../../../hooks/hook'
@@ -147,6 +151,8 @@ const ItemValue = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: Noto Sans;
+    font-size: 15px;
 `
 const ValueText = styled.div`
     display: inline-block;
@@ -154,16 +160,20 @@ const ValueText = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-family: Noto Sans;
+    font-size: 15px;
 `
 const ValueContent = styled.div`
     display: flex;
     align-items: center;
     max-width: 100%;
     overflow: hidden;
+    font-weight: 500;
+    font-family: Noto Sans;
 `
 const ItemIcon = styled.div`
-display:flex;
-align-items:center;
+    display: flex;
+    align-items: center;
     svg {
         font-size: 1.2rem;
         color: #6f757b;
@@ -173,45 +183,54 @@ const BottomBarItem = styled.div`
     background-color: #fff;
     border-radius: 12px;
     padding: 10px 16px;
-    max-height: 25px;
+    height: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
     color: #090f19;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 14px;
+    font-family: Noto Sans;
     gap: 7px;
 
-   
     &:hover {
         box-shadow: 0 4px 32px rgba(0, 0, 0, 0.12);
         cursor: pointer;
     }
 `
 
+const BottomSearch = styled(BottomBarItem)`
+    padding: 0px 0px 0px 12px;
+    min-height: 40px;
+`
+
 const BottomBarInput = styled.input`
     width: 100%;
-    height: 100%;
+    height: auto;
     outline: none;
     border: none;
 `
 const InputWrapper = styled.div`
-    width: 100%;
+    width: 200px;
     height: 100%;
-    display:flex;
-    align-items:center;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 `
 
 const InputConfirmButton = styled.div`
- 
+    height: 100%;
+    width: 65px;
     display: flex;
     justify-content: center;
+    font-size: 19px;
     align-items: center;
     border-radius: 7px 12px 12px 7px;
-    
     height: 100%;
-  
+    &:hover {
+        background: rgba(18, 17, 23, 0.06);
+    }
 `
 
 const ModalWrapper = styled.div`
@@ -223,54 +242,17 @@ const ModalWrapper = styled.div`
     top: 0;
     background: rgba(0, 0, 0, 0.3);
 `
-
-type Props = {}
-
-function Filter({}: Props) {
+type Props = {
+    filters: IFilter
+    setFilters: React.Dispatch<React.SetStateAction<IFilter>>
+}
+function Filter({ filters, setFilters }: Props) {
     const [currentModal, setCurrentModal] = useState<any>(null)
     const [currentModalRef, setCurrentModalRef] = useState<any>(null)
     const [mobileModal, setMobileModal] = useState(false)
     const [searchValue, setSearchValue] = useState('')
     const [isWrapperFixed, setWrapperFixed] = useState(false)
-
-    const [filters, setFilters] = useState<IFilter>({
-        languages: LANGUAGES,
-        price: { min: 1, max: 35 },
-        countries: COUNTRIES,
-        time: [],
-        days: [],
-        isNative: false,
-        sortBy: { label: 'Our recommendations', value: '' },
-        searchBy: '',
-    })
-    const dispatch = useAppDispatch()
-    useEffect(() => {
-        let countriesFilter: string[] = []
-        let languagesFilter: string[] = []
-        filters.countries?.forEach((el) => {
-            if (el.checked) {
-                countriesFilter.push(el.country.code)
-            }
-        })
-        filters.languages?.forEach((el) => {
-            if (el.checked) {
-                languagesFilter.push(el.language.code)
-            }
-        })
-        
-        dispatch(GetTeachersList({
-            languages: languagesFilter.length === 0 ? null : languagesFilter.join(','),
-            minPrice:Number(filters.price.min),
-            maxPrice:Number(filters.price.max),
-            countries: countriesFilter.length === 0 ? null : countriesFilter.join(','),
-            time: filters.time.length === 0 ? null :filters.time.join(',') ,
-            days:  filters.days.length === 0 ? null :filters.days.join(','),
-            isNative: filters.isNative,
-            sortBy: filters.sortBy.value === '' ? null : filters.sortBy.value,
-            searchBy: filters.searchBy.length === 0 ?null :filters.searchBy,
-
-        }))
-    }, [filters])
+    const inputRef = useRef<HTMLInputElement>(null)
     useEffect(() => {
         const listener = () => {
             if (WrapperRef.current!.getBoundingClientRect().top < 20) {
@@ -293,16 +275,34 @@ function Filter({}: Props) {
             window.removeEventListener('scroll', listener)
         }
     }, [])
-    useEffect(()=>{ 
-        if(window.innerWidth < 780){
+    useEffect(() => {
+        if (window.innerWidth < 780) {
             setMobileModal(false)
         }
-    },[window.innerWidth])
-    function openModal(e: any, modalType: string) {
-        e.preventDefault()
+    }, [window.innerWidth])
+    function openModal(
+        event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+        modalType: string
+    ) {
+        if (modalType === 'searchBy') {
+            inputRef.current?.focus()
+        }
+        event.preventDefault()
         setCurrentModal(modalType)
-        setCurrentModalRef(e.currentTarget)
-        e.currentTarget.style.zIndex = '3'
+        setCurrentModalRef(event.currentTarget)
+        event.currentTarget.style.zIndex = '3'
+    }
+    function closeModal() {
+        if (currentModal === 'searchBy' && searchValue === '') {
+            submitSearchFilter()
+        }
+        setCurrentModal(null)
+        currentModalRef.style.zIndex = '1'
+    }
+    function enterPress(key: string) {
+        if (key === 'Enter') {
+            submitSearchFilter()
+        }
     }
     function clearSpecificFilter(type: 'country' | 'schedule' | 'language') {
         if (type === 'country') {
@@ -337,6 +337,8 @@ function Filter({}: Props) {
             ...prev,
             searchBy: searchValue,
         }))
+        setCurrentModal(null)
+        inputRef.current?.blur()
     }
     const WrapperRef = useRef<HTMLDivElement | null>(null)
 
@@ -461,10 +463,10 @@ function Filter({}: Props) {
                                         <>
                                             <ValueText>
                                                 {filters.time?.map((t) => (
-                                                    <span>{t},</span>
+                                                    <span key={t}>{t},</span>
                                                 ))}
                                                 {filters.days?.map((d) => (
-                                                    <span>{d},</span>
+                                                    <span key={d}>{d},</span>
                                                 ))}
                                             </ValueText>
                                             <AiFillCloseCircle
@@ -499,10 +501,12 @@ function Filter({}: Props) {
                                 onClick={(e) => openModal(e, 'isNative')}
                             >
                                 <div>Native speaker</div>
-                              {filters.isNative &&   <AiFillCheckCircle fontSize={'22px'}/>}
-                               <ItemIcon>
-                               <IoIosArrowDown />
-                               </ItemIcon>
+                                {filters.isNative && (
+                                    <AiFillCheckCircle fontSize={'22px'} />
+                                )}
+                                <ItemIcon>
+                                    <IoIosArrowDown />
+                                </ItemIcon>
                                 {currentModal === 'isNative' && (
                                     <NativeModal
                                         isNative={filters.isNative}
@@ -524,24 +528,31 @@ function Filter({}: Props) {
                                     />
                                 )}
                             </BottomBarItem>
-                            <BottomBarItem
+                            <BottomSearch
                                 onClick={(e) => openModal(e, 'searchBy')}
                             >
-                                <AiOutlineSearch />
-                                <BottomBarInput
-                                    onChange={(e) =>
-                                        setSearchValue(e.target.value)
-                                    }
-                                    placeholder="Search for a name or word"
-                                />
-                                {searchValue.length !== 0 && (
-                                    <InputConfirmButton
-                                        onClick={() => submitSearchFilter()}
-                                    >
-                                        <BsArrowRight />
-                                    </InputConfirmButton>
-                                )}
-                            </BottomBarItem>
+                                <AiOutlineSearch fontSize={18} />
+                                <InputWrapper>
+                                    <BottomBarInput
+                                        onKeyDown={(e) => enterPress(e.key)}
+                                        ref={inputRef}
+                                        onChange={(e) =>
+                                            setSearchValue(e.target.value)
+                                        }
+                                        placeholder="Search for a name or word"
+                                    />
+                                    {searchValue.length !== 0 && (
+                                        <InputConfirmButton
+                                            onClick={(e) => (
+                                                e.stopPropagation(),
+                                                submitSearchFilter()
+                                            )}
+                                        >
+                                            <BsArrowRight />
+                                        </InputConfirmButton>
+                                    )}
+                                </InputWrapper>
+                            </BottomSearch>
                         </Flex>
                     </BottomBar>
                 </ContentDesktop>
@@ -551,14 +562,15 @@ function Filter({}: Props) {
                         Filters
                     </Text>
                 </ContentMobile>
-                {mobileModal && <FilterModal setMobileModal={setMobileModal} />}
-                {currentModal !== null && (
-                    <ModalWrapper
-                        onClick={() => (
-                            setCurrentModal(null),
-                            (currentModalRef.style.zIndex = '1')
-                        )}
+                {mobileModal && (
+                    <FilterModal
+                        filters={filters}
+                        setFilters={setFilters}
+                        setMobileModal={setMobileModal}
                     />
+                )}
+                {currentModal !== null && (
+                    <ModalWrapper onClick={(e) => closeModal()} />
                 )}
             </Container>
         </Wrapper>

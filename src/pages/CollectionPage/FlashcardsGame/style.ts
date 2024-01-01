@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components'
 
 interface IProps {
-    isTerm?: Boolean
+    isTerm?: boolean
     animation?: string
     isDisabled?: boolean
 }

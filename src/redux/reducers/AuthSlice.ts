@@ -2,11 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AuthAPI } from '../../api/services/AuthService'
 import { TeachersAPI } from '../../api/services/TeachersService'
 import { ClearUser, GetUser } from './UserSlice'
+import { User } from '../../types/User/UserTypes'
 
 type LoginData = {
     email: string
     password: string
 }
+
 export const AuthSliceAsyncActions = {
     Login: createAsyncThunk(
         'auth/Login',
@@ -32,7 +34,7 @@ export const AuthSliceAsyncActions = {
     //fix-type
     Registration: createAsyncThunk(
         'auth/Registration',
-        async (data: any, { dispatch }) => {
+        async (data: LoginData | User, { dispatch }) => {
             try {
                 const response = await AuthAPI.registration(data)
                 localStorage.setItem('token', response.data.token)
@@ -56,14 +58,6 @@ const AuthSlice = createSlice({
     name: 'auth',
     initialState: {},
     reducers: {},
-    extraReducers: (builder) => {
-        builder
-            .addCase(AuthSliceAsyncActions.Login.pending, (state, action) => {})
-            .addCase(
-                AuthSliceAsyncActions.Login.fulfilled,
-                (state, action) => {}
-            )
-    },
 })
 
 export default AuthSlice.reducer

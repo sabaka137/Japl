@@ -50,10 +50,10 @@ const IconItem = styled.div`
     }
 `
 const SearchItem = styled(IconItem)`
-display:none;
- @media(max-width:650px){
-    display:flex;
- }
+    display: none;
+    @media (max-width: 650px) {
+        display: flex;
+    }
 `
 const ItemCount = styled.div`
     position: absolute;
@@ -114,11 +114,10 @@ function AuthorizedUser({
     return (
         <Flex align="center" gap={'10px'}>
             <Flex align="center" gap="20px">
-         
                 <Separator />
 
                 <IconGroup>
-                    <SearchItem onClick={()=>setOpen(true)}>
+                    <SearchItem onClick={() => setOpen(true)}>
                         <IoSearch />
                     </SearchItem>
                     <IconItem>

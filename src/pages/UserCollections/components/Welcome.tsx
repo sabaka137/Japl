@@ -38,9 +38,8 @@ const ImgContainer = styled.div`
         display: none;
     }
 `
-type Props = {}
 
-function Welcome({}: Props) {
+function Welcome() {
     return (
         <WelcomContainer>
             <div style={{ height: '100%' }}>
@@ -50,7 +49,7 @@ function Welcome({}: Props) {
                     fw={'bold'}
                     style={{ marginBottom: '30px' }}
                 >
-                  Welcome to Japl!
+                    Welcome to Japl!
                 </Text>
                 <Flex direction="column" gap={'20px'}>
                     <Flex align="center" gap={'10px'}>
@@ -64,7 +63,7 @@ function Welcome({}: Props) {
                                 letterSpacing: 'normal',
                             }}
                         >
-                           Create an account
+                            Create an account
                         </Text>
                     </Flex>
                     <Flex align="center" gap={'10px'}>
@@ -92,14 +91,14 @@ function Welcome({}: Props) {
                                 letterSpacing: 'normal',
                             }}
                         >
-                        Explore collections in modes
+                            Explore collections in modes
                             <Text inline color="#4255FF" fw={'bold'}>
                                 {' '}
                                 Cards
                             </Text>{' '}
                             or{' '}
                             <Text color="#4255FF" fw={'bold'}>
-                            Memorization
+                                Memorization
                             </Text>
                         </Text>
                     </Flex>

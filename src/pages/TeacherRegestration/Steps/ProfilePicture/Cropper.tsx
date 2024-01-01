@@ -1,10 +1,25 @@
 import { useEffect, useState } from 'react'
-import ReactCrop from 'react-image-crop'
+import { UseFormSetValue } from 'react-hook-form'
+import ReactCrop, { Crop } from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
-
-const Cropper = ({ imageToCrop, croppedImage, setValue }) => {
-    const [crop, setCrop] = useState({ unit: 'px', width: 200, aspect: 1 })
-    const [image, setImage] = useState(null)
+import { TeacherReg, User } from '../../../../types/User/UserTypes'
+//TODO fix cropper
+type Props = {
+    imageToCrop: string
+    setCroppedImage: React.Dispatch<React.SetStateAction<string | null>>
+    setValue: UseFormSetValue<{
+        general: TeacherReg
+    }>
+}
+const Cropper = ({ imageToCrop, setCroppedImage, setValue }: Props) => {
+    const [crop, setCrop] = useState<Crop>({
+        unit: 'px',
+        x: 0,
+        y: 0,
+        width: 200,
+        height: 200,
+    })
+    const [image, setImage] = useState<HTMLImageElement | null>(null)
 
     const cropImageNow = () => {
         if (!crop || !image) {
@@ -20,10 +35,10 @@ const Cropper = ({ imageToCrop, croppedImage, setValue }) => {
         const pixelRatio = window.devicePixelRatio
         canvas.width = crop.width * pixelRatio
         canvas.height = crop.height * pixelRatio
-        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
-        ctx.imageSmoothingQuality = 'high'
+        ctx!.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
+        ctx!.imageSmoothingQuality = 'high'
 
-        ctx.drawImage(
+        ctx!.drawImage(
             image,
             crop.x * scaleX,
             crop.y * scaleY,
@@ -37,12 +52,12 @@ const Cropper = ({ imageToCrop, croppedImage, setValue }) => {
 
         const base64Image = canvas.toDataURL('image/jpeg')
         setValue('general.photo', base64Image)
-  
-        croppedImage(base64Image)
+
+        setCroppedImage(base64Image)
     }
     useEffect(() => {
         cropImageNow()
-    }, [crop,image])
+    }, [crop, image])
 
     return (
         <div>

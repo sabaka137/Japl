@@ -1,8 +1,11 @@
-import { Store, createAsyncThunk, createSlice, current } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { TeachersAPI } from '../../api/services/TeachersService'
 import { User } from '../../types/User/UserTypes'
 import { RootState } from '../store/store'
-import { FilterRequestOptions, IFilter } from '../../types/Teachers/TeachersType'
+import {
+    FilterRequestOptions,
+    IFilter,
+} from '../../types/Teachers/TeachersType'
 
 export const GetTeachersList = createAsyncThunk<
     any,
@@ -10,7 +13,7 @@ export const GetTeachersList = createAsyncThunk<
     { state: RootState }
 >('teachers/GetTeachersList', async (filters, { getState }) => {
     try {
-        const response = await TeachersAPI.GetTeachers()
+        const response = await TeachersAPI.GetTeachers(filters)
         const isAuthenticated = getState().user.User !== null
         const UserFavorites = getState().user.User?.favoriteTeachers
         return { data: response.data, UserFavorites, isAuthenticated }
@@ -34,6 +37,8 @@ export const GetTeacher = createAsyncThunk<any, any, { state: RootState }>(
 
 type GroupState = {
     teachersList: User[] | null
+    teachersTotal: number
+    pagesTotal: number
     currentTeacher: User | null
     isLoad: boolean
     isTeacheLoad: boolean
@@ -41,6 +46,8 @@ type GroupState = {
 const initialState: GroupState = {
     teachersList: null,
     currentTeacher: null,
+    teachersTotal: 0,
+    pagesTotal: 0,
     isLoad: false,
     isTeacheLoad: false,
 }
@@ -49,14 +56,14 @@ const TeachersSlice = createSlice({
     initialState,
     reducers: {
         setModalOpen(state, action) {
-            state.teachersList = state.teachersList!.map((el: any) =>
+            state.teachersList = state.teachersList!.map((el) =>
                 el._id === action.payload
                     ? { ...el, isModalOpen: true }
                     : { ...el }
             )
         },
         setModalClose(state, action) {
-            state.teachersList = state.teachersList!.map((el: any) => ({
+            state.teachersList = state.teachersList!.map((el) => ({
                 ...el,
                 isModalOpen: false,
             }))
@@ -96,13 +103,17 @@ const TeachersSlice = createSlice({
                 state.isLoad = false
             })
             .addCase(GetTeachersList.fulfilled, (state, action) => {
-                state.teachersList = action.payload?.data.map((el: any) => ({
-                    ...el,
-                    isModalOpen: false,
-                    inFavorite: action.payload.isAuthenticated
-                        ? action.payload.UserFavorites.includes(el._id)
-                        : false,
-                }))
+                state.teachersList = action.payload?.data.teachers.map(
+                    (el: any) => ({
+                        ...el,
+                        isModalOpen: false,
+                        inFavorite: action.payload.isAuthenticated
+                            ? action.payload.UserFavorites.includes(el._id)
+                            : false,
+                    })
+                )
+                state.teachersTotal = action.payload.data.teachersTotal
+                state.pagesTotal = action.payload.data.totalPages
                 state.isLoad = true
             })
             .addCase(GetTeacher.pending, (state, action) => {

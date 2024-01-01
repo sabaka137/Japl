@@ -5,11 +5,10 @@ import { Flex, Text } from '../../../../../components/Common'
 import { AiOutlineCheck } from 'react-icons/ai'
 const Wrpper = styled.div`
     margin-top: 20px;
-    div{
-        cursor:pointer;
+    div {
+        cursor: pointer;
     }
 `
-
 
 type Props = {
     currentSort: { value: string; label: string }
@@ -18,7 +17,12 @@ type Props = {
 
 function SortByFilter({ currentSort, setFilters }: Props) {
     const [sort, setSort] = useState([
-        { id: 1, label: 'Our recommendations', value: '', checked: false },
+        {
+            id: 1,
+            label: 'Our recommendations',
+            value: 'default',
+            checked: false,
+        },
         {
             id: 2,
             label: 'Price: from high to low',
@@ -62,13 +66,13 @@ function SortByFilter({ currentSort, setFilters }: Props) {
         <Wrpper>
             <Flex direction="column" gap="5px">
                 {sort.map((el) => (
-                    <Flex  onClick={() => handleClick(el.id)} key={el.id} justify="space-between" align="center">
-                        <Text
-                            ff="Inter"
-                           
-                            key={el.id}
-                            fz="16px"
-                        >
+                    <Flex
+                        onClick={() => handleClick(el.id)}
+                        key={el.id}
+                        justify="space-between"
+                        align="center"
+                    >
+                        <Text ff="Inter" key={el.id} fz="16px">
                             {el.label}
                         </Text>
                         {el.checked && <AiOutlineCheck />}

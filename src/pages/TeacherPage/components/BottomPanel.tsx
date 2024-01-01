@@ -6,6 +6,7 @@ import { TeacherPageButton } from '../style'
 import { BsLightningCharge } from 'react-icons/bs'
 import BookLessonModal from '../../../components/Modal/BookLessonModal'
 import { User, UserSchedule } from '../../../types/User/UserTypes'
+import SuccessfullBookLesson from '../../../components/Modal/SuccessfullBookLesson'
 const Wrapper = styled.div`
     display: none;
     width: 100%;
@@ -64,6 +65,7 @@ type Props = {
 
 function BottomPanel({ teacher, schedule }: Props) {
     const [scheduleModal, setScheduleModal] = useState(false)
+    const [successfulLesson, setSuccessfullLesson] = useState(false)
     function OpenScheduleModal() {
         setScheduleModal(true)
     }
@@ -79,7 +81,7 @@ function BottomPanel({ teacher, schedule }: Props) {
                         >
                             <div>
                                 <NewUserLabel>
-                                Recently on the platform
+                                    Recently on the platform
                                 </NewUserLabel>
                             </div>
                         </Flex>
@@ -107,9 +109,18 @@ function BottomPanel({ teacher, schedule }: Props) {
             {scheduleModal &&
                 createPortal(
                     <BookLessonModal
+                        setSuccessfullLesson={setSuccessfullLesson}
+                        teacherId={teacher!._id}
                         avatarSrc={teacher!.photo}
                         setBookModal={setScheduleModal}
                         schedule={schedule}
+                    />,
+                    document.body
+                )}
+            {successfulLesson &&
+                createPortal(
+                    <SuccessfullBookLesson
+                        setSuccessfullLesson={setSuccessfullLesson}
                     />,
                     document.body
                 )}

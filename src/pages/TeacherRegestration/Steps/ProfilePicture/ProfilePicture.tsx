@@ -1,7 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { useAppDispatch } from '../../../../hooks/hook'
 import styled from 'styled-components'
-import { ReactCrop } from 'react-image-crop'
 import Cropper from './Cropper'
 import { RegistrationButtonNext } from '../../../../components/Button/RegistrationButtonNext'
 import { Flex, Text } from '../../../../components/Common'
@@ -9,24 +8,31 @@ import { AiOutlineCheckCircle } from 'react-icons/ai'
 import uploadIcon from '../../../../assets/images/UploadIcon.png'
 import { RegistrationButtonPrev } from '../../../../components/Button/RegistrationButtonPrev'
 import { DragImageContainer, LoadButton, UploadIcon } from '../style'
-const ImageContainer = styled.div`
-    width: 400px;
-    height: 400px;
-    position: relative;
-    overflow: hidden;
-    img {
-        width: 100%;
+import {
+    UseFormRegister,
+    UseFormSetValue,
+    UseFormTrigger,
+} from 'react-hook-form'
+import { TeacherReg, User } from '../../../../types/User/UserTypes'
 
-        height: 100%;
-    }
-`
+type Props = {
+    setValue: UseFormSetValue<{
+        general: TeacherReg
+    }>
+    setStep: React.Dispatch<React.SetStateAction<number>>
+    trigger: UseFormTrigger<{
+        general: TeacherReg
+    }>
+    register: UseFormRegister<{
+        general: TeacherReg
+    }>
+}
 
-
-function ProfilePicture({ register, trigger, setStep, setValue }) {
-    const [file, setSelectedFile] = useState(null)
+function ProfilePicture({ register, trigger, setStep, setValue }: Props) {
+    const [file, setSelectedFile] = useState<any>(null)
     const [isDragOver, setOver] = useState(false)
-    const [croppedImage, setCroppedimage] = useState(null)
-    const inputRef = useRef()
+    const [croppedImage, setCroppedimage] = useState<string | null>(null)
+    const inputRef = useRef<HTMLInputElement>(null)
     return (
         <>
             <Flex gap={'40px'}>
@@ -67,8 +73,8 @@ function ProfilePicture({ register, trigger, setStep, setValue }) {
                             })}
                             ref={inputRef}
                             onChange={(e) => {
-                                console.log(e.target.files)
-                                setSelectedFile(e.target.files[0])
+                                e.target.files !== null &&
+                                    setSelectedFile(e.target.files[0])
                             }}
                         />
                         <LoadButton
@@ -79,7 +85,7 @@ function ProfilePicture({ register, trigger, setStep, setValue }) {
                         </LoadButton>
                     </div>
                     <DragImageContainer
-                        fileExist={file}
+                        fileExist={file !== null}
                         isDragOver={isDragOver}
                         onDrop={(e) => {
                             e.preventDefault()
@@ -94,20 +100,26 @@ function ProfilePicture({ register, trigger, setStep, setValue }) {
                             e.preventDefault()
                             setOver(false)
                         }}
-                      
                     >
                         {file ? (
                             <Cropper
                                 imageToCrop={URL.createObjectURL(file)}
                                 setValue={setValue}
-                                croppedImage={(value) => setCroppedimage(value)}
+                                setCroppedImage={setCroppedimage}
                             />
                         ) : (
-                            <Flex align='center' direction='column' >
+                            <Flex align="center" direction="column">
                                 <UploadIcon>
                                     <img src={uploadIcon} />
                                 </UploadIcon>
-                                <Text ff="Inter" fw='bold' color='#a0a0a0' fz='18px'>Drag photo over here</Text>
+                                <Text
+                                    ff="Inter"
+                                    fw="bold"
+                                    color="#a0a0a0"
+                                    fz="18px"
+                                >
+                                    Drag photo over here
+                                </Text>
                             </Flex>
                         )}
                     </DragImageContainer>

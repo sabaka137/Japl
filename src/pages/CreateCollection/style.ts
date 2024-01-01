@@ -39,12 +39,13 @@ export const CreateCollectionButton = styled.button`
     cursor: pointer;
 `
 
-export const CustomInput = styled.input<{isValide?:boolean}>`
+export const CustomInput = styled.input<{ isValide?: boolean }>`
     display: block;
     width: 30%;
     height: 30px;
     border: none;
-    border-bottom:${props => props.isValide ?'2px solid #FF725B' : '2px solid #2e3856'};
+    border-bottom: ${(props) =>
+        props.isValide ? '2px solid #FF725B' : '2px solid #2e3856'};
     background: transparent;
     font-size: 0.9rem;
     font-family: Inter;
@@ -56,12 +57,13 @@ export const CustomInput = styled.input<{isValide?:boolean}>`
     }
     &:focus {
         outline: none;
-        border-bottom:${props => props.isValide ?'2px solid #FF725B' : '2px solid #ffcd1f'};
-        border-bottom: ;
+        border-bottom: ${(props) =>
+            props.isValide ? '2px solid #FF725B' : '2px solid #ffcd1f'};
+        border-bottom:;
     }
 `
 export const ErrorMessage = styled.div`
-    color:#FF725B;
+    color: #ff725b;
 `
 export const TermCardContainer = styled.div`
     width: 100%;

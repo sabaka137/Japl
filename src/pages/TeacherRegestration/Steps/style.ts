@@ -44,8 +44,8 @@ export const DragImageContainer = styled.div<{
         props.fileExist
             ? 'none'
             : props.isDragOver
-            ? 'rgba(255, 199, 234,.2)'
-            : 'none'};
+              ? 'rgba(255, 199, 234,.2)'
+              : 'none'};
     border-radius: 10px;
     border: ${(props) => (props.fileExist ? 'none' : '2px #ff8aff dashed')};
 `
@@ -67,24 +67,24 @@ export const SkipInfo = styled.div`
 `
 
 export const ScheduleTip = styled.div`
-   background:#e1fae3;
-   padding:15px 20px;
-   margin-bottom:20px
+    background: #e1fae3;
+    padding: 15px 20px;
+    margin-bottom: 20px;
 `
 export const ScheduleTipTop = styled.div`
-display:flex;
-align-items:center;
-color:#24BB36;
-font-size:0.9rem;
-font-family:Inter;
-font-weight:600;
-margin-bottom:10px
+    display: flex;
+    align-items: center;
+    color: #24bb36;
+    font-size: 0.9rem;
+    font-family: Inter;
+    font-weight: 600;
+    margin-bottom: 10px;
 `
 
 export const PriceTip = styled.div`
-color:#6F757B;
-font-family:Inter;
-font-size:14px;
-margin-bottom:20px;
-width:70%;
+    color: #6f757b;
+    font-family: Inter;
+    font-size: 14px;
+    margin-bottom: 20px;
+    width: 70%;
 `

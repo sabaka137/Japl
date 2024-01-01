@@ -10,6 +10,7 @@ const CropperWrapper = styled.div`
     width: 100%;
     top: 0;
     height: 100%;
+    z-index: 22;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
@@ -20,6 +21,9 @@ const ModalWindow = styled.div`
     height: 480px;
     background: #ffffff;
     border-radius: 10px;
+    @media (max-width: 500px) {
+        height: auto;
+    }
 `
 const ModalHeader = styled.div`
     font-family: Inter;
@@ -34,6 +38,9 @@ const ModalContent = styled.div`
     padding: 20px 30px;
     overflow: hidden;
     gap: 25px;
+    @media (max-width: 500px) {
+        flex-direction: column;
+    }
 `
 
 const Cropper = styled.div`
@@ -45,13 +52,20 @@ const Cropper = styled.div`
         height: 265px;
     }
 `
+const PreviewContainer = styled.div`
+    @media (max-width: 500px) {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+`
 const CroppedPreview = styled.div`
     width: 80px;
     height: 80px;
     border-radius: 50%;
     overflow: hidden;
     img {
-        width: 80px;
+        min-width: 80px;
         height: 80px;
     }
 `
@@ -63,6 +77,9 @@ const PreviewText = styled.div`
     font-family: Inter;
     font-size: 13px;
     margin-top: 20px;
+    @media (max-width: 500px) {
+        width: 100%;
+    }
 `
 
 const SaveButton = styled.button`
@@ -115,7 +132,6 @@ export const CropperModal: FC<ComponentProps> = ({
         y: 0,
         width: 200,
         height: 200,
-        aspect: 1,
     })
     const [image, setImage] = useState<HTMLImageElement | null>(null)
     const [croppedImage, setCroppedImage] = useState<string>('')
@@ -157,6 +173,9 @@ export const CropperModal: FC<ComponentProps> = ({
         setValue('photo', croppedImage)
         setModalOpen(false)
     }
+    useEffect(() => {
+        cropImageNow()
+    }, [crop, image])
     return (
         <CropperWrapper>
             <ModalWindow>
@@ -173,7 +192,7 @@ export const CropperModal: FC<ComponentProps> = ({
                                 maxWidth={400}
                                 crop={crop}
                                 onChange={setCrop}
-                                onComplete={(c) => cropImageNow()}
+                                onComplete={cropImageNow}
                             />
                         </Cropper>
                         <Flex gap={'10px'}>
@@ -185,7 +204,7 @@ export const CropperModal: FC<ComponentProps> = ({
                             </CancelButton>
                         </Flex>
                     </Box>
-                    <div>
+                    <PreviewContainer>
                         <CroppedPreview>
                             {croppedImage ? (
                                 <img src={croppedImage} />
@@ -197,7 +216,7 @@ export const CropperModal: FC<ComponentProps> = ({
                             Выберите область предварительного просмотра фото.
                             Эта версия фото профиля будет отображаться на сайте.
                         </PreviewText>
-                    </div>
+                    </PreviewContainer>
                 </ModalContent>
             </ModalWindow>
         </CropperWrapper>

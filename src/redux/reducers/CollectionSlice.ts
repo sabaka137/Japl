@@ -1,6 +1,9 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { CollectionAPI } from '../../api/services/CollectionService'
-import { CollectionTermin, ICollection } from '../../types/Collections/CollectionType'
+import {
+    CollectionTermin,
+    ICollection,
+} from '../../types/Collections/CollectionType'
 
 export const CollectionSliceAsyncActions = {
     GetCollections: createAsyncThunk('collection/GetCollections', async () => {
@@ -8,7 +11,9 @@ export const CollectionSliceAsyncActions = {
             const response = await CollectionAPI.GetCollections()
             const result = await response.data
             return result
-        } catch (e) {}
+        } catch (e) {
+            console.log(e)
+        }
     }),
     GetCollection: createAsyncThunk(
         'collection/GetCollection',
@@ -17,7 +22,9 @@ export const CollectionSliceAsyncActions = {
                 const response = await CollectionAPI.GetCollection(id)
                 const result = await response.data
                 return result
-            } catch (e) {}
+            } catch (e) {
+                console.log(e)
+            }
         }
     ),
     DeleteCollection: createAsyncThunk(
@@ -26,16 +33,20 @@ export const CollectionSliceAsyncActions = {
             try {
                 await CollectionAPI.DeleteCollection(id)
                 dispatch(GroupActions.DeleteCollection(id))
-            } catch (e) {}
+            } catch (e) {
+                console.log(e)
+            }
         }
     ),
     UpdateCollection: createAsyncThunk(
         'collection/UpdateCollection',
-        async (data: {id:string,group:ICollection}, { dispatch }) => {
+        async (data: { id: string; group: ICollection }, { dispatch }) => {
             try {
                 await CollectionAPI.UpdateCollection(data)
                 dispatch(CollectionSliceAsyncActions.GetCollections())
-            } catch (e) {}
+            } catch (e) {
+                console.log(e)
+            }
         }
     ),
     GetCollectionNames: createAsyncThunk(
@@ -45,7 +56,9 @@ export const CollectionSliceAsyncActions = {
                 const response = await CollectionAPI.GetCollectionNames()
                 const result = await response.data
                 return result
-            } catch (e) {}
+            } catch (e) {
+                console.log(e)
+            }
         }
     ),
     CreateCollection: createAsyncThunk(
@@ -54,20 +67,22 @@ export const CollectionSliceAsyncActions = {
             try {
                 await CollectionAPI.CreateCollection(group)
                 dispatch(CollectionSliceAsyncActions.GetCollections())
-            } catch (e) {}
+            } catch (e) {
+                console.log(e)
+            }
         }
     ),
     AddToCollection: createAsyncThunk(
-        "vocabulary/addToCollection",
-        async (data: {kanji:CollectionTermin,name:string}) => {
+        'vocabulary/addToCollection',
+        async (data: { kanji: CollectionTermin; name: string }) => {
             try {
-                const response = await CollectionAPI.AddToCollection(data);
-                return response.data;
+                const response = await CollectionAPI.AddToCollection(data)
+                return response.data
             } catch (e) {
-                console.log(e);
+                console.log(e)
             }
         }
-    )
+    ),
 }
 
 type CollectionState = {

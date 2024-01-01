@@ -20,63 +20,25 @@ export const COUNTRIES = [
     { id: 15, country: { label: 'Japan', code: 'JP' }, checked: false },
     { id: 16, country: { label: 'South Korea', code: 'KR' }, checked: false },
     { id: 17, country: { label: 'Argentina', code: 'AR' }, checked: false },
-    { id: 18, country: { label: 'Egypt', code: 'EG' }, checked: false },
+
     { id: 19, country: { label: 'Turkey', code: 'TR' }, checked: false },
     { id: 20, country: { label: 'Saudi Arabia', code: 'SA' }, checked: false },
-    { id: 21, country: { label: 'Nigeria', code: 'NG' }, checked: false },
+
     { id: 22, country: { label: 'Indonesia', code: 'ID' }, checked: false },
-    { id: 23, country: { label: 'Pakistan', code: 'PK' }, checked: false },
+
     { id: 24, country: { label: 'Bangladesh', code: 'BD' }, checked: false },
     { id: 25, country: { label: 'Iran', code: 'IR' }, checked: false },
     { id: 26, country: { label: 'Vietnam', code: 'VN' }, checked: false },
     { id: 27, country: { label: 'Philippines', code: 'PH' }, checked: false },
     { id: 28, country: { label: 'Thailand', code: 'TH' }, checked: false },
-    { id: 29, country: { label: 'Myanmar', code: 'MM' }, checked: false },
-    { id: 30, country: { label: 'Kenya', code: 'KE' }, checked: false },
+
     { id: 31, country: { label: 'Ukraine', code: 'UA' }, checked: false },
     { id: 32, country: { label: 'Poland', code: 'PL' }, checked: false },
-    { id: 33, country: { label: 'Tanzania', code: 'TZ' }, checked: false },
-    { id: 34, country: { label: 'Sudan', code: 'SD' }, checked: false },
-    { id: 35, country: { label: 'Uganda', code: 'UG' }, checked: false },
-    { id: 36, country: { label: 'Morocco', code: 'MA' }, checked: false },
-    { id: 37, country: { label: 'Peru', code: 'PE' }, checked: false },
-    { id: 38, country: { label: 'Malaysia', code: 'MY' }, checked: false },
-    { id: 39, country: { label: 'Venezuela', code: 'VE' }, checked: false },
-    { id: 40, country: { label: 'Ghana', code: 'GH' }, checked: false },
-    { id: 41, country: { label: 'Nepal', code: 'NP' }, checked: false },
-    { id: 42, country: { label: 'Madagascar', code: 'MG' }, checked: false },
-    { id: 43, country: { label: 'Cameroon', code: 'CM' }, checked: false },
-    { id: 44, country: { label: 'Ivory Coast', code: 'CI' }, checked: false },
-    { id: 45, country: { label: 'North Korea', code: 'KP' }, checked: false },
+
     { id: 46, country: { label: 'Australia', code: 'AU' }, checked: false },
-    { id: 47, country: { label: 'Niger', code: 'NE' }, checked: false },
-    { id: 48, country: { label: 'Taiwan', code: 'TW' }, checked: false },
-    { id: 49, country: { label: 'Yemen', code: 'YE' }, checked: false },
-    { id: 50, country: { label: 'Iraq', code: 'IQ' }, checked: false },
-    { id: 51, country: { label: 'Mozambique', code: 'MZ' }, checked: false },
-    { id: 52, country: { label: 'Romania', code: 'RO' }, checked: false },
-    { id: 53, country: { label: 'Chile', code: 'CL' }, checked: false },
-    { id: 54, country: { label: 'Syria', code: 'SY' }, checked: false },
+
     { id: 55, country: { label: 'Kazakhstan', code: 'KZ' }, checked: false },
-    { id: 56, country: { label: 'Zambia', code: 'ZM' }, checked: false },
-    { id: 57, country: { label: 'Guatemala', code: 'GT' }, checked: false },
-    { id: 58, country: { label: 'Ecuador', code: 'EC' }, checked: false },
-    { id: 59, country: { label: 'Netherlands', code: 'NL' }, checked: false },
-    { id: 60, country: { label: 'Senegal', code: 'SN' }, checked: false },
-    { id: 61, country: { label: 'Cambodia', code: 'KH' }, checked: false },
-    { id: 62, country: { label: 'Chad', code: 'TD' }, checked: false },
-    { id: 63, country: { label: 'Somalia', code: 'SO' }, checked: false },
-    { id: 64, country: { label: 'Zimbabwe', code: 'ZW' }, checked: false },
-    { id: 65, country: { label: 'Guinea', code: 'GN' }, checked: false },
-    { id: 66, country: { label: 'Rwanda', code: 'RW' }, checked: false },
-    { id: 67, country: { label: 'Benin', code: 'BJ' }, checked: false },
-    { id: 68, country: { label: 'Tunisia', code: 'TN' }, checked: false },
-    { id: 69, country: { label: 'Bolivia', code: 'BO' }, checked: false },
-    { id: 70, country: { label: 'Belgium', code: 'BE' }, checked: false },
-    { id: 71, country: { label: 'Cuba', code: 'CU' }, checked: false },
-    { id: 72, country: { label: 'Haiti', code: 'HT' }, checked: false },
-    { id: 73, country: { label: 'Greece', code: 'GR' }, checked: false },
-    { id: 74, country: { label: 'Jordan', code: 'JO' }, checked: false },
+
     {
         id: 75,
         country: { label: 'Czech Republic', code: 'CZ' },
@@ -85,30 +47,21 @@ export const COUNTRIES = [
     { id: 76, country: { label: 'Portugal', code: 'PT' }, checked: false },
     { id: 77, country: { label: 'Sweden', code: 'SE' }, checked: false },
     { id: 78, country: { label: 'Azerbaijan', code: 'AZ' }, checked: false },
-    { id: 79, country: { label: 'Hungary', code: 'HU' }, checked: false },
+
     {
         id: 80,
         country: { label: 'United Arab Emirates', code: 'AE' },
         checked: false,
     },
-    { id: 81, country: { label: 'Honduras', code: 'HN' }, checked: false },
+
     { id: 82, country: { label: 'Belarus', code: 'BY' }, checked: false },
     { id: 83, country: { label: 'Tajikistan', code: 'TJ' }, checked: false },
     { id: 84, country: { label: 'Israel', code: 'IL' }, checked: false },
     { id: 85, country: { label: 'Switzerland', code: 'CH' }, checked: false },
-    { id: 86, country: { label: 'Sierra Leone', code: 'SL' }, checked: false },
-    { id: 87, country: { label: 'Hong Kong', code: 'HK' }, checked: false },
-    { id: 88, country: { label: 'Laos', code: 'LA' }, checked: false },
-    { id: 89, country: { label: 'Paraguay', code: 'PY' }, checked: false },
-    { id: 90, country: { label: 'Libya', code: 'LY' }, checked: false },
-    { id: 91, country: { label: 'Nicaragua', code: 'NI' }, checked: false },
-    { id: 92, country: { label: 'El Salvador', code: 'SV' }, checked: false },
-    { id: 93, country: { label: 'Kyrgyzstan', code: 'KG' }, checked: false },
-    { id: 94, country: { label: 'Lebanon', code: 'LB' }, checked: false },
-    { id: 95, country: { label: 'Singapore', code: 'SG' }, checked: false },
+
     { id: 96, country: { label: 'Denmark', code: 'DK' }, checked: false },
     { id: 97, country: { label: 'Finland', code: 'FI' }, checked: false },
-    { id: 98, country: { label: 'Slovakia', code: 'SK' }, checked: false },
+
     { id: 99, country: { label: 'Norway', code: 'NO' }, checked: false },
     { id: 100, country: { label: 'Ireland', code: 'IE' }, checked: false },
 ]
@@ -315,7 +268,7 @@ export const REGISTRATION_LANGUAGE = [
     { label: 'Kanuri', value: 'KR', isAvailable: true },
     { label: 'Mandingo', value: 'MN', isAvailable: true },
     { label: 'Fulani', value: 'FF', isAvailable: true },
-    { label: 'Berber', value: 'BER', isAvailable: true }
+    { label: 'Berber', value: 'BER', isAvailable: true },
 ]
 
 export const FILTER_DAYS = [
@@ -350,4 +303,29 @@ export const LANGUAGE_LEVEL = [
     { value: 'Advanced', label: 'C1' },
     { value: 'Expert', label: 'C2' },
     { value: 'Native', label: 'Native' },
+]
+
+export const CERTIFICATE = [
+    {
+        value: 'Japanese Language Teaching Competency Test',
+        label: 'Japanese Language Teaching Competency Test',
+    },
+    {
+        value: 'Japanese Language Teacher Training Course',
+        label: 'Japanese Language Teacher Training Course',
+    },
+    { value: 'JLPT', label: 'JLPT' },
+    {
+        value: 'Language Teaching Certificate',
+        label: 'Language Teaching Certificate',
+    },
+    { value: '', label: 'Another' },
+]
+export const DIPLOMA = [
+    { value: 'Pedagogical Diploma', label: 'Pedagogical Diploma' },
+    {
+        value: 'Diploma in the subject you teach',
+        label: 'Diploma in the subject you teach',
+    },
+    { value: 'Another diploma', label: 'Another diploma' },
 ]

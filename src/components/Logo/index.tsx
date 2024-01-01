@@ -3,17 +3,21 @@ import styled from 'styled-components'
 import Logotype from './logo.png'
 
 const LogoStyle = styled.div`
-    margin-left: -10px;
-    cursor:pointer;
+    cursor: pointer;
     img {
         width: 130px;
+    }
+    @media (max-width: 350px) {
+        img {
+            width: 110px;
+        }
     }
 `
 
 function Logo() {
-    const navigate = useNavigate() 
+    const navigate = useNavigate()
     return (
-        <LogoStyle onClick={()=>navigate('/')}>
+        <LogoStyle onClick={() => navigate('/')}>
             <img src={Logotype} />
         </LogoStyle>
     )

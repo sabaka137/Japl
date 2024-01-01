@@ -25,7 +25,6 @@ export const UserAPI = {
         return API.get('users/subcribeNotifications')
     },
     UpdateUser(data: UserUpdate) {
-        console.log(data)
         return API.post('users/updateUser', data)
     },
     AddToFavorite(teacherId: string) {

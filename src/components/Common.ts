@@ -27,22 +27,20 @@ interface Props {
     ff?: string
     padding?: string
     bg?: string
-    opacity?:number;
+    opacity?: number
     borderBox?: boolean
-    cursor?:string
+    cursor?: string
 }
 export const Text = styled.div<Props>`
     font-size: ${(props) => props.fz || '1rem'};
     font-weight: ${(props) => props.fw || '400'};
     text-align: ${(props) => props.align || 'left'};
-    opacity:${(props) => props.opacity || '1'};
+    opacity: ${(props) => props.opacity || '1'};
     font-family: ${(props) => props.ff};
     line-height: ${(props) => props.lh || props.fz}rem;
     color: ${(props) => props.color || 'black'};
     display: ${(props) => (props.inline ? 'inline' : 'block')};
     margin: ${(props) => props.margin || '0px'};
-   
-    
 `
 export const Box = styled.div<Props>`
     width: ${(props) => props.w || 'auto'}%;

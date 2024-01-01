@@ -10,7 +10,7 @@ const Wrapper = styled.div`
     top: 60px;
     right: 15px;
     box-sizing: border-box;
-    z-index:10;
+    z-index: 10;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
     transition: all 0.25s;
     padding: 5px 0px;
@@ -34,7 +34,7 @@ const Item = styled(NavLink)`
         background: #eeeeee;
     }
 `
-export const AvatarModal = ({}) => {
+export const AvatarModal = () => {
     const dispatch = useAppDispatch()
     function Logout() {
         dispatch(AuthSliceAsyncActions.LogOut())

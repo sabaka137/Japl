@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     padding: 0px 30px;
     line-height: 0.9rem;
     @media (max-width: 768px) {
-        justify-content:center;
+        justify-content: center;
     }
 `
 const Item = styled(NavLink)`
@@ -33,8 +33,8 @@ const Item = styled(NavLink)`
         transition: color 0.2s;
     }
 `
-type Props = {}
-export const SettingsNavbar = ({}: Props) => {
+
+export const SettingsNavbar = () => {
     return (
         <Wrapper>
             <Item to={'/messages'}>Messages</Item>

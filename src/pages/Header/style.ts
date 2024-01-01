@@ -3,9 +3,8 @@ import styled from 'styled-components'
 
 export const HeaderWrapper = styled.div<{ pathname: string }>`
     padding: 15px 25px;
-    background: ${(props) =>
-        props.pathname === '/teachers' ? '#f3f3f3' : 'white'};
-
+    background: white;
+    border-bottom: ${(props) => props.pathname && '1px solid #F2F1EB'};
     width: 100%;
     display: flex;
 
@@ -25,15 +24,15 @@ export const LeftSide = styled.nav`
     }
 `
 export const Separator = styled.nav`
-    width:1px;
-    height:23px;
-    background:#8194a7;
-    @media(max-width:1000px){
-        display:none;
+    width: 1px;
+    height: 23px;
+    background: #8194a7;
+    @media (max-width: 1000px) {
+        display: none;
     }
 `
 export const NavItems = styled.nav`
-display:flex;
+    display: flex;
     @media (max-width: 1000px) {
         display: none;
     }
@@ -41,7 +40,7 @@ display:flex;
 
 export const NavItem = styled(NavLink)<{ pathname: string }>`
     font-size: 1rem;
-    display:block;
+    display: block;
     text-decoration: none;
     margin: 0px 10px;
     font-family: Inter;
@@ -49,7 +48,7 @@ export const NavItem = styled(NavLink)<{ pathname: string }>`
 
     &:hover {
         opacity: 1;
-        color: #52667d;   
+        color: #52667d;
     }
 `
 export const ButButton = styled.div`
@@ -106,22 +105,25 @@ export const InviteFriend = styled.div`
 export const UserContainer = styled.div`
     display: flex;
     margin-left: 50px;
+    @media (max-width: 500px) {
+        margin-left: 0px;
+    }
 `
 export const OpenSidebarButton = styled.div`
-display:flex;
-align-items:center;
-margin:0px 10px;
-cursor:pointer;
-svg{
-    font-size:1.4rem;
-}
-@media (min-width: 1001px) {
-    display: none;
-}
+    display: flex;
+    align-items: center;
+    margin: 0px 10px;
+    cursor: pointer;
+    svg {
+        font-size: 1.4rem;
+    }
+    @media (min-width: 1001px) {
+        display: none;
+    }
 `
 
 export const OpenSearchButton = styled(OpenSidebarButton)`
-@media (min-width: 650px) {
-    display: none;
-}
+    @media (min-width: 650px) {
+        display: none;
+    }
 `

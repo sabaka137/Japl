@@ -1,4 +1,3 @@
-import React from 'react'
 import styled, { keyframes } from 'styled-components'
 const LoadingAnimeation = keyframes`
  0% {transform:rotate(0turn)}
@@ -17,12 +16,9 @@ export const Loader = styled.div`
     animation-iteration-count: infinite;
     box-sizing: border-box;
 `
-type Props = {}
 
-function SearchLoader({}: Props) {
-  return (
-    <Loader/>
-  )
+function SearchLoader() {
+    return <Loader />
 }
 
 export default SearchLoader

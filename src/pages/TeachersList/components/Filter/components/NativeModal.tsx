@@ -13,6 +13,7 @@ const Wrapper = styled.div`
     left: 0;
     box-sizing: border-box;
     padding: 20px;
+    box-shadow: 0 0 0 2px #dcdce5;
 `
 const ToggleWrapper = styled.label`
     position: relative;
@@ -68,7 +69,7 @@ function NativeModal({ setFilters, isNative }: Props) {
     return (
         <Wrapper>
             <Flex justify="space-between">
-                <Text fz="18px" fw="500">
+                <Text fz="18px" ff="Noto Sans" fw="500">
                     Native speakers only
                 </Text>
                 <ToggleWrapper onClick={() => handleChange()}>
@@ -76,7 +77,7 @@ function NativeModal({ setFilters, isNative }: Props) {
                     <Toggle isChecked={isNative}></Toggle>
                 </ToggleWrapper>
             </Flex>
-            <Text fz="15px" margin="10px 0px 0px">
+            <Text fz="15px" ff="Inter" margin="10px 0px 0px">
                 We will only show tutors who teach their native language.
             </Text>
         </Wrapper>

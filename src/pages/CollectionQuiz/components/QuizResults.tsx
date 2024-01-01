@@ -47,7 +47,7 @@ const PracticeItem = styled(NavLink)<any>`
         width: 100px;
         height: 100px;
     }
-    &:hover{
+    &:hover {
         box-shadow: 0 0.65rem 1rem #2e385614;
     }
     @media (max-width: 1600px) {
@@ -108,13 +108,13 @@ export const QuizResults = ({ correct, total, restart, quizMode }: Props) => {
     //fix-type
     const [Phrases] = useState<any>({
         0: "Don't give up, you'll make it.",
-        25: "Don't give up! You're on the right track",
+        25: "Don't give up! You're on the right way",
         50: 'Great result!',
         75: 'You are making great progress, keep it up!',
         100: "You're unbelievable.",
     })
     function PickPhrase() {
-        let percent = Math.floor((correct * 100) / total)
+        const percent = Math.floor((correct * 100) / total)
         for (let i = 0; i < Object.keys(Phrases).length; i++) {
             if (percent === 100) {
                 return Phrases[100]

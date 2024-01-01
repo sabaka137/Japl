@@ -17,6 +17,7 @@ import SortByFilter from './components/SortByFilter'
 import { IFilter } from '../../../../types/Teachers/TeachersType'
 import { LANGUAGES, COUNTRIES } from '../../../../constants/data'
 import LanguageFilter from './components/LanguageFilter'
+import { DEFAULT_FILTERS } from '../../../../constants/filters'
 const Wrapper = styled.div`
     width: 100%;
     height: 100%;
@@ -28,6 +29,19 @@ const Wrapper = styled.div`
     overflow: hidden;
     box-sizing: border-box;
     padding: 0px 0px 50px 0px;
+`
+const CloseButton = styled.div`
+    cursor: pointer;
+    svg {
+        font-size: 1.3rem;
+        color: #aeb5bc;
+    }
+`
+const RemoveFilterrsButton = styled.div`
+    color: #33aab4;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
 `
 const ModalHeader = styled.div`
     width: 100%;
@@ -77,9 +91,13 @@ const ModalContent = styled.div`
     width: 100%;
     height: 100%;
     overflow-y: scroll;
-
     padding-bottom: 70px;
     box-sizing: border-box;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
 `
 const FilterItem = styled.div`
     width: 100%;
@@ -99,104 +117,35 @@ const FilterItemContent = styled.div`
     padding: 0px 20px;
 `
 
-const Item = styled.div`
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    margin-bottom: 10px;
-    input {
-        display: none;
-    }
-    span {
-        color: #384047;
-        cursor: pointer;
-        padding-left: 30px;
-        position: relative;
-        &:hover {
-            &:before {
-                content: '';
-                position: absolute;
-                left: 0px;
-                top: 1px;
-                width: 18px;
-                height: 18px;
-                border-radius: 2px;
-                border: 1px solid #6cb1b4;
-                background-color: rgb(255, 255, 255);
-                transition: all 50ms ease;
-            }
-        }
-        &:before {
-            content: '';
-            position: absolute;
-            left: 0px;
-            top: 1px;
-            width: 18px;
-            height: 18px;
-            border-radius: 2px;
-            border: 1px solid rgb(218, 223, 225);
-            background-color: rgb(255, 255, 255);
-            transition: border-color 0s ease 0s, background-color 0s ease 0s,
-                all 50ms ease 0s;
-        }
-    }
-`
-const Input = styled.input`
-    border: 1px solid #dadfe1;
-    border-radius: 2px;
-    box-shadow: none;
-    color: #384047;
-    display: block;
-    font-size: 14px;
-    font-weight: 400;
-    height: 38px;
-    line-height: 1;
-    margin-bottom: 8px;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 15px;
-    padding: 0 12px;
-    &:before {
-        content: '1111';
-        color: black;
-        display: block;
-    }
-    &:focus {
-        outline: none;
-    }
-    &:hover {
-        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.08);
-    }
-`
-
 type Props = {
     setMobileModal: Dispatch<SetStateAction<boolean>>
+    filters: IFilter
+    setFilters: React.Dispatch<React.SetStateAction<IFilter>>
 }
 
-function MobileFilter({ setMobileModal }: Props) {
+function MobileFilter({ setMobileModal, filters, setFilters }: Props) {
+    const [tempFilters, setTempFilters] = useState<IFilter>(filters)
     const [countyOpen, setCountyOpen] = useState<boolean>(false)
     const [speaksOpen, setSpeaksOpen] = useState<boolean>(false)
-    const [filters, setFilters] = useState<IFilter>({
-        languages: LANGUAGES,
-        price: { min: 1, max: 35 },
-        countries: COUNTRIES,
-        time: [],
-        days: [],
-        isNative: false,
-        sortBy: { label: 'Our recommendations', value: '' },
-        searchBy: '',
-    })
-    console.log(filters)
+
+    function applyFilters() {
+        setFilters(tempFilters)
+        setMobileModal(false)
+    }
+    function clearFilters() {
+        setFilters(DEFAULT_FILTERS)
+        setTempFilters(DEFAULT_FILTERS)
+    }
     return (
         <Wrapper>
             <ModalHeader>
-                <Text color="#33AAB4" fw="500" fz="16px">
+                <RemoveFilterrsButton onClick={() => clearFilters()}>
                     Remove all
-                </Text>
+                </RemoveFilterrsButton>
 
-                <div onClick={() => setMobileModal(false)}>
-                    <AiOutlineClose fontSize={'1.3rem'} color="#aeb5bc" />
-                </div>
+                <CloseButton onClick={() => setMobileModal(false)}>
+                    <AiOutlineClose />
+                </CloseButton>
             </ModalHeader>
             <ModalContent>
                 <FilterItem>
@@ -209,8 +158,8 @@ function MobileFilter({ setMobileModal }: Props) {
                             PRICE PER LESSON
                         </Text>
                         <PriceRange
-                            price={filters.price}
-                            setFilters={setFilters}
+                            price={tempFilters.price}
+                            setFilters={setTempFilters}
                         />
                     </FilterItemContent>
                 </FilterItem>
@@ -224,8 +173,8 @@ function MobileFilter({ setMobileModal }: Props) {
                             NATIVE SPEAKER
                         </Text>
                         <NativeFilter
-                            isNative={filters.isNative}
-                            setFilters={setFilters}
+                            isNative={tempFilters.isNative}
+                            setFilters={setTempFilters}
                         />
                     </FilterItemContent>
                 </FilterItem>
@@ -239,9 +188,9 @@ function MobileFilter({ setMobileModal }: Props) {
                             TIME RANGE
                         </Text>
                         <ScheduleFilter
-                            choosenDays={filters.days}
-                            choosenSchedule={filters.time}
-                            setFilters={setFilters}
+                            choosenDays={tempFilters.days}
+                            choosenSchedule={tempFilters.time}
+                            setFilters={setTempFilters}
                         />
                     </FilterItemContent>
                 </FilterItem>
@@ -265,8 +214,8 @@ function MobileFilter({ setMobileModal }: Props) {
                         </Flex>
                         {countyOpen && (
                             <CountryFilter
-                                countries={filters.countries}
-                                setFilters={setFilters}
+                                countries={tempFilters.countries}
+                                setFilters={setTempFilters}
                             />
                         )}
                     </FilterItemContent>
@@ -291,8 +240,8 @@ function MobileFilter({ setMobileModal }: Props) {
                         </Flex>
                         {speaksOpen && (
                             <LanguageFilter
-                                languages={filters.languages}
-                                setFilters={setFilters}
+                                languages={tempFilters.languages}
+                                setFilters={setTempFilters}
                             />
                         )}
                     </FilterItemContent>
@@ -307,14 +256,14 @@ function MobileFilter({ setMobileModal }: Props) {
                             SORT BY: OUR RECOMMENDATIONS
                         </Text>
                         <SortByFilter
-                            setFilters={setFilters}
-                            currentSort={filters.sortBy}
+                            setFilters={setTempFilters}
+                            currentSort={tempFilters.sortBy}
                         />
                     </FilterItemContent>
                 </FilterItem>
             </ModalContent>
             <ModalFooter>
-                <Button>Apply filters</Button>
+                <Button onClick={() => applyFilters()}>Apply filters</Button>
             </ModalFooter>
         </Wrapper>
     )

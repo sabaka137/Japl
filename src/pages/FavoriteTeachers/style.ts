@@ -13,11 +13,11 @@ export const FavoriteImage = styled.div`
     margin-bottom: 20px;
 `
 export const Title = styled.div`
- font-size:24px;
- color:#121117;
- font-weight:bold;
- font-family:Inter;
- margin-bottom:20px;
+    font-size: 24px;
+    color: #121117;
+    font-weight: bold;
+    font-family: Inter;
+    margin-bottom: 20px;
 `
 export const Text = styled.div`
     display: flex;

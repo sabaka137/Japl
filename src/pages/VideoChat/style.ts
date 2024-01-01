@@ -19,16 +19,16 @@ export const PDFSide = styled.div`
 export const LocalVideo = styled.div<any>`
     width: 600px;
     height: 400px;
-    overflow:hidden;
+    overflow: hidden;
     video {
         min-width: 100%;
         min-height: 100%;
     }
 `
 export const RemoteVideo = styled.div<any>`
-width: 600px;
-height: 400px;
-overflow:hidden;
+    width: 600px;
+    height: 400px;
+    overflow: hidden;
     video {
         width: 100%;
         height: 100%;

@@ -33,6 +33,7 @@ function Header() {
     const User = useAppSelector((state) => state.user.User)
     const path = useLocation()
     const socket = useContext(SocketContext)
+
     socket.on('receive-notification', () => {
         //show notif
     })
@@ -43,7 +44,7 @@ function Header() {
         })
     }, [User])
     return (
-        <HeaderWrapper pathname={path.pathname}>
+        <HeaderWrapper pathname={path.pathname.split('/')[1]}>
             <Flex align="center" gap="15px" style={{ flex: 2 }}>
                 <Logo />
                 <Separator />

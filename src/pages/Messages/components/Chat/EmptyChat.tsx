@@ -22,19 +22,17 @@ border-radius: 50%;
 }
 `
 
-type Props = {}
-
-function EmptyChat({}: Props) {
+function EmptyChat() {
     return (
         <Wrapper>
             <Circle>
                 <AiOutlineFile color="#3bb3bd" fontSize={'1.25rem'} />
             </Circle>
             <Text color="#6F757B" fz="15px">
-            Select a tutor to start{' '}
+                Select a tutor to start{' '}
             </Text>
             <Text color="#6F757B" fz="15px">
-            conversation
+                conversation
             </Text>
         </Wrapper>
     )

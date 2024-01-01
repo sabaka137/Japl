@@ -35,7 +35,7 @@ function CollectionQuiz() {
     )
     const isLoading = useAppSelector((state) => state.collections.isLoading)
 
-    let QuizRefs = useRef<HTMLDivElement[]>([])
+    const QuizRefs = useRef<HTMLDivElement[]>([])
     const addQuizToRef = (el: HTMLDivElement) => {
         if (el && !QuizRefs.current.includes(el)) {
             QuizRefs.current.push(el)
@@ -53,10 +53,10 @@ function CollectionQuiz() {
 
     useEffect(() => {
         if (quizMode === 'results') {
-            let TotalCorrect: number = 0
+            let TotalCorrect = 0
             quiz.forEach((el) => el.choosen === el.correct && TotalCorrect++)
 
-            let tempResult: ResultNavigationItem[] = []
+            const tempResult: ResultNavigationItem[] = []
             quiz.forEach((el, index) =>
                 tempResult.push({
                     order: index + 1,
@@ -74,7 +74,7 @@ function CollectionQuiz() {
     }, [quizMode])
 
     function setChoosenVariant(index: number, id: number) {
-        let updatedArray = quiz.map((question) =>
+        const updatedArray = quiz.map((question) =>
             question.id === id
                 ? {
                       ...question,

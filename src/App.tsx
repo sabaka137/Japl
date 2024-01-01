@@ -13,7 +13,6 @@ function App() {
         if (!User) {
             dispatch(GetUser()).then((res) => {
                 if (res.payload !== null) {
-                 
                     socket.emit('add-user', res.payload._id)
                 }
             })

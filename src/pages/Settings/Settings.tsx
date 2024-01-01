@@ -1,18 +1,23 @@
-import React, {useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Container, Flex } from '../../components/Common'
 import SettingsNavbar from '../../components/SettingsNavbar'
 import { useAppDispatch, useAppSelector } from '../../hooks/hook'
 import { SubmitHandler, UseFormSetValue, useForm } from 'react-hook-form'
-import { UpdateUser } from '../../redux/reducers/UserSlice'
+import { UpdateUser, setUserAvatarLocal } from '../../redux/reducers/UserSlice'
 import { CropperModal } from './components/CropperModal'
 import {
+    AvatarContainer,
+    AvatarItem,
+    ButtonContainer,
     ContentForm,
     ImageInfo,
     LeftSide,
     LoadButton,
     RightSide,
     SaveChangesButton,
+    SettingsContainer,
     SettingsInput,
+    SettingsItem,
     Title,
     UserPhoto,
 } from './style'
@@ -67,7 +72,7 @@ export const Settings = () => {
         }
     }, [User])
     function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
-        let FileList: FileList | null = e.target.files
+        const FileList: FileList | null = e.target.files
         setSelectedFile(URL.createObjectURL(FileList![0]))
         setModalOpen(true)
     }
@@ -76,6 +81,9 @@ export const Settings = () => {
         setLoader(true)
         dispatch(UpdateUser(data)).then((res) => {
             setLoader(false)
+            if (getValues('photo')) {
+                dispatch(setUserAvatarLocal(getValues('photo')))
+            }
         })
     }
 
@@ -89,21 +97,13 @@ export const Settings = () => {
                 />
             )}
             <SettingsNavbar />
-            <Container
-                style={{
-                    background: 'white',
-                    height: '800px',
-                    marginTop: '30px',
-                }}
-                w={40}
-                m={'0 auto'}
-            >
+            <SettingsContainer>
                 <Title>Profile settings</Title>
                 <ContentForm onSubmit={handleSubmit(onSubmit)}>
                     <Flex justify="space-between">
-                        <LeftSide>Avatar</LeftSide>
+                        <AvatarItem>Avatar</AvatarItem>
                         <RightSide>
-                            <Flex justify="space-between">
+                            <AvatarContainer>
                                 <UserPhoto>
                                     <img
                                         src={
@@ -114,7 +114,7 @@ export const Settings = () => {
                                         }
                                     />
                                 </UserPhoto>
-                                <Flex direction="column" align="flex-end">
+                                <ButtonContainer>
                                     <input
                                         style={{ display: 'none' }}
                                         type="file"
@@ -140,23 +140,23 @@ export const Settings = () => {
                                     <ImageInfo>
                                         Max. size - 2 Mb. JPG or PNG format.
                                     </ImageInfo>
-                                </Flex>
-                            </Flex>
+                                </ButtonContainer>
+                            </AvatarContainer>
                         </RightSide>
                     </Flex>
-                    <Flex m={'20px 0px'} justify="space-between" align="center">
+                    <SettingsItem>
                         <LeftSide>Name</LeftSide>
                         <RightSide>
                             <SettingsInput {...register('name')} />
                         </RightSide>
-                    </Flex>
-                    <Flex m={'20px 0px'} justify="space-between" align="center">
+                    </SettingsItem>
+                    <SettingsItem>
                         <LeftSide>Surname</LeftSide>
                         <RightSide>
                             <SettingsInput {...register('surname')} />
                         </RightSide>
-                    </Flex>
-                    <Flex m={'20px 0px'} justify="space-between" align="center">
+                    </SettingsItem>
+                    <SettingsItem>
                         <LeftSide>E-mail</LeftSide>
                         <RightSide>
                             <SettingsInput
@@ -164,18 +164,18 @@ export const Settings = () => {
                                 value={User?.email}
                             />
                         </RightSide>
-                    </Flex>
-                    <Flex m={'20px 0px'} justify="space-between" align="center">
+                    </SettingsItem>
+                    <SettingsItem>
                         <LeftSide>Password</LeftSide>
                         <RightSide>
                             <SettingsInput {...register('password')} />
                         </RightSide>
-                    </Flex>
+                    </SettingsItem>
                     <SaveChangesButton type="submit">
                         {saveLoader ? <ButtonLoader /> : 'Save changes'}
                     </SaveChangesButton>
                 </ContentForm>
-            </Container>
+            </SettingsContainer>
         </div>
     )
 }

@@ -5,6 +5,7 @@ import {
     FieldErrors,
     UseFormRegister,
     UseFormTrigger,
+    Control,
 } from 'react-hook-form'
 import Day from './Day'
 import { RegistrationButtonNext } from '../../../../components/Button/RegistrationButtonNext'
@@ -13,7 +14,7 @@ import { BsCheck } from 'react-icons/bs'
 import { Flex, Text } from '../../../../components/Common'
 import styled from 'styled-components'
 import { RegistrationButtonPrev } from '../../../../components/Button/RegistrationButtonPrev'
-import { User } from '../../../../types/User/UserTypes'
+import { TeacherReg, User } from '../../../../types/User/UserTypes'
 import { ScheduleTip, ScheduleTipTop } from '../style'
 const CustomCheckbox = styled.div`
     margin-bottom: 15px;
@@ -81,27 +82,50 @@ const CheckBox = styled.span`
         border-radius: 2px;
         border: 1px solid rgb(218, 223, 225);
         background-color: rgb(255, 255, 255);
-        transition: border-color 0s ease 0s, background-color 0s ease 0s,
+        transition:
+            border-color 0s ease 0s,
+            background-color 0s ease 0s,
             all 50ms ease 0s;
     }
 `
-
+type Props = {
+    setStep: React.Dispatch<React.SetStateAction<number>>
+    control: Control<{
+        general: TeacherReg
+    }>
+    trigger: UseFormTrigger<{
+        general: TeacherReg
+    }>
+    errors: FieldErrors<{
+        general: TeacherReg
+    }>
+    register: UseFormRegister<{
+        general: TeacherReg
+    }>
+}
 export const ProfileSchedule = ({
     control,
     setStep,
     register,
     errors,
     trigger,
-}) => {
+}: Props) => {
     const { fields, append, remove } = useFieldArray({
         name: 'general.schedule',
         control,
     })
     const [Days, setDays] = useState(fields)
 
-    function setChecked(checked, index) {
-        setDays([...Days, (Days[index].checked = checked)])
+    function setChecked(checked: any, index: number) {
+        setDays(
+            Days.map((item, currentIndex) =>
+                currentIndex === index
+                    ? { ...item, checked: !item.checked }
+                    : { ...item }
+            )
+        )
     }
+
     return (
         <>
             <Text
@@ -138,7 +162,7 @@ export const ProfileSchedule = ({
                 </Text>
             </ScheduleTip>
             <div>
-                {fields.map((field, index) => (
+                {fields.map((field: any, index) => (
                     <div key={field.id} style={{ marginBottom: '30px' }}>
                         <CustomCheckbox>
                             <input
@@ -159,7 +183,7 @@ export const ProfileSchedule = ({
                         </CustomCheckbox>
                         {Days[index].checked && (
                             <Day
-                                {...{ control, register }}
+                                control={control}
                                 errors={
                                     errors?.general?.schedule
                                         ? errors?.general?.schedule[index]

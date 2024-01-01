@@ -1,17 +1,19 @@
-import API from "..";
-
+import API from '..'
+import { FilterRequestOptions } from '../../types/Teachers/TeachersType'
 export const TeachersAPI = {
-	GetTeachers() {
-		return API.get("users/getTeachers?countries=AX,RU,4&&language=null&&min=1&&max=22&&search=Станислав&&sort=desc&&native=true&&time=12:30,13:00,14&&days=Mon");
-	},
-	GetTeacher(id: string) {
-		return API.get(`users/getTeacher?id=${id}`);
-	},
-	GetLessons() {
-		return API.get("users/getLessons");
-	},
+    GetTeachers(filters: FilterRequestOptions) {
+        return API.get(
+            `users/getTeachers?countries=${filters.countries}&page=${filters.page}&language=${filters.languages}&min=${filters.minPrice}&max=${filters.maxPrice}&search=${filters.search}&sort=${filters.sort}&native=${filters.isNative}&time=12:30,13:00,14&days=Mon`
+        )
+    },
+    GetTeacher(id: string) {
+        return API.get(`users/getTeacher?id=${id}`)
+    },
+    GetLessons() {
+        return API.get('users/getLessons')
+    },
 
-	RefreshData() {
-		return API.get("users/refreshData");
-	},
-};
+    RefreshData() {
+        return API.get('users/refreshData')
+    },
+}

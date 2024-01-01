@@ -44,7 +44,7 @@ function QuizBottom({ setQuizMode }: Props) {
                 <img src={ConfirmImg} alt="send quiz" />
             </Image>
             <Text color="#2E3856" margin={'40px 0px'} fz={'1.7rem'}>
-                It's done! Send the quiz?
+                It&apos;s done! Send the quiz?
             </Text>
             <Button onClick={() => handleClick()}>Submit a quiz</Button>
         </Wrapper>

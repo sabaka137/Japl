@@ -73,11 +73,11 @@ export interface Props {
 export const CollectionCard = ({ collection }: Props) => {
     const [open, setOpen] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
-    function handleClick(e: any) {
+    function handleClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
         e.preventDefault()
         setOpen(!open)
     }
-    function Delete(e: any) {
+    function Delete(e: React.MouseEvent<SVGElement, MouseEvent>) {
         e.preventDefault()
         setDeleteModal(true)
     }

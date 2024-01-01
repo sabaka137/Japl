@@ -54,7 +54,7 @@ export const Chat = ({ conversation, currentId, setCurrentView }: Props) => {
     const socket = useContext(SocketContext)
     const scrollRef = useRef<HTMLDivElement | null>(null)
     const inputRef = useRef<HTMLInputElement | null>(null)
-    console.log(currentFriend)
+
     useEffect(() => {
         const friendId = conversation.members.find(
             (id: string) => id !== currentId
@@ -133,7 +133,6 @@ export const Chat = ({ conversation, currentId, setCurrentView }: Props) => {
             setMessages((prevState) => [...prevState, res.data])
         })
     }
-    console.log(currentFriend)
 
     return (
         <div
@@ -142,7 +141,7 @@ export const Chat = ({ conversation, currentId, setCurrentView }: Props) => {
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
-                width: '100%',
+                maxWidth: '100%',
             }}
         >
             <Flex style={{ flex: 2 }}>
@@ -197,7 +196,7 @@ export const Chat = ({ conversation, currentId, setCurrentView }: Props) => {
                                                         currentId
                                                     }
                                                 >
-                                                    {message.text}
+                                                    <span> {message.text}</span>
                                                     <MessageTime>
                                                         {new Date(
                                                             message.time
@@ -272,14 +271,30 @@ export const Chat = ({ conversation, currentId, setCurrentView }: Props) => {
                             </TopBar>
                         ) : (
                             <MobileTopBar
-                                onClick={() => setCurrentView('conversations')}
+                                onClick={(e) => (
+                                    setCurrentView('conversations'),
+                                    e.stopPropagation()
+                                )}
                             >
                                 <Flex align="center" gap="10px">
                                     <IoIosArrowBack fontSize={'1.4rem'} />
-                                    <Avatar>
+                                    <Avatar
+                                        onClick={(e) => (
+                                            e.stopPropagation(),
+                                            setSideBarOpen(true)
+                                        )}
+                                    >
                                         <img src={currentFriend?.photo} />
                                     </Avatar>
-                                    <Text color="#3C4447" fz="14px" fw="500">
+                                    <Text
+                                        onClick={(e) => (
+                                            e.stopPropagation(),
+                                            setSideBarOpen(true)
+                                        )}
+                                        color="#3C4447"
+                                        fz="14px"
+                                        fw="500"
+                                    >
                                         {currentFriend?.name}{' '}
                                         {currentFriend?.surname[0]}.
                                     </Text>

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const ConversationsWrapper = styled.div`
     border-right: 1px solid #d8dfe6;
-    min-width: 450px;
+    width: 450px;
     @media (max-width: 1350px) {
         min-width: 350px;
     }
@@ -25,10 +25,9 @@ export const ConversationInput = styled.input`
     padding: 15px 12px;
     font-size: 1rem;
     box-sizing: border-box;
-    border:none;
+    border: none;
     border-radius: 5px;
     outline: none;
     &:focus {
-    
     }
 `

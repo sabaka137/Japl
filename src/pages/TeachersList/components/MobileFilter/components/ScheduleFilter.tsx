@@ -95,13 +95,13 @@ function ScheduleFilter({ setFilters, choosenDays, choosenSchedule }: Props) {
 
     useEffect(() => {
         if (isDirty) {
-            let finalSchedule: string[] = []
+            const finalSchedule: string[] = []
             schedule.forEach((s) => {
                 if (s.checked) {
                     finalSchedule.push(s.time.hours)
                 }
             })
-            let finalDays: string[] = []
+            const finalDays: string[] = []
             days.forEach((d) => {
                 if (d.checked) {
                     finalDays.push(d.day.code)

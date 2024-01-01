@@ -4,7 +4,7 @@ import RegistrationInput from '../../../components/Input/RegistrationInput'
 import { RegistrationButtonPrev } from '../../../components/Button/RegistrationButtonPrev'
 import { Flex, Text } from '../../../components/Common'
 import { FieldErrors, UseFormRegister, UseFormTrigger } from 'react-hook-form'
-import { User } from '../../../types/User/UserTypes'
+import { TeacherReg, User } from '../../../types/User/UserTypes'
 import { Dispatch, SetStateAction } from 'react'
 import { PriceTip } from './style'
 
@@ -24,8 +24,8 @@ const Button = styled.button`
     }
 `
 type Props = {
-    errors: FieldErrors<{ general: User }> | undefined
-    register: UseFormRegister<{ general: User }>
+    errors: FieldErrors<{ general: TeacherReg }> | undefined
+    register: UseFormRegister<{ general: TeacherReg }>
     setStep: Dispatch<SetStateAction<number>>
 }
 export const ProfiilePrice = ({ setStep, register, errors }: Props) => {
@@ -46,7 +46,7 @@ export const ProfiilePrice = ({ setStep, register, errors }: Props) => {
             </PriceTip>
 
             <RegistrationInput
-                type="text"
+                type="number"
                 width={'200px'}
                 text={'$ USD'}
                 label={'Price'}
@@ -58,7 +58,10 @@ export const ProfiilePrice = ({ setStep, register, errors }: Props) => {
                             value: /^-?\d*\.?\d*$/,
                             message: 'The number must be an integer',
                         },
-                        max: {value:100,message:'Price must be between 1 and 100'},
+                        max: {
+                            value: 100,
+                            message: 'Price must be between 1 and 100',
+                        },
                     }),
                 }}
             />

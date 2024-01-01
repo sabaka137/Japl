@@ -16,6 +16,8 @@ import {
     AddToFavorite,
     RemoveFromFavorite,
 } from '../../../redux/reducers/UserSlice'
+import SuccessfullMessage from '../../../components/Modal/SuccessfullMessage'
+import { getLabel } from '../../../utils/GetLabelFromCode'
 
 //fix- add clip-path
 const Avatar = styled.div`
@@ -198,6 +200,7 @@ type Props = {
 
 export const TeacherHeader = ({ currentTeacher }: Props) => {
     const [messageModal, setMessageModal] = useState(false)
+    const [successfulMessage, setSuccessfull] = useState(false)
     const User = useAppSelector((state) => state.user.User)
     const navigate = useNavigate()
     const { id } = useParams()
@@ -266,9 +269,11 @@ export const TeacherHeader = ({ currentTeacher }: Props) => {
                                         align="center"
                                         gap="5px"
                                     >
-                                        <Language>Английский</Language>
+                                        <Language>
+                                            {getLabel(el.language)}
+                                        </Language>
                                         <LanguageLevel>
-                                            Родной язык
+                                            {el.level}
                                         </LanguageLevel>
                                     </Flex>
                                 ))}
@@ -294,7 +299,6 @@ export const TeacherHeader = ({ currentTeacher }: Props) => {
                                 : addToFavorite()
                         }
                     >
-               
                         {currentTeacher?.inFavorite ? (
                             <BiSolidHeart />
                         ) : (
@@ -321,11 +325,17 @@ export const TeacherHeader = ({ currentTeacher }: Props) => {
             {messageModal &&
                 createPortal(
                     <SendMessageModal
+                        setSuccessfull={setSuccessfull}
                         avatarSrc={currentTeacher!.photo}
                         name={currentTeacher!.name}
                         setModalOpen={setMessageModal}
                         teacherId={id!}
                     />,
+                    document.body
+                )}
+            {successfulMessage &&
+                createPortal(
+                    <SuccessfullMessage setSuccessfull={setSuccessfull} />,
                     document.body
                 )}
         </>

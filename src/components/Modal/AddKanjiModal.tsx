@@ -41,16 +41,16 @@ function AddKanjiModal({ example }: Props) {
     useEffect(() => {
         dispatch(CollectionSliceAsyncActions.GetCollections()).then((res) => {
             if (res.payload.length !== 0) {
-				setGroups(res.payload)
-				 setValue(res.payload[0].name)
-            }else{
-				alert('предложить создать коллекцию')
-			}
+                setGroups(res.payload)
+                setValue(res.payload[0].name)
+            } else {
+                alert('предложить создать коллекцию')
+            }
         })
     }, [])
     function handleClick() {
-        let termin = example.japanese.split('（')[0]
-        let reading = example.japanese.split('（')[1].slice(0, -1)
+        const termin = example.japanese.split('（')[0]
+        const reading = example.japanese.split('（')[1].slice(0, -1)
 
         dispatch(
             CollectionSliceAsyncActions.AddToCollection({
@@ -67,7 +67,10 @@ function AddKanjiModal({ example }: Props) {
     return (
         <KanjiModalContainer>
             <ModalSelect onChange={(e) => setValue(e.target.value)}>
-                {groups != null && groups?.map((el) => <option>тфьу</option>)}
+                {groups != null &&
+                    groups?.map((el, index) => (
+                        <option key={index}>тфьу</option>
+                    ))}
             </ModalSelect>
 
             <div>

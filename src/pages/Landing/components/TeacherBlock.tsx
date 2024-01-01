@@ -87,8 +87,11 @@ const Button = styled(NavLink)`
     text-align: center;
     text-decoration: none;
     text-overflow: ellipsis;
-    transition: color 50ms ease 0s, background-color 50ms ease 0s,
-        border-color 50ms ease 0s, box-shadow 0.2s ease 0s;
+    transition:
+        color 50ms ease 0s,
+        background-color 50ms ease 0s,
+        border-color 50ms ease 0s,
+        box-shadow 0.2s ease 0s;
     user-select: none;
     vertical-align: middle;
     @media (max-width: 960px) {
@@ -125,44 +128,40 @@ const ImgContainer = styled.div`
     }
 `
 
-type Props = {}
-
-function TeacherBlock({}: Props) {
+function TeacherBlock() {
     return (
         <Wrapper>
             <Container>
                 <Content>
                     <TextHeader>Become a tutor on Japl</TextHeader>
                     <TextSub>
-                    Share your knowledge and earn from the comfort of your home.
-                        Sign up to start teaching on Japl.
+                        Share your knowledge and earn from the comfort of your
+                        home. Sign up to start teaching on Japl.
                     </TextSub>
                     <Box margin="25px 0px 0px">
                         <StepItem>
                             <AiOutlineSearch />
                             <Text color="#090F19" fz="15px">
-                            Find new students
+                                Find new students
                             </Text>
                         </StepItem>
                         <StepItem>
                             <AiOutlineCalendar />
                             <Text color="#090F19" fz="15px">
-                            Develop your own business
+                                Develop your own business
                             </Text>
                         </StepItem>
                         <StepItem>
                             <AiOutlineDollarCircle />
                             <Text color="#090F19" fz="15px">
-                            Be sure to pay for your lessons
+                                Be sure to pay for your lessons
                             </Text>
                         </StepItem>
                     </Box>
                     <Button to={'/signup/teacher'}>Become a tutor</Button>
                 </Content>
                 <ImgContainer>
-                    <img
-                        src={BecomeTeacher}
-                    />
+                    <img src={BecomeTeacher} />
                 </ImgContainer>
             </Container>
         </Wrapper>

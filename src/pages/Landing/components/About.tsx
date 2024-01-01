@@ -160,9 +160,8 @@ const Separator = styled.div`
         left: 0;
     }
 `
-type Props = {}
 
-function About({}: Props) {
+function About() {
     return (
         <Wrapper>
             <HeaderIcon fill>
@@ -195,7 +194,7 @@ function About({}: Props) {
                         </IconItem>
                         <ItemHeader>Safe communication</ItemHeader>
                         <ItemSub>
-                            We verify each tutor's profile on the platform
+                            We verify each tutor&apos;s profile on the platform
                         </ItemSub>
                     </Item>
                     <Item>
@@ -214,7 +213,8 @@ function About({}: Props) {
                         </IconItem>
                         <ItemHeader>Affordable prices</ItemHeader>
                         <ItemSub>
-                        On the platform, you'll find a tutor for every budget
+                            On the platform, you&apos;ll find a tutor for every
+                            budget
                         </ItemSub>
                     </Item>
                 </TopContent>
@@ -228,7 +228,7 @@ function About({}: Props) {
                 <HeaderTextContainer>
                     <TextHeader>Work on specific skills</TextHeader>
                     <TextSub>
-                    Our tutors can help you achieve any goal you have
+                        Our tutors can help you achieve any goal you have
                     </TextSub>
                 </HeaderTextContainer>
             </Flex>
@@ -246,10 +246,11 @@ function About({}: Props) {
                                     fz="18px"
                                     fw="500"
                                 >
-                         Immerse yourself in learning a new culture
+                                    Immerse yourself in learning a new culture
                                 </Text>
                                 <Text color="#6F757B" fz="15px">
-                                Communicate freely with people from all over the world
+                                    Communicate freely with people from all over
+                                    the world
                                 </Text>
                             </div>
                         </Flex>
@@ -264,10 +265,10 @@ function About({}: Props) {
                                     fz="18px"
                                     fw="500"
                                 >
-                                   Discuss different topics with your tutors
+                                    Discuss different topics with your tutors
                                 </Text>
                                 <Text color="#6F757B" fz="15px">
-                                Our experts will always be there to help you
+                                    Our experts will always be there to help you
                                 </Text>
                             </div>
                         </Flex>
@@ -284,10 +285,10 @@ function About({}: Props) {
                                     fz="18px"
                                     fw="500"
                                 >
-                                 Build a career and achieve success
+                                    Build a career and achieve success
                                 </Text>
                                 <Text color="#6F757B" fz="15px">
-                                Develop your professional vocabulary
+                                    Develop your professional vocabulary
                                 </Text>
                             </div>
                         </Flex>
@@ -302,10 +303,10 @@ function About({}: Props) {
                                     fz="18px"
                                     fw="500"
                                 >
-                                 Learn to speak boldly and naturally
+                                    Learn to speak boldly and naturally
                                 </Text>
                                 <Text color="#6F757B" fz="15px">
-                                Speak confidently in any language
+                                    Speak confidently in any language
                                 </Text>
                             </div>
                         </Flex>

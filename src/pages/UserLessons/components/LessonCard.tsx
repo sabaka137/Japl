@@ -8,20 +8,26 @@ import { GetTeacher } from '../../../redux/reducers/TeachersSlice'
 import { User } from '../../../types/User/UserTypes'
 import { AiOutlineCheck } from 'react-icons/ai'
 import { days, months } from './data'
+import { Lesson } from '../../../types/Lesson/LessonsType'
 
 const CardWrapper = styled.div`
     width: 100%;
-    height: 100px;
+    min-height: 100px;
     border-radius: 15px;
     background: white;
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    padding: 0px 20px;
+    padding: 10px 20px;
+
     justify-content: space-between;
+    @media (max-width: 600px) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 `
 const Avatar = styled.div`
-    width: 50px;
+    min-width: 50px;
     height: 50px;
     border-radius: 50%;
     overflow: hidden;
@@ -30,22 +36,36 @@ const Avatar = styled.div`
         height: 50px;
     }
 `
+const DateText = styled.div`
+    font-weight: 500;
+    font-size: 17px;
+    font-family: Inter;
+    @media (max-width: 600px) {
+        font-size: 14px;
+    }
+`
+
 const Button = styled.button`
     border: none;
     border-radius: 20px;
     display: flex;
     align-items: center;
     gap: 5px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     cursor: pointer;
-    padding: 10px 35px;
+    padding: 10px 30px;
     background: #e1fafa;
     color: #45909b;
     font-weight: 500;
+    @media (max-width: 600px) {
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+    }
 `
 
 type Props = {
-    lesson: any
+    lesson: Lesson
 }
 
 function LessonCard({ lesson }: Props) {
@@ -55,9 +75,9 @@ function LessonCard({ lesson }: Props) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        let today = new Date(lesson.date)
-        let temp = new Date(today.getTime() + 1 * 60 * 60 * 1000)
-        let next = new Date(temp.getTime())
+        const today = new Date(lesson.date)
+        const temp = new Date(today.getTime() + 1 * 60 * 60 * 1000)
+        const next = new Date(temp.getTime())
 
         setNextTime(
             next.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -68,8 +88,8 @@ function LessonCard({ lesson }: Props) {
     }, [])
 
     function handleClick() {
-        dispatch(setLesson(lesson))
-        navigate(`/lesson/${lesson.teacherId}/${lesson.studentId}`)
+        //dispatch(setLesson(lesson))
+        //navigate(`/lesson/${lesson.teacherId}/${lesson.studentId}`)
     }
     return (
         <CardWrapper>
@@ -77,8 +97,8 @@ function LessonCard({ lesson }: Props) {
                 <Avatar>
                     <img src={teacher?.photo} />
                 </Avatar>
-                <div>
-                    <Text fw={'500'} fz={'17px'}>
+                <Flex justify="center" direction="column">
+                    <DateText>
                         {days[new Date(lesson.date).getDay()]},{' '}
                         {months[new Date(lesson.date).getMonth()]}{' '}
                         {new Date(lesson.date).getDate()},{' '}
@@ -87,18 +107,17 @@ function LessonCard({ lesson }: Props) {
                             minute: '2-digit',
                         })}{' '}
                         - {nextTime}
-                    </Text>
+                    </DateText>
                     <Text color="#707070" fw={'400'} fz={'1rem'}>
                         Japanese with {teacher?.name}
                     </Text>
-                </div>
+                </Flex>
             </Flex>
-            <Flex>
-                <Button>
-                    <AiOutlineCheck onClick={() => handleClick()} />
-                    Подключится
-                </Button>
-            </Flex>
+
+            <Button>
+                <AiOutlineCheck onClick={() => handleClick()} />
+                Подключится
+            </Button>
         </CardWrapper>
     )
 }

@@ -104,14 +104,17 @@ export const ImportModal = ({
     function dragStartHandler(card: Card) {
         setCurrentCard(card)
     }
-    function dragOverHandler(e: any) {
-        e.preventDefault()
-        e.target.style.background = '#2e3856;'
+    function dragOverHandler(e: React.DragEvent<HTMLDivElement>) {
+        e.preventDefault(),
+            ((e.target as HTMLDivElement).style.background = '#2e3856;')
     }
-    function dragLeaveHandler(e: any) {
-        e.target.style.background = '#2e3856;'
+    function dragLeaveHandler(e: React.DragEvent<HTMLDivElement>) {
+        ;(e.target as HTMLDivElement).style.background = '#2e3856;'
     }
-    function dragDropHandler(e: any, card1: any) {
+    function dragDropHandler(
+        e: React.DragEvent<HTMLDivElement>,
+        card1: { id: number; order: number; text: string }
+    ) {
         e.preventDefault()
         setCard(
             card.map((el) => {
@@ -123,10 +126,13 @@ export const ImportModal = ({
                 }
                 return el
             })
-        )
-        e.target.style.background = '#2e3856;'
+        ),
+            ((e.target as HTMLDivElement).style.background = '#2e3856;')
     }
-    function sortCards(a: any, b: any) {
+    function sortCards(
+        a: { id: number; order: number; text: string },
+        b: { id: number; order: number; text: string }
+    ) {
         if (a.order > b.order) {
             return 1
         } else {
@@ -134,12 +140,17 @@ export const ImportModal = ({
         }
     }
 
-    function generateCard(e: any) {
-        let tempArray: any = []
+    function generateCard(e: string) {
+        const tempArray: {
+            id: number
+            termin: string
+            meaning: string
+            reading: string
+        }[] = []
         let arr
-        e.split(rowSeparator).forEach((el: any, index: number) => {
+        e.split(rowSeparator).forEach((el: string, index: number) => {
             arr = el.split(separator === 'tab' ? '	' : separator)
-            let temp = {
+            const temp = {
                 id: group.termins[group.termins.length - 1].id + index + 1,
                 termin:
                     arr[card.find((el1) => el1.text === 'termin')!.order - 1] ||
@@ -174,7 +185,6 @@ export const ImportModal = ({
                 item.reading === '' &&
                 item.termin === ''
             ) {
-                console.log(item)
                 remove(index)
             }
         })
@@ -195,7 +205,6 @@ export const ImportModal = ({
                     <Flex justify="space-between">
                         {card.sort(sortCards).map((el) => (
                             <DragButtons
-                                //fix add drag&drop for mobile
                                 key={el.id}
                                 draggable
                                 onDragStart={(e) => dragStartHandler(el)}
@@ -385,7 +394,11 @@ export const ImportModal = ({
                     </Flex>
                     <CardContainer count={tempCard.length > 6}>
                         {tempCard.map((el, index) => (
-                            <CardExample index={index + 1} card={el} />
+                            <CardExample
+                                key={index}
+                                index={index + 1}
+                                card={el}
+                            />
                         ))}
                     </CardContainer>
                 </Container>

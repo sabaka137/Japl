@@ -383,9 +383,7 @@ const ButtonsContainer = styled.div`
     }
 `
 
-type Props = {}
-
-function SkeletonCard({}: Props) {
+function SkeletonCard() {
     return (
         <TeacherCardWrapper>
             <Flex gap={'15px'} style={{ flexWrap: 'wrap' }}>

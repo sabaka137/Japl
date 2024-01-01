@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '../../hooks/hook'
 import { MessageAPI } from '../../api/services/MessageService'
 import { newMessage } from '../../types/Chat/ChatTypes'
+import { ButtonLoader } from '../Loader/ButtonLoader'
 const ModalWrapper = styled.div`
     position: fixed;
     width: 100%;
@@ -59,6 +60,9 @@ const Button = styled.button`
     width: 100%;
     height: 50px;
     background: #3bb3bd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: none;
     border-radius: 3px;
     color: white;
@@ -79,7 +83,9 @@ const TextArea = styled.textarea`
     line-height: 1.42857143;
     background: #fff;
     margin-bottom: 20px;
-    transition: box-shadow 0.2s, border 50ms;
+    transition:
+        box-shadow 0.2s,
+        border 50ms;
     &:focus {
         box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.08);
         outline: none;
@@ -90,12 +96,20 @@ type Props = {
     avatarSrc: string
     name: string
     setModalOpen: Dispatch<SetStateAction<boolean>>
-    teacherId:string
+    teacherId: string
+    setSuccessfull: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function SendMessageModal({ avatarSrc, name, setModalOpen,teacherId }: Props) {
+function SendMessageModal({
+    setSuccessfull,
+    avatarSrc,
+    name,
+    setModalOpen,
+    teacherId,
+}: Props) {
     const [value, setValue] = useState('')
-    const userId = useAppSelector(state => state.user.User?._id)
+    const [messageSended, setSended] = useState(false)
+    const userId = useAppSelector((state) => state.user.User?._id)
     const dispatch = useAppDispatch()
     useEffect(() => {
         window.addEventListener('keydown', (key) => {
@@ -109,28 +123,33 @@ function SendMessageModal({ avatarSrc, name, setModalOpen,teacherId }: Props) {
         e.stopPropagation()
     }
     function sendMessage() {
-        const message:newMessage = {
+        setSended(true)
+        const message: newMessage = {
             senderId: userId!,
             text: value,
             receiverId: teacherId,
             time: new Date(),
         }
-        MessageAPI.CheckConversationAndSendMessage(message)
-        setModalOpen(false)
+        MessageAPI.CheckConversationAndSendMessage(message).then((res) => {
+            setSended(false)
+            setModalOpen(false)
+            setSuccessfull(true)
+        })
     }
     return (
         <ModalWrapper onClick={(e) => handleClick(e)}>
             <ModalItem onClick={(e) => e.stopPropagation()}>
                 <Text>Contact with {name}</Text>
                 <About>
-                Tell the tutor about yourself, your requirements and your learning goals.
+                    Tell the tutor about yourself, your requirements and your
+                    learning goals.
                 </About>
                 <TextArea
                     onChange={(e) => setValue(e.target.value)}
                     placeholder="Enter your message here..."
                 />
                 <Button onClick={() => sendMessage()}>
-                Send a message
+                    {messageSended ? <ButtonLoader /> : 'Send a message'}
                 </Button>
                 <Avatar>
                     <img src={avatarSrc} />

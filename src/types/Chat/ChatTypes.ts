@@ -16,5 +16,5 @@ export interface newMessage {
 }
 export interface Conversation {
     _id: string
-    members:string[]
+    members: string[]
 }

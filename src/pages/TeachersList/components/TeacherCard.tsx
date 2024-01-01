@@ -18,6 +18,7 @@ import LoginForActiontModal from '../../../components/Modal/LoginForActiontModal
 import { AiOutlineMessage } from 'react-icons/ai'
 import SuccessfullMessage from '../../../components/Modal/SuccessfullMessage'
 import { getLabel } from '../../../utils/GetLabelFromCode'
+import SuccessfullBookLesson from '../../../components/Modal/SuccessfullBookLesson'
 const TeacherCardWrapper = styled.div`
     width: 65%;
     min-height: 250px;
@@ -101,6 +102,7 @@ const LessonPrice = styled.div`
     font-size: 1.2rem;
     display: flex;
     align-items: center;
+    font-family: Noto Sans;
     gap: 5px;
     font-weight: 400;
     span {
@@ -122,8 +124,9 @@ const Header = styled.div<{ DescriptionOpen: boolean }>`
     font-family: Inter;
     color: black;
     max-height: ${(props) => (props.DescriptionOpen ? 'auto' : '65px')};
-    word-break: break-all;
+    word-break: break-word;
     overflow: hidden;
+    overflow-wrap: break-word;
     span {
         font-weight: 500;
         color: #090f19;
@@ -147,7 +150,8 @@ const SendMessageButton = styled.button`
     border-radius: 10px;
     border: none;
     text-align: center;
-    font-family: Inter;
+    font-family: Noto Sans;
+
     font-size: 16px;
     color: #090F1;
     display: flex;
@@ -170,7 +174,7 @@ const BookLesson = styled.button`
     width: 100%;
     height: 60px;
     background: #0096b2;
-    font-family: Inter;
+    font-family: Noto Sans;
     text-align: center;
     font-size: 0.9rem;
     color: white;
@@ -242,10 +246,12 @@ const LanguageLevel = styled.div`
 `
 
 const ButtonsContainer = styled.div`
-    min-width: 25%;
+    min-width: 29%;
     display: flex;
     flex-direction: column;
-
+    @media (max-width: 1000px) {
+        min-width: 24%;
+    }
     @media (max-width: 720px) {
         min-width: 100%;
         flex-direction: row;
@@ -308,7 +314,7 @@ const CheckFullLanguages = styled.div`
     font-size: 15px;
 `
 type Props = {
-    addTeachertoRef: (teacherRef: any) => void
+    addTeachertoRef: (el: HTMLInputElement) => void
     teacher: User
     hoverHandle: (teacherIndex: number) => void
     index: number
@@ -324,6 +330,8 @@ function TeacherCard({
 }: Props) {
     const [modalOpen, setModalOpen] = useState(false)
     const [BookModal, setBookModal] = useState(false)
+    const [successfulMessage, setSuccessfull] = useState(false)
+    const [successfulLesson, setSuccessfullLesson] = useState(false)
     const [DescriptionOpen, setDescriptionOpen] = useState(false)
     const [LanguagesOpen, setLanguagesOpen] = useState(false)
     const navigate = useNavigate()
@@ -435,7 +443,7 @@ function TeacherCard({
                             <Text color="#8194A7" fz="14px">
                                 Speaks at:
                             </Text>
-                            {teacher.languages.map((el: any, index) =>
+                            {teacher.languages.map((el, index) =>
                                 LanguagesOpen ? (
                                     <Flex
                                         key={index}
@@ -497,7 +505,7 @@ function TeacherCard({
                             Book a trial lesson
                         </BookLesson>
                         <SendMessageButton onClick={() => SendMessage()}>
-                            <span style={{ textAlign: 'center' }}>
+                            <span>
                                 {window.innerWidth > 400 ? (
                                     'Send a message'
                                 ) : (
@@ -513,6 +521,7 @@ function TeacherCard({
                 createPortal(
                     <SendMessageModal
                         avatarSrc={teacher.photo}
+                        setSuccessfull={setSuccessfull}
                         name={teacher.name}
                         setModalOpen={setModalOpen}
                         teacherId={teacher._id}
@@ -520,9 +529,24 @@ function TeacherCard({
                     document.body
                 )}
 
+            {successfulMessage &&
+                createPortal(
+                    <SuccessfullMessage setSuccessfull={setSuccessfull} />,
+                    document.body
+                )}
+            {successfulLesson &&
+                createPortal(
+                    <SuccessfullBookLesson
+                        setSuccessfullLesson={setSuccessfullLesson}
+                    />,
+                    document.body
+                )}
+
             {BookModal &&
                 createPortal(
                     <BookLessonModal
+                        setSuccessfullLesson={setSuccessfullLesson}
+                        teacherId={teacher._id}
                         setBookModal={setBookModal}
                         avatarSrc={teacher.photo}
                         schedule={teacher.schedule}

@@ -10,13 +10,12 @@ function RandomVariant(
     correct: CollectionTermin,
     variants: string[]
 ) {
-    
-    let filteredCollection = collection.filter(
+    const filteredCollection = collection.filter(
         (termin) =>
             !variants.includes(termin.reading) &&
             termin.reading !== correct.reading
     )
-    let candidate =
+    const candidate =
         filteredCollection[
             Math.floor(Math.random() * filteredCollection.length)
         ]?.reading
@@ -25,10 +24,10 @@ function RandomVariant(
 }
 
 function RandomForTrueFalse(collection: CollectionTermin[], correct: string) {
-    let filteredCollection = collection.filter(
+    const filteredCollection = collection.filter(
         (termin) => termin.reading !== correct
     )
-    let candidate =
+    const candidate =
         filteredCollection[
             Math.floor(Math.random() * filteredCollection.length)
         ]?.reading
@@ -40,7 +39,7 @@ function GenerateTrueFalse(
     quiz: IQuizQuestion[]
 ) {
     collection?.forEach((el, i) => {
-        let temp: IQuizQuestion = {
+        const temp: IQuizQuestion = {
             id: 0,
             type: 'true/false',
             termin: null,
@@ -50,7 +49,7 @@ function GenerateTrueFalse(
             correct: 0,
             correctMeaning: null,
         }
-        let random = Math.floor(Math.random() * 2)
+        const random = Math.floor(Math.random() * 2)
         temp.id = i + 1
         temp.termin = el.termin
         temp.meaning =
@@ -61,17 +60,16 @@ function GenerateTrueFalse(
         temp.variants = ['True', 'False']
         temp.correct = temp.meaning == temp.correctMeaning ? 0 : 1
 
-        //tyta -fix 
-        if(quiz.length < 4){
+        //tyta -fix
+        if (quiz.length < 4) {
             quiz.push(temp)
-        }else{
+        } else {
             if (quiz.length < collection.length / 2) {
                 quiz.push(temp)
             } else {
                 //закончить цикл чтобы не работал в холостую
             }
         }
-        
     })
 }
 
@@ -80,7 +78,7 @@ function GenerateOneFour(
     quiz: IQuizQuestion[]
 ) {
     collection?.forEach((el, i) => {
-        let temp: IQuizQuestion = {
+        const temp: IQuizQuestion = {
             id: 0,
             type: '1/4',
             termin: null,
@@ -95,7 +93,7 @@ function GenerateOneFour(
         temp.meaning = el.meaning
         temp.id = i + 1
 
-        let pos = Math.floor(Math.random() * 4) // random correct answer position
+        const pos = Math.floor(Math.random() * 4) // random correct answer position
         temp.correct = pos
 
         for (let j = 0; j < 4; j++) {
@@ -117,9 +115,8 @@ function GenerateOneFour(
                 temp.variants[index] = el.reading
             }
         })
-        
-        if(quiz.length > 3){
-          
+
+        if (quiz.length > 3) {
             if (i + 1 > quiz.length && quiz.length < collection.length) {
                 quiz.push(temp)
             } else {
@@ -129,10 +126,10 @@ function GenerateOneFour(
     })
 }
 function Shuffle(array: CollectionTermin[]) {
-    let shuffledArray = [...array]
+    const shuffledArray = [...array]
 
     for (let i = shuffledArray.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1))
+        const j = Math.floor(Math.random() * (i + 1))
         ;[shuffledArray[i], shuffledArray[j]] = [
             shuffledArray[j],
             shuffledArray[i],
@@ -141,12 +138,14 @@ function Shuffle(array: CollectionTermin[]) {
     return shuffledArray
 }
 
-export function createQuiz(collection: ICollection, setFinish: Dispatch<SetStateAction<boolean>>):IQuizQuestion[] {
-    let ShuffledArray = Shuffle(collection.termins) // change the order of terms so that the quiz is not in the same order
+export function createQuiz(
+    collection: ICollection,
+    setFinish: Dispatch<SetStateAction<boolean>>
+): IQuizQuestion[] {
+    const ShuffledArray = Shuffle(collection.termins) // change the order of terms so that the quiz is not in the same order
     const quiz: IQuizQuestion | [] = []
     GenerateTrueFalse(ShuffledArray, quiz)
     GenerateOneFour(ShuffledArray, quiz)
-    console.log(quiz)
     setFinish(true)
     return quiz
 }

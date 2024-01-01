@@ -32,49 +32,57 @@ export const SelectedGroup = () => {
                 pathname.split('/')[pathname.split('/').length - 1]
             )
         )
-    }, [dispatch,pathname])
+    }, [dispatch, pathname])
 
     return (
         <PageWrapper>
             <ContentContainer>
-                <Container w={60} m={'0 auto'}>
-                    <div>
-                        <Flex justify="space-between">
+                <Container
+                    w={60}
+                    m={'0 auto'}
+                    style={{ minHeight: window.innerHeight }}
+                >
+                    {currentCollection && (
+                        <>
                             <div>
-                                <CollectionName>
-                                    {currentCollection?.name}
-                                </CollectionName>
+                                <Flex justify="space-between">
+                                    <div>
+                                        <CollectionName>
+                                            {currentCollection?.name}
+                                        </CollectionName>
+                                    </div>
+                                    <div>
+                                        <ShareButton>
+                                            <IoShareOutline /> Publish
+                                        </ShareButton>
+                                    </div>
+                                </Flex>
+                                <CollectionRating>
+                                    <AiTwotoneStar /> Leave your first rating
+                                </CollectionRating>
+                                <div>
+                                    <TypesContainer>
+                                        <TypeButton active to={'#'}>
+                                            <div>
+                                                <BsCollectionFill /> Cards
+                                            </div>
+                                        </TypeButton>
+                                        <TypeButton to={`${pathname}/quiz`}>
+                                            <div>
+                                                <HiDocumentText /> Quiz
+                                            </div>
+                                        </TypeButton>
+                                        <TypeButton disabled to={'/'}>
+                                            <div>
+                                                <AiOutlineLock /> Games
+                                            </div>
+                                        </TypeButton>
+                                    </TypesContainer>
+                                </div>
                             </div>
-                            <div>
-                                <ShareButton>
-                                    <IoShareOutline /> Publish
-                                </ShareButton>
-                            </div>
-                        </Flex>
-                        <CollectionRating>
-                            <AiTwotoneStar /> Leave your first rating
-                        </CollectionRating>
-                        <div>
-                            <TypesContainer>
-                                <TypeButton active to={'#'}>
-                                    <div>
-                                        <BsCollectionFill /> Cards
-                                    </div>
-                                </TypeButton>
-                                <TypeButton  to={`${pathname}/quiz`}>
-                                    <div>
-                                        <HiDocumentText /> Quiz
-                                    </div>
-                                </TypeButton>
-                                <TypeButton disabled to={'/'}>
-                                    <div>
-                                        <AiOutlineLock /> Games
-                                    </div>
-                                </TypeButton>
-                            </TypesContainer>
-                        </div>
-                    </div>
-                    <FlashcardGame collection={currentCollection} />
+                            <FlashcardGame collection={currentCollection} />
+                        </>
+                    )}
                 </Container>
             </ContentContainer>
         </PageWrapper>
